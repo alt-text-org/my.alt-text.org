@@ -2,20 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Canvas OCR Proof of Concept</title>
+    <title>OCRop</title>
     <style>
         body {
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            margin: 10px auto;
+            width: 97vw;
+            height: 97vh;
             display: grid;
             grid-auto-columns: 67% 33%;
+            grid-column-gap: 30px;
+            background-color: #cef0f5;
+            font-family: Helvetica, sans-serif;
         }
 
         #right-col {
             grid-column: 2;
             grid-row: 1;
+            margin-right: 20px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -23,8 +26,25 @@
         }
 
         button {
-            border-radius: 4px;
-            padding: 4px;
+            border-radius: 15px;
+            padding: 5px 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            align-content: center;
+            gap: 3px;
+            background-color: #FFFFFF;
+            font-size: 1.3em;
+            font-family: Helvetica, sans-serif;
+            font-weight: 900;
+        }
+
+        button:hover {
+            background-color: #EDEDED;
+        }
+
+        button:disabled:hover {
+            background-color: #FFFFFF;
         }
 
         #controls {
@@ -36,7 +56,6 @@
             align-items: center;
             align-content: center;
             gap: 10px;
-            background-color: #DFDFDF;
         }
 
         #cvs-wrapper {
@@ -44,12 +63,11 @@
             height: 100%;
             grid-column: 1;
             grid-row: 1;
-            border: solid 3px #AAAAAA;
-            overflow: scroll;
             display: flex;
             flex-direction: column;
             align-content: center;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         canvas {
@@ -57,28 +75,93 @@
             height: 100%;
         }
 
+        #result-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: start;
+        }
+
         textarea {
             width: 100%;
             height: 100%;
         }
 
+        #upload-wrapper {
+            width: 50vw;
+            height: 30vh;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 40px 40px 15px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 900;
+            background-color: #FFFFFF;
+            border-radius: 40px;
+        }
+
+        .upload-area {
+            width: calc(50vw - 5vh);
+            height: 25vh;
+            border: 4px dashed #000;
+            border-radius: 40px;
+            background-image: url("images/upload.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 64px 64px;
+            margin-bottom: 15px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            filter: alpha(opacity=50);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragging,
+        .upload-area.uploading {
+            filter: alpha(opacity=100);
+            -moz-opacity: 1;
+            opacity: 1;
+        }
+
+        .upload-area input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .upload-area input:focus {
+            outline: none;
+        }
+
         .loading {
             min-height: 100%;
             background: linear-gradient(-45deg,
-                    rgba(255, 0, 0, 1) 0%,
-                    rgba(255, 154, 0, 1) 10%,
-                    rgba(208, 222, 33, 1) 20%,
-                    rgba(79, 220, 74, 1) 30%,
-                    rgba(63, 218, 216, 1) 40%,
-                    rgba(47, 201, 226, 1) 50%,
-                    rgba(28, 127, 238, 1) 60%,
-                    rgba(95, 21, 242, 1) 70%,
-                    rgba(186, 12, 248, 1) 80%,
-                    rgba(251, 7, 217, 1) 90%,
-                    rgba(255, 0, 0, 1) 100%
+            rgba(255, 0, 0, 1) 0%,
+            rgba(255, 154, 0, 1) 10%,
+            rgba(208, 222, 33, 1) 20%,
+            rgba(79, 220, 74, 1) 30%,
+            rgba(63, 218, 216, 1) 40%,
+            rgba(47, 201, 226, 1) 50%,
+            rgba(28, 127, 238, 1) 60%,
+            rgba(95, 21, 242, 1) 70%,
+            rgba(186, 12, 248, 1) 80%,
+            rgba(251, 7, 217, 1) 90%,
+            rgba(255, 0, 0, 1) 100%
             );
             background-size: 400% 400%;
             animation: loading-a 10s ease infinite;
+            color: #FFFFFF;
         }
 
         @keyframes loading-a {
@@ -92,11 +175,96 @@
                 background-position: 0 50%;
             }
         }
+
+        #links {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            align-items: center;
+            align-content: center;
+        }
+
+        .link-logo {
+            height: 50px;
+            width: auto;
+            margin: 5px;
+        }
+
+        @media screen and (max-width: 750px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: start;
+            }
+
+            button {
+                font-size: 2em;
+            }
+
+            #right-col {
+                width: 90vw;
+                margin-right: 0;
+                margin-left: 10px;
+            }
+
+            #upload-wrapper {
+                width: 70vw;
+                height: 30vh;
+            }
+
+            .upload-area {
+                width: calc(70vw - 5vh);
+                height: 25vh;
+            }
+
+            #result {
+                height: 40vh;
+                font-size: 1.2em;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: start;
+            }
+
+            button {
+                font-size: 1.2em;
+            }
+
+            #right-col {
+                width: 90vw;
+                margin-right: 0;
+                margin-left: 10px;
+            }
+
+            #upload-wrapper {
+                width: 70vw;
+                height: 30vh;
+                font-size: 1em;
+            }
+
+            .upload-area {
+                width: calc(70vw - 5vh);
+                height: 25vh;
+            }
+
+            #result {
+                height: 40vh;
+                font-size: 1.2em;
+            }
+        }
+
     </style>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
     <script src="http://unpkg.com/fabric/dist/fabric.min.js"></script>
     <script type="module">
         const worker = await Tesseract.createWorker();
+        //TODO: Dropdown to select language
         await worker.loadLanguage('eng');
         await worker.initialize('eng');
 
@@ -105,24 +273,41 @@
 </head>
 <body>
 <div id="cvs-wrapper">
+    <div id="upload-wrapper">
+        <div class="upload-area">
+            <input type="file" id="upload"/>
+        </div>
+        Upload File or Paste Image
+    </div>
     <canvas id="cvs" width="1" height="1"></canvas>
 </div>
 <div id="right-col">
     <div id="controls">
-        <button id="extract-bt" onclick="extract()">Extract Text</button>
-        <button id="copy-bt" onclick="copy()">Copy</button>
+        <button id="extract-bt" onclick="extract()" disabled>Extract Text</button>
+        <button id="copy-bt" onclick="copy()" disabled>Copy</button>
     </div>
-    <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
+    <div id="result-wrapper">
+        <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
+    </div>
+    <div id="links">
+        <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+        <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+    </div>
 </div>
-
 </body>
 <script>
+    const uploadWrapper = document.getElementById("upload-wrapper")
+    const upload = document.getElementById('upload');
     const extractBtn = document.getElementById("extract-bt")
+    const copyBtn = document.getElementById("copy-bt")
     const canvasWrapper = document.getElementById("cvs-wrapper")
     const result = document.getElementById("result")
     const canvas = new fabric.Canvas("cvs", {
         uniformScaling: false
     })
+    let copyAck = null
+
+    window.onresize = () => scaleCanvas(canvas.backgroundImage)
 
     canvas.on('selection:cleared', () => {
         let cropper = canvas.item(0);
@@ -141,11 +326,30 @@
         }
     };
 
+    upload.addEventListener('dragenter', () => {
+        upload.parentNode.className = 'area dragging';
+    }, false);
+
+    upload.addEventListener('dragleave', () => {
+        upload.parentNode.className = 'area';
+    }, false);
+
+    upload.addEventListener('dragdrop', () => {
+        const file = upload.files[0]
+        loadFile(file)
+    }, false);
+
+    upload.addEventListener('change', () => {
+        const file = upload.files[0]
+        loadFile(file)
+    }, false);
+
     function loadFile(file) {
         const objUrl = URL.createObjectURL(file);
         fabric.Image.fromURL(objUrl, img => {
+            uploadWrapper.style.display = "none"
             canvas.clear()
-            canvas.setDimensions({width: img.width + 40, height: img.height + 40})
+            const ratio = scaleCanvas(img)
 
             const cropRect = new fabric.Rect({
                 left: 15,
@@ -154,8 +358,8 @@
                 height: img.height + 5,
                 fill: 'transparent',
                 stroke: '#FF0000',
-                strokeWidth: 5,
-                strokeDashArray: [5, 2],
+                strokeWidth: 3 / ratio,
+                strokeDashArray: [5 / ratio, 3 / ratio],
                 strokeUniform: true,
                 uniformScaling: false,
             })
@@ -166,32 +370,55 @@
             })
 
             canvas.add(cropRect)
-            cropRect.on('moving', () => {
-                if (cropRect.left < 15) {
-                    cropRect.left = 15
-                } else if (cropRect.left + cropRect.width * cropRect.scaleX > canvas.width - 20) {
-                    cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
-                }
-
-                if (cropRect.top < 15) {
-                    cropRect.top = 15
-                } else if (cropRect.top + cropRect.height * cropRect.scaleY > canvas.height - 20) {
-                    cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
-                }
-            })
-
-            cropRect.on('scaling', () => {
-
-            })
-
+            cropRect.on('moving', handleCropMoving)
+            cropRect.on('scaling', handleCropScaling)
 
             canvas.setActiveObject(canvas.item(0))
-
-            // canvasWrapper.height
-
-
             canvas.renderAll()
+
+            extractBtn.disabled = false
+            copyBtn.disabled = false
         });
+    }
+
+    function scaleCanvas(img) {
+        if (!img) {
+            return
+        }
+
+        const ratio = Math.min(
+            Math.min(canvasWrapper.clientWidth / (img.width + 40), 1),
+            Math.min(canvasWrapper.clientHeight / (img.height + 40), 1),
+        );
+        window.canvasRatio = ratio
+        canvas.setZoom(ratio)
+        canvas.setDimensions({width: (img.width + 40) * ratio, height: (img.height + 40) * ratio})
+
+        return ratio
+    }
+
+    function handleCropMoving() {
+        const cropRect = canvas.item(0)
+
+        if (cropRect.left < 10) {
+            cropRect.left = 10
+        }
+
+        if (cropRect.left + cropRect.width * cropRect.scaleX > canvas.width - 20) {
+            cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
+        }
+
+        if (cropRect.top < 10) {
+            cropRect.top = 10
+        }
+
+        if (cropRect.top + cropRect.height * cropRect.scaleY > canvas.height - 20) {
+            cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
+        }
+    }
+
+    function handleCropScaling() {
+        //TODO: Prevent scaling outside canvas
     }
 
     async function extract() {
@@ -199,12 +426,15 @@
         const cropRect = canvas.item(0)
 
         cropRect.opacity = 0
+
+        canvas.setZoom(1)
         const dataUrl = canvas.toDataURL({
             left: cropRect.left,
             top: cropRect.top,
             width: cropRect.width * cropRect.scaleX,
             height: cropRect.height * cropRect.scaleY
         })
+        canvas.setZoom(window.canvasRatio)
         cropRect.opacity = 1
 
         let extracted = await recognize(dataUrl);
@@ -218,12 +448,18 @@
     }
 
     function tidy(text) {
-        //TODO
+        //TODO: Anything that can be done to clean up output?
         return text
     }
 
     function copy() {
+        if (copyAck) {
+            clearTimeout(copyAck)
+        }
+
         navigator.clipboard.writeText(result.value)
+        copyBtn.innerText = 'Copied!'
+        copyAck = setTimeout(() => copyBtn.innerText = 'Copy', 3000)
     }
 </script>
 </html>
