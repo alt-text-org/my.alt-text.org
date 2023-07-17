@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas OCR Proof of Concept</title>
+    <style>
+        body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: grid;
+            grid-auto-columns: 67% 33%;
+        }
+
+        #right-col {
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        button {
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        #controls {
+            padding: 7px 20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            align-content: center;
+            gap: 10px;
+            background-color: #DFDFDF;
+        }
+
+        #cvs-wrapper {
+            width: 100%;
+            height: 100%;
+            grid-column: 1;
+            grid-row: 1;
+            border: solid 3px #AAAAAA;
+            overflow: scroll;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            min-height: 100%;
+            background: linear-gradient(-45deg,
+                    rgba(255, 0, 0, 1) 0%,
+                    rgba(255, 154, 0, 1) 10%,
+                    rgba(208, 222, 33, 1) 20%,
+                    rgba(79, 220, 74, 1) 30%,
+                    rgba(63, 218, 216, 1) 40%,
+                    rgba(47, 201, 226, 1) 50%,
+                    rgba(28, 127, 238, 1) 60%,
+                    rgba(95, 21, 242, 1) 70%,
+                    rgba(186, 12, 248, 1) 80%,
+                    rgba(251, 7, 217, 1) 90%,
+                    rgba(255, 0, 0, 1) 100%
+            );
+            background-size: 400% 400%;
+            animation: loading-a 10s ease infinite;
+        }
+
+        @keyframes loading-a {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
+    </style>
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
+    <script src="http://unpkg.com/fabric/dist/fabric.min.js"></script>
+    <script type="module">
+        const worker = await Tesseract.createWorker();
+        await worker.loadLanguage('eng');
+        await worker.initialize('eng');
+
+        window.tesseractWorker = worker
+    </script>
+</head>
+<body>
+<div id="cvs-wrapper">
+    <canvas id="cvs" width="1" height="1"></canvas>
+</div>
+<div id="right-col">
+    <div id="controls">
+        <button id="extract-bt" onclick="extract()">Extract Text</button>
+        <button id="copy-bt" onclick="copy()">Copy</button>
+    </div>
+    <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
+</div>
+
+</body>
+<script>
+    const extractBtn = document.getElementById("extract-bt")
+    const canvasWrapper = document.getElementById("cvs-wrapper")
+    const result = document.getElementById("result")
+    const canvas = new fabric.Canvas("cvs", {
+        uniformScaling: false
+    })
+
+    canvas.on('selection:cleared', () => {
+        let cropper = canvas.item(0);
+        if (cropper) {
+            canvas.setActiveObject(cropper)
+            canvas.renderAll()
+        }
+    });
+
+    document.onpaste = function (event) {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (let item of items) {
+            if (item.kind === 'file') {
+                loadFile(item.getAsFile())
+            }
+        }
+    };
+
+    function loadFile(file) {
+        const objUrl = URL.createObjectURL(file);
+        fabric.Image.fromURL(objUrl, img => {
+            canvas.clear()
+            canvas.setDimensions({width: img.width + 40, height: img.height + 40})
+
+            const cropRect = new fabric.Rect({
+                left: 15,
+                top: 15,
+                width: img.width + 5,
+                height: img.height + 5,
+                fill: 'transparent',
+                stroke: '#FF0000',
+                strokeWidth: 5,
+                strokeDashArray: [5, 2],
+                strokeUniform: true,
+                uniformScaling: false,
+            })
+
+            canvas.setBackgroundImage(img, null, {
+                top: 20,
+                left: 20
+            })
+
+            canvas.add(cropRect)
+            cropRect.on('moving', () => {
+                if (cropRect.left < 15) {
+                    cropRect.left = 15
+                } else if (cropRect.left + cropRect.width * cropRect.scaleX > canvas.width - 20) {
+                    cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
+                }
+
+                if (cropRect.top < 15) {
+                    cropRect.top = 15
+                } else if (cropRect.top + cropRect.height * cropRect.scaleY > canvas.height - 20) {
+                    cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
+                }
+            })
+
+            cropRect.on('scaling', () => {
+
+            })
+
+
+            canvas.setActiveObject(canvas.item(0))
+
+            // canvasWrapper.height
+
+
+            canvas.renderAll()
+        });
+    }
+
+    async function extract() {
+        extractBtn.classList.add("loading")
+        const cropRect = canvas.item(0)
+
+        cropRect.opacity = 0
+        const dataUrl = canvas.toDataURL({
+            left: cropRect.left,
+            top: cropRect.top,
+            width: cropRect.width * cropRect.scaleX,
+            height: cropRect.height * cropRect.scaleY
+        })
+        cropRect.opacity = 1
+
+        let extracted = await recognize(dataUrl);
+        result.value = tidy(extracted)
+        extractBtn.classList.remove("loading")
+    }
+
+    async function recognize(dataUrl) {
+        const {data: {text}} = await window.tesseractWorker.recognize(dataUrl);
+        return text
+    }
+
+    function tidy(text) {
+        //TODO
+        return text
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(result.value)
+    }
+</script>
+</html>
