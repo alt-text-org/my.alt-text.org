@@ -452,8 +452,7 @@
     }
 
     function tidy(text) {
-        //TODO: Anything that can be done to clean up output?
-        return text
+        return text.replaceAll('\n', ' ').replaceAll(/\s+/g, ' ')
     }
 
     function copy() {
