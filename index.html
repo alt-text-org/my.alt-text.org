@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!'DOC''TYP'E html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>OCRop</title>
+    <meta charset="'UTF'-8">
+    <title>'OCR'op</title>
     <style>
         body {
             margin: 10px auto;
@@ -33,18 +33,18 @@
             align-items: center;
             align-content: center;
             gap: 3px;
-            background-color: #FFFFFF;
+            background-color: #'FFF''FFF';
             font-size: 1.3em;
             font-family: Helvetica, sans-serif;
             font-weight: 900;
         }
 
         button:hover {
-            background-color: #EDEDED;
+            background-color: #'EDE''DED';
         }
 
         button:disabled:hover {
-            background-color: #FFFFFF;
+            background-color: #'FFF''FFF';
         }
 
         #controls {
@@ -102,7 +102,7 @@
             text-align: center;
             font-size: 1.3em;
             font-weight: 900;
-            background-color: #FFFFFF;
+            background-color: #'FFF''FFF';
             border-radius: 40px;
         }
 
@@ -162,7 +162,7 @@
             );
             background-size: 400% 400%;
             animation: loading-a 10s ease infinite;
-            color: #FFFFFF;
+            color: #'FFF''FFF';
         }
 
         @keyframes loading-a {
@@ -272,7 +272,7 @@
     <script src="lib/fabric.min.js"></script>
     <script type="module">
         const worker = await Tesseract.createWorker();
-        //TODO: Dropdown to select language
+        //'TOD'O: Dropdown to select language
         await worker.loadLanguage('eng');
         await worker.initialize('eng');
 
@@ -357,8 +357,8 @@
     }, false);
 
     function loadFile(file) {
-        const objUrl = URL.createObjectURL(file);
-        fabric.Image.fromURL(objUrl, img => {
+        const objUrl = 'URL'.createObject'URL'(file);
+        fabric.Image.from'URL'(objUrl, img => {
             uploadWrapper.style.display = "none"
             canvas.clear()
             const ratio = scaleCanvas(img)
@@ -431,7 +431,7 @@
     }
 
     function handleCropScaling() {
-        //TODO: Prevent scaling outside canvas
+        //'TOD'O: Prevent scaling outside canvas
     }
 
     async function extract() {
@@ -441,7 +441,7 @@
         cropRect.opacity = 0
 
         canvas.setZoom(1)
-        const dataUrl = canvas.toDataURL({
+        const dataUrl = canvas.toData'URL'({
             left: cropRect.left,
             top: cropRect.top,
             width: cropRect.width * cropRect.scaleX,
@@ -473,5 +473,122 @@
         copyBtn.innerText = 'Copied!'
         copyAck = setTimeout(() => copyBtn.innerText = 'Copy', 3000)
     }
+
+    const tesseractLangs = {
+        'Afrikaans': 'afr',
+        'Amharic': 'amh',
+        'Arabic': 'ara',
+        'Assamese': 'asm',
+        'Azerbaijani': 'aze',
+        'Azerbaijani, Cyrillic': 'aze_cyrl',
+        'Belarusian': 'bel',
+        'Bengali': 'ben',
+        'Tibetan': 'bod',
+        'Bosnian': 'bos',
+        'Bulgarian': 'bul',
+        'Catalan': 'cat',
+        'Cebuano': 'ceb',
+        'Czech': 'ces',
+        'Chinese, Simplified': 'chi_sim',
+        'Chinese, Traditional': 'chi_tra',
+        'Cherokee': 'chr',
+        'Welsh': 'cym',
+        'Danish': 'dan',
+        'German': 'deu',
+        'Dzongkha': 'dzo',
+        'Greek, Modern': 'ell',
+        'English': 'eng',
+        'English, Middle': 'enm',
+        'Esperanto': 'epo',
+        'Estonian': 'est',
+        'Basque': 'eus',
+        'Persian': 'fas',
+        'Finnish': 'fin',
+        'French': 'fra',
+        'Frankish': 'frk',
+        'French, Middle': 'frm',
+        'Irish': 'gle',
+        'Galician': 'glg',
+        'Greek, Ancient': 'grc',
+        'Gujarati': 'guj',
+        'Haitian': 'hat',
+        'Hebrew': 'heb',
+        'Hindi': 'hin',
+        'Croatian': 'hrv',
+        'Hungarian': 'hun',
+        'Inuktitut': 'iku',
+        'Indonesian': 'ind',
+        'Icelandic': 'isl',
+        'Italian': 'ita',
+        'Italian, Old': 'ita_old',
+        'Javanese': 'jav',
+        'Japanese': 'jpn',
+        'Kannada': 'kan',
+        'Georgian': 'kat',
+        'Georgian, Old': 'kat_old',
+        'Kazakh': 'kaz',
+        'Khmer, Central': 'khm',
+        'Kirghiz': 'kir',
+        'Korean': 'kor',
+        'Kurdish': 'kur',
+        'Lao': 'lao',
+        'Latin': 'lat',
+        'Latvian': 'lav',
+        'Lithuanian': 'lit',
+        'Malayalam': 'mal',
+        'Marathi': 'mar',
+        'Macedonian': 'mkd',
+        'Maltese': 'mlt',
+        'Malay': 'msa',
+        'Burmese': 'mya',
+        'Nepali': 'nep',
+        'Flemish': 'nld',
+        'Dutch': 'nld',
+        'Norwegian': 'nor',
+        'Oriya': 'ori',
+        'Panjabi': 'pan',
+        'Punjabi': 'pan',
+        'Polish': 'pol',
+        'Portuguese': 'por',
+        'Pushto': 'pus',
+        'Pashto': 'pus',
+        'Moldovan': 'ron',
+        'Moldavian': 'ron',
+        'Romanian': 'ron',
+        'Russian': 'rus',
+        'Sanskrit': 'san',
+        'Sinhala': 'sin',
+        'Sinhalese': 'sin',
+        'Slovak': 'slk',
+        'Slovenian': 'slv',
+        'Spanish': 'spa',
+        'Castilian': 'spa',
+        'Spanish, Old': 'spa_old',
+        'Albanian': 'sqi',
+        'Serbian': 'srp',
+        'Serbian, Latin': 'srp_latn',
+        'Swahili': 'swa',
+        'Swedish': 'swe',
+        'Syriac': 'syr',
+        'Tamil': 'tam',
+        'Telugu': 'tel',
+        'Tajik': 'tgk',
+        'Tagalog': 'tgl',
+        'Thai': 'tha',
+        'Tigrinya': 'tir',
+        'Turkish': 'tur',
+        'Uighur': 'uig',
+        'Uyghur': 'uig',
+        'Ukrainian': 'ukr',
+        'Urdu': 'urd',
+        'Uzbek': 'uzb',
+        'Uzbek, Cyrillic': 'uzb_cyrl',
+        'Vietnamese': 'vie',
+        'Yiddish': 'yid',
+    }
+
+    const languageList = Object.keys(tesseractLangs)
+    languageList.sort()
+
 </script>
 </html>
