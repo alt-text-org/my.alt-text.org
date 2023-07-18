@@ -191,6 +191,13 @@
             margin: 5px;
         }
 
+        #explanation {
+            display: none;
+            font-size: 1.1em;
+            font-weight: 300;
+            font-family: monospace;
+        }
+
         @media screen and (max-width: 750px) {
             body {
                 display: flex;
@@ -281,7 +288,7 @@
         Upload File or Paste Image
     </div>
     <canvas id="cvs" width="1" height="1"></canvas>
-    <p>
+    <p id="explanation">
         Try clicking extract, then manipulate the dashed red box, click extract again and see what changes 💜
     </p>
 </div>
@@ -300,6 +307,7 @@
 </div>
 </body>
 <script>
+    const explanation = document.getElementById("explanation")
     const uploadWrapper = document.getElementById("upload-wrapper")
     const upload = document.getElementById('upload');
     const extractBtn = document.getElementById("extract-bt")
@@ -382,6 +390,7 @@
 
             extractBtn.disabled = false
             copyBtn.disabled = false
+            explanation.style.display = "block"
         });
     }
 
