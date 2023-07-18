@@ -1,4 +1,4 @@
-<!'DOC''TYP'E html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="'UTF'-8">
@@ -33,18 +33,18 @@
             align-items: center;
             align-content: center;
             gap: 3px;
-            background-color: #'FFF''FFF';
+            background-color: #FFFFFF;
             font-size: 1.3em;
             font-family: Helvetica, sans-serif;
             font-weight: 900;
         }
 
         button:hover {
-            background-color: #'EDE''DED';
+            background-color: #EDEDED;
         }
 
         button:disabled:hover {
-            background-color: #'FFF''FFF';
+            background-color: #FFFFFF;
         }
 
         #controls {
@@ -102,7 +102,7 @@
             text-align: center;
             font-size: 1.3em;
             font-weight: 900;
-            background-color: #'FFF''FFF';
+            background-color: #FFFFFF;
             border-radius: 40px;
         }
 
@@ -162,7 +162,7 @@
             );
             background-size: 400% 400%;
             animation: loading-a 10s ease infinite;
-            color: #'FFF''FFF';
+            color: #FFFFFF;
         }
 
         @keyframes loading-a {
@@ -357,8 +357,8 @@
     }, false);
 
     function loadFile(file) {
-        const objUrl = 'URL'.createObject'URL'(file);
-        fabric.Image.from'URL'(objUrl, img => {
+        const objUrl = URL.createObjectURL(file);
+        fabric.Image.fromURL(objUrl, img => {
             uploadWrapper.style.display = "none"
             canvas.clear()
             const ratio = scaleCanvas(img)
@@ -441,7 +441,7 @@
         cropRect.opacity = 0
 
         canvas.setZoom(1)
-        const dataUrl = canvas.toData'URL'({
+        const dataUrl = canvas.toDataURL({
             left: cropRect.left,
             top: cropRect.top,
             width: cropRect.width * cropRect.scaleX,
