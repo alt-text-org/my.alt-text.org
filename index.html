@@ -12,28 +12,46 @@
     <meta property="og:image" content="images/preview.png">
     <meta property="og:image:alt" content="A selection box in red">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/main.css">
 
+    <script src="src/i18n-data.js"></script>
+    <script src="https://unpkg.com/canvas-txt"></script>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
-    <script src="lib/fabric.min.js"></script>
+    <script>
+        const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
+        window.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
+    </script>
     <script type="module">
+        const isoExtractionLang = window.navigator.language || DEFAULT_EXTRACTION_LANG_ISO
+        const initialExtractionLang = iso639_2ToTesseract[isoExtractionLang] || iso639_2ToTesseract[DEFAULT_EXTRACTION_LANG_ISO]
 
         const worker = await Tesseract.createWorker();
-        //TODO: Dropdown to select language
-        await worker.loadLanguage('eng');
-        await worker.initialize('eng');
+        await worker.loadLanguage(initialExtractionLang);
+        await worker.initialize(initialExtractionLang);
 
         window.tesseractWorker = worker
     </script>
+
+    <script src="lib/fabric.min.js" defer></script>
+    <script src="lib/flexsearch.min.js" defer></script>
+    <script src="lib/findBoundaries.js" defer></script>
+    <script src="lib/unicode-break.js" defer></script>
+    <script src="lib/gen/WordBreakProperty.js" defer></script>
+
+    <script src="index.js" defer></script>
+    <script src="src/image-gen.js" defer></script>
+    <script src="src/results.js" defer></script>
+    <script src="src/i18n.js" defer></script>
+
 </head>
 <body>
 <div id="controls">
     <div id="left-ctl">
         <div class="dropdown">
             <button id="page-lang-btn" onclick="openDropdown('page-lang-dropdown')" class="drop-btn"></button>
-            <div id="page-lang-dropdown" class="dropdown-content" onselect="changePageLanguage()">
+            <div id="page-lang-dropdown" class="dropdown-content">
                 <input type="text" placeholder="" id="page-lang-text" aria-label="Page Language"
-                       onkeyup="filterPageLangs()">
+                       onkeyup="filterPageLangs()" onsubmit="changePageLanguage()">
                 <div id="page-lang-options"></div>
             </div>
             <a id="add-translation-link" class="dropdown-option"
@@ -45,12 +63,11 @@
     <button id="extract-bt" onclick="extract()" disabled>Extract Text</button>
     <button id="copy-bt" onclick="copy()" disabled>Copy</button>
 </div>
-</div>
 <div id="main">
     <div id="cvs-wrapper">
         <div id="upload-wrapper">
             <div class="upload-area">
-                <input type="file" id="upload"/>
+                <input type="file" id="upload" accept="image/*"/>
             </div>
             <label id="upload-label">
                 Upload File or Paste Image
@@ -67,6 +84,7 @@
         </div>
         <div id="links">
             <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+            <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
             <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
         </div>
     </div>

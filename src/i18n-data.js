@@ -1,3 +1,30 @@
+const DEFAULT_PAGE_LANG = 'en'
+const i18nText = {
+    en: {
+        displayName: "English",
+        uploadInstr: 'Upload File or Paste Image',
+        usageInstr: 'Try clicking extract, then manipulate the dashed red box, click extract again and see what change.',
+        extractBtnTxt: 'Extract Text',
+        copyBtnTxt: 'Copy',
+        copiedTxt: 'Copied!',
+        clearBtnTxt: 'Clear',
+        additionalImageTag: "Alt Text Continued",
+        addTranslationTxt: "Add Translation",
+        maxLenTxt: "Max Length",
+        popupCopyText: "Copy Text",
+        popupCopyImage: "Copy Image",
+    }
+}
+
+const i18nOptions = {}
+Object.entries(i18nText).forEach(lang => {
+    i18nOptions[lang[1].displayName] = lang[0]
+})
+const pageLanguageList = Object.keys(i18nOptions)
+pageLanguageList.sort()
+
+const DEFAULT_EXTRACTION_LANG_ISO = "en"
+const DEFAULT_EXTRACTION_LANG_HUMAN = "English"
 const tesseractLangs = {
     'Afrikaans': 'afr',
     'Amharic': 'amh',
@@ -111,46 +138,96 @@ const tesseractLangs = {
     'Yiddish': 'yid',
 }
 
+const iso639_2ToTesseract = {
+    'af': 'afr',
+    'am': 'amh',
+    'ar': 'ara',
+    'as': 'asm',
+    'az': 'aze',
+    'be': 'bel',
+    'bn': 'ben',
+    'bo': 'bod',
+    'bs': 'bos',
+    'bg': 'bul',
+    'ca': 'cat',
+    'cs': 'ces',
+    'zh': 'chi_sim',
+    'cy': 'cym',
+    'da': 'dan',
+    'de': 'deu',
+    'dz': 'dzo',
+    'el': 'ell',
+    'en': 'eng',
+    'eo': 'epo',
+    'et': 'est',
+    'eu': 'eus',
+    'fa': 'fas',
+    'fi': 'fin',
+    'fr': 'fra',
+    'ga': 'gle',
+    'gl': 'glg',
+    'gu': 'guj',
+    'ht': 'hat',
+    'he': 'heb',
+    'hi': 'hin',
+    'hr': 'hrv',
+    'hu': 'hun',
+    'iu': 'iku',
+    'id': 'ind',
+    'is': 'isl',
+    'it': 'ita',
+    'jv': 'jav',
+    'ja': 'jpn',
+    'kn': 'kan',
+    'ka': 'kat',
+    'kk': 'kaz',
+    'km': 'khm',
+    'ky': 'kir',
+    'ko': 'kor',
+    'ku': 'kur',
+    'lo': 'lao',
+    'la': 'lat',
+    'lv': 'lav',
+    'lt': 'lit',
+    'ml': 'mal',
+    'mr': 'mar',
+    'mk': 'mkd',
+    'mt': 'mlt',
+    'ms': 'msa',
+    'my': 'mya',
+    'ne': 'nep',
+    'nl': 'nld',
+    'no': 'nor',
+    'or': 'ori',
+    'pa': 'pan',
+    'pl': 'pol',
+    'pt': 'por',
+    'ps': 'pus',
+    'ro': 'ron',
+    'ru': 'rus',
+    'sa': 'san',
+    'si': 'sin',
+    'sk': 'slk',
+    'sl': 'slv',
+    'es': 'spa',
+    'sq': 'sqi',
+    'sr': 'srp',
+    'sw': 'swa',
+    'sv': 'swe',
+    'ta': 'tam',
+    'te': 'tel',
+    'tg': 'tgk',
+    'tl': 'tgl',
+    'th': 'tha',
+    'ti': 'tir',
+    'tr': 'tur',
+    'ug': 'uig',
+    'uk': 'ukr',
+    'ur': 'urd',
+    'uz': 'uzb',
+    'vi': 'vie',
+    'yi': 'yid',
+}
+
 const tesseractLanguageList = Object.keys(tesseractLangs)
 tesseractLanguageList.sort()
-
-const DEFAULT_LANG = 'en'
-const i18nText = {
-    en: {
-        displayName: "English",
-        uploadInstr: 'Upload File or Paste Image',
-        usageInstr: 'Try clicking extract, then manipulate the dashed red box, click extract again and see what changes 💜',
-        extractBtnTxt: 'Extract Text',
-        copyBtnTxt: 'Copy',
-        copiedTxt: 'Copied!',
-        clearBtnTxt: 'Clear',
-        extractLangLbl: 'Extraction Language:',
-        pageLangLbl: 'Page Language:'
-    }
-}
-const i18nOptions = {}
-Object.entries(i18nText).forEach(lang => {
-    i18nOptions[lang[1].displayName] = lang[0]
-})
-const pageLanguageList = Object.keys(i18nOptions)
-pageLanguageList.sort()
-
-function openDropdown(elem) {
-
-}
-
-function changePageLanguage() {
-
-}
-
-function filterPageLangs() {
-
-}
-
-async function changeExtractionLanguage() {
-
-}
-
-function filterExtractionLangs() {
-
-}

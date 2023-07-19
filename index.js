@@ -1,6 +1,9 @@
-//TODO: Packaged, deletable results. Drag one onto another to combine, make blank
+//TODO: Packaged, deletable results. Drag one onto another to combine, make blank, char counts
 //TODO: Undo?
 //TODO: Pop-up first time visiting with non-existing lang
+//TODO: Ability to split by length
+//TODO: Make alt-text-continued images available
+//TODO: Save button pops up on edit
 
 const explanation = document.getElementById("explanation")
 const uploadWrapper = document.getElementById("upload-wrapper")

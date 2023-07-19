@@ -113,7 +113,7 @@ textarea {
     height: 25vh;
     border: 4px dashed #000;
     border-radius: 40px;
-    background-image: url("images/upload.svg");
+    background-image: url("../images/upload.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 64px 64px;
@@ -188,7 +188,7 @@ textarea {
 }
 
 .link-logo {
-    height: 50px;
+    height: 96px;
     width: auto;
     margin: 5px;
 }
@@ -283,7 +283,7 @@ textarea {
 
     #myInput {
         box-sizing: border-box;
-        background-image: url('searchicon.png');
+        background-image: url('../images/dropdown.svg');
         background-position: 14px 12px;
         background-repeat: no-repeat;
         font-size: 16px;
