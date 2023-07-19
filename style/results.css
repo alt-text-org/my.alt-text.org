@@ -1,0 +1,103 @@
+#result-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}
+
+#descriptions {
+    margin: 15px auto;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    border: solid 2px #697cc7;
+    box-shadow: 1px 1px 1px 1px #a5afdc;
+}
+
+.description-name {
+
+}
+
+.description-wrapper {
+
+}
+
+.description-text-section {
+
+}
+
+
+
+.description-composer {
+
+}
+
+.text-part-wrapper {
+
+}
+
+.frozen-text-part {
+
+}
+
+.text-part-controls {
+
+}
+
+.description-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.char-counter {
+    width: 5em;
+    color: #1e40c7;
+    font-size: 1.2em;
+}
+
+.maxlen-field {
+
+}
+
+.aux-image-popup {
+    min-width: 33vw;
+    min-height: 42vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    border-radius: 20px;
+    box-shadow: 7px 7px 1px 1px #21222c;
+}
+
+.popup-text-part {
+
+}
+
+.popup-controls {
+
+}
+
+.popup-close-x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.popup-click-out {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+}

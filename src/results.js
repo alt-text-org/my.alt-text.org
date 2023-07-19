@@ -3,10 +3,9 @@ const index = new FlexSearch.Index({});
 let displayDescriptions = []
 let userDescriptions = {}
 
-const resultFilter = document.getElementById("result-filter")
+const descriptionsEle = document.getElementById("descriptions")
+const resultFilter = document.getElementById("filter-input")
 resultFilter.oninput = () => searchResults(resultFilter.value)
-
-const results = document.getElementById("results")
 
 loadDescriptions()
 updateMtimeOrderedResults()
@@ -66,7 +65,6 @@ function deleteResult(hash) {
 }
 
 function renderDescriptions() {
-    const descriptionsEle = document.getElementById("descriptions")
     const scrollPx = descriptionsEle.scrollHeight
     descriptionsEle.innerHTML = ""
 
@@ -135,6 +133,7 @@ function makeAtRestText(ele, description, liquify) {
         const textArea = document.createElement("textarea")
         textArea.classList.add("frozen-text-part")
         textArea.value = part
+        textArea.readOnly = true
         textArea.onclick = liquify
 
         const controls = document.createElement("div")
@@ -217,6 +216,7 @@ function popupAuxImage(lang, textPart, partNum, numParts) {
 
     const clickOut = document.createElement("div")
     clickOut.classList.add("popup-click-out")
+    closeX.innerText = "❎"
     clickOut.onclick = close
     popup.appendChild(clickOut)
 }

@@ -1,19 +1,12 @@
-//TODO: Packaged, deletable results. Drag one onto another to combine, make blank, char counts
 //TODO: Undo?
-//TODO: Pop-up first time visiting with non-existing lang
-//TODO: Ability to split by length
-//TODO: Make alt-text-continued images available
-//TODO: Save button pops up on edit
 //TODO: Save some configs to localStorage
 //TODO: Zip localstorage?
 
 const explanation = document.getElementById("explanation")
 const uploadWrapper = document.getElementById("upload-wrapper")
 const upload = document.getElementById('upload');
-const extractBtn = document.getElementById("extract-bt")
-const copyBtn = document.getElementById("copy-bt")
+const extractBtn = document.getElementById("extract-btn")
 const canvasWrapper = document.getElementById("cvs-wrapper")
-const result = document.getElementById("result")
 const canvas = new fabric.Canvas("cvs", {
     uniformScaling: false
 })
@@ -32,7 +25,7 @@ document.onpaste = function (event) {
     const items = (event.clipboardData || event.originalEvent.clipboardData).items;
     for (let item of items) {
         if (item.kind === 'file') {
-            loadFile(item.getAsFile())
+            loadFile("Unknown", item.getAsFile())
         }
     }
 };
@@ -88,7 +81,6 @@ function loadFile(file) {
         canvas.renderAll()
 
         extractBtn.disabled = false
-        copyBtn.disabled = false
         explanation.style.display = "block"
     });
 }
@@ -150,7 +142,11 @@ async function extract() {
     cropRect.opacity = 1
 
     let extracted = await recognize(dataUrl);
-    result.value = tidy(extracted)
+
+
+
+
+
     extractBtn.classList.remove("loading")
 }
 

@@ -13,6 +13,8 @@
     <meta property="og:image:alt" content="A selection box in red">
 
     <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/results.css">
+    <link rel="stylesheet" href="style/dropdowns.css">
 
     <script src="src/i18n-data.js"></script>
     <script src="https://unpkg.com/canvas-txt"></script>
@@ -48,15 +50,22 @@
 <div id="controls">
     <div id="left-ctl">
         <div class="dropdown" aria-label="Page language select">
-            <button onclick="openDropdown('page-lang-dropdown')" class="drop-btn">
-                <img src="images/dropdown.svg" class="drop-icon" aria-hidden="true" alt="">
+            <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text', 'page-lang-close-cover')"
+                    class="drop-btn">
+                <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
                 <span id="current-page-lang"></span>
             </button>
+            <div id="page-lang-close-cover" class="dropdown-page-cover"
+                 onclick="closeDropdown('page-lang-dropdown', 'page-lang-close-cover')"></div>
             <div id="page-lang-dropdown" class="dropdown-content">
-                <input type="text" placeholder="" id="page-lang-text" aria-label="Page Language"
-                       onkeyup="filterPageLangs()">
-                <div id="page-lang-options"></div>
-                <a id="add-translation-link" class="dropdown-option"
+                <div class="search-wrapper rounded-top">
+                    <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
+                    <input id="page-lang-text" class="search-input" type="text" placeholder=""
+                           aria-label="Page Language"
+                           onkeyup="filterPageLangs()">
+                </div>
+                <div id="page-lang-options" class="dropdown-options"></div>
+                <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
                    href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
             </div>
         </div>
@@ -78,7 +87,11 @@
     </div>
     <div id="right-col">
         <div id="result-wrapper">
-            <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
+            <div id="filter-wrapper" class="search-wrapper">
+                <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
+                <input id="filter-input" class="search-input" type="text" placeholder="" aria-label="Alt Text Search">
+            </div>
+            <div id="descriptions"></div>
         </div>
         <div id="links">
             <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>

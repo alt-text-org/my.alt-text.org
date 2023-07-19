@@ -1,5 +1,10 @@
+const uploadLbl = document.getElementById("upload-label")
+const explanationEle = document.getElementById("explanation")
+const currPageLangEle = document.getElementById("current-page-lang")
+const filterInput = document.getElementById("filter-input")
+const translationLink = document.getElementById('add-translation-link')
+
 const pageLangOptionsEle = document.getElementById("page-lang-options")
-const pageLangBtn = document.getElementById("page-lang-btn")
 const pageLangText = document.getElementById("page-lang-text")
 const pageLangDropdown = document.getElementById("page-lang-dropdown")
 
@@ -13,7 +18,7 @@ function populateDropdowns() {
         const langCode = i18nOptions[humanLang]
         addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
             window.i18n = i18nText[langCode]
-            pageLangDropdown.hidden = true
+            pageLangDropdown.style.visibility = "hidden"
             updatePageLanguage()
         })
     })
@@ -32,20 +37,32 @@ function addDropdownOption(ele, langCode, humanLang, onClick) {
     ele.appendChild(option)
 }
 
-function openDropdown(id) {
+function openDropdown(id, search, mask) {
     const elem = document.getElementById(id)
-    elem.style.hidden = false
+    elem.style.visibility = "visible"
+
+    const maskEle = document.getElementById(mask)
+    maskEle.style.visibility = "visible"
+
+    const searchInput = document.getElementById(search)
+    searchInput.focus()
 }
 
-const extractBtn = document.getElementById("extract-btn")
-const uploadLbl = document.getElementById("upload-label")
-const explanationEle = document.getElementById("explanation")
-const currPageLangEle = document.getElementById("current-page-lang")
+function closeDropdown(id, mask) {
+    const elem = document.getElementById(id)
+    elem.style.visibility = "hidden"
+
+    const maskEle = document.getElementById(mask)
+    maskEle.style.visibility = "hidden"
+}
+
 function updatePageLanguage() {
+    translationLink.innerText = window.i18n.addTranslationTxt
     currPageLangEle.innerText = window.i18n.displayName
     extractBtn.innerText = window.i18n.extractBtnTxt
     uploadLbl.innerText = window.i18n.uploadInstr
     explanationEle.innerText = window.i18n.usageInstr
+    filterInput.placeholder = window.i18n.searchPrompt
 }
 
 function filterPageLangs() {
@@ -56,7 +73,11 @@ function filterPageLangs() {
     if (foundLanguages.length) {
         foundLanguages.forEach(humanLang => {
             const langCode = i18nOptions[humanLang]
-            addDropdownOption(pageLangOptionsEle, )
+            addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
+                window.i18n = i18nText[langCode]
+                pageLangDropdown.hidden = true
+                updatePageLanguage()
+            })
         })
     } else {
         const noLangFound = document.createElement("div")

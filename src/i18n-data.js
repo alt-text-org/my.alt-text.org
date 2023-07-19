@@ -8,6 +8,7 @@ const i18nText = {
         extractBtnTxt: 'Extract Text',
         additionalImageTag: "Alt Text Continued",
         addTranslationTxt: "Add Translation",
+        searchPrompt: "Search Your Archive",
         maxLenTxt: "Max Length",
         popupCopyText: "Copy Text",
         popupCopyImage: "Copy Image",
@@ -225,6 +226,11 @@ const iso639_2ToTesseract = {
     'uz': 'uzb',
     'vi': 'vie',
     'yi': 'yid',
+}
+
+const tesseractToIso639_2 = {}
+for (let [iso, tess] of Object.entries(iso639_2ToTesseract)) {
+    tesseractToIso639_2[tess] = iso
 }
 
 const tesseractLanguageList = Object.keys(tesseractLangs)
