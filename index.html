@@ -38,7 +38,7 @@
     <script src="lib/unicode-break.js" defer></script>
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
-    <script src="index.js" defer></script>
+    <script src="src/ocr-crop.js" defer></script>
     <script src="src/image-gen.js" defer></script>
     <script src="src/results.js" defer></script>
     <script src="src/i18n.js" defer></script>
@@ -47,21 +47,23 @@
 <body>
 <div id="controls">
     <div id="left-ctl">
-        <div class="dropdown">
-            <button id="page-lang-btn" onclick="openDropdown('page-lang-dropdown')" class="drop-btn"></button>
+        <div class="dropdown" aria-label="Page language select">
+            <button onclick="openDropdown('page-lang-dropdown')" class="drop-btn">
+                <img src="images/dropdown.svg" class="drop-icon" aria-hidden="true" alt="">
+                <span id="current-page-lang"></span>
+            </button>
             <div id="page-lang-dropdown" class="dropdown-content">
                 <input type="text" placeholder="" id="page-lang-text" aria-label="Page Language"
-                       onkeyup="filterPageLangs()" onsubmit="changePageLanguage()">
+                       onkeyup="filterPageLangs()">
                 <div id="page-lang-options"></div>
+                <a id="add-translation-link" class="dropdown-option"
+                   href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
             </div>
-            <a id="add-translation-link" class="dropdown-option"
-               href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
         </div>
     </div>
-</div>
-<div id="right-ctl">
-    <button id="extract-bt" onclick="extract()" disabled>Extract Text</button>
-    <button id="copy-bt" onclick="copy()" disabled>Copy</button>
+    <div id="right-ctl">
+        <button id="extract-btn" onclick="extract()" disabled></button>
+    </div>
 </div>
 <div id="main">
     <div id="cvs-wrapper">
@@ -69,14 +71,10 @@
             <div class="upload-area">
                 <input type="file" id="upload" accept="image/*"/>
             </div>
-            <label id="upload-label">
-                Upload File or Paste Image
-            </label>
+            <label id="upload-label"></label>
         </div>
         <canvas id="cvs" width="1" height="1"></canvas>
-        <p id="explanation">
-            Try clicking extract, then manipulate the dashed red box, click extract again and see what changes 💜
-        </p>
+        <p id="explanation"></p>
     </div>
     <div id="right-col">
         <div id="result-wrapper">

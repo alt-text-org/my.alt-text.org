@@ -91,8 +91,6 @@ function makeDescriptionEle(description) {
     wrapper.classList.add("description-wrapper")
     wrapper.appendChild(name)
     wrapper.appendChild(makeTextSection(description))
-    wrapper.appendChild(makeFooter(description))
-
     return wrapper
 }
 
@@ -101,14 +99,20 @@ function makeTextSection(description) {
     textSection.classList.add("description-text-section")
 
     let liquify = () => {
+        const counter = document.createElement("span")
+        counter.classList.add("char-counter")
+        counter.innerText = description.text.length
+
         const editor = document.createElement("textarea")
         editor.classList.add("description-composer")
         editor.value = description.text
         editor.cols = 42
-        editor.onblur = () => updateResult(description.hash, null, editor.value, null)
 
+        editor.oninput = () => counter.innerText = `${editor.value.length}`
+        editor.onblur = () => updateResult(description.hash, null, editor.value, null)
         textSection.innerHTML = ""
         textSection.appendChild(editor)
+        textSection.appendChild(counter)
     }
 
     makeAtRestText(textSection, description, liquify)
@@ -160,8 +164,10 @@ function makeAtRestText(ele, description, liquify) {
 
         textPartWrapper.appendChild(textArea)
         textPartWrapper.appendChild(controls)
+        ele.appendChild(textPartWrapper)
     })
 
+    ele.appendChild(makeFooter(description))
 }
 
 function popupAuxImage(lang, textPart, partNum, numParts) {

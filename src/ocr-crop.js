@@ -4,6 +4,8 @@
 //TODO: Ability to split by length
 //TODO: Make alt-text-continued images available
 //TODO: Save button pops up on edit
+//TODO: Save some configs to localStorage
+//TODO: Zip localstorage?
 
 const explanation = document.getElementById("explanation")
 const uploadWrapper = document.getElementById("upload-wrapper")
@@ -15,8 +17,6 @@ const result = document.getElementById("result")
 const canvas = new fabric.Canvas("cvs", {
     uniformScaling: false
 })
-let copyAck = null
-
 
 window.onresize = () => scaleCanvas(canvas.backgroundImage)
 
@@ -162,18 +162,3 @@ async function recognize(dataUrl) {
 function tidy(text) {
     return text.replaceAll('\n', ' ').replaceAll(/\s+/g, ' ')
 }
-
-function copy() {
-    if (copyAck) {
-        clearTimeout(copyAck)
-    }
-
-    navigator.clipboard.writeText(result.value)
-    copyBtn.innerText = 'Copied!'
-    copyAck = setTimeout(() => copyBtn.innerText = 'Copy', 3000)
-}
-
-function clear() {
-    result.value = ''
-}
-
