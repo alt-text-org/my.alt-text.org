@@ -6,7 +6,8 @@
     min-width: 256px;
 }
 
-.drop-btn:hover, .drop-btn:focus {
+.drop-btn:hover {
+    background-color: #EDEDED;
 }
 
 .dropdown-content {

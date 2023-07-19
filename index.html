@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="'UTF'-8">
-    <title>OCRop</title>
+    <title>Alt Composer</title>
     <link rel="icon" href="images/icon.png">
 
-    <meta property="og:title" content="OCRop"/>
+    <meta property="og:title" content="Alt Composer"/>
     <meta property="og:type" content="website"/>
     <meta property="og:description"
-          content="Optical Character Recognition/Text Extraction: Built For Building Alt Text"/>
+          content="Built For Building Image Descriptions"/>
     <meta property="og:image" content="images/preview.png">
     <meta property="og:image:alt" content="A selection box in red">
 
@@ -47,43 +47,45 @@
 
 </head>
 <body>
-<div id="controls">
-    <div id="left-ctl">
-        <div class="dropdown" aria-label="Page language select">
-            <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text', 'page-lang-close-cover')"
-                    class="drop-btn">
-                <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                <span id="current-page-lang"></span>
-            </button>
-            <div id="page-lang-close-cover" class="dropdown-page-cover"
-                 onclick="closeDropdown('page-lang-dropdown', 'page-lang-close-cover')"></div>
-            <div id="page-lang-dropdown" class="dropdown-content">
-                <div class="search-wrapper rounded-top">
-                    <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                    <input id="page-lang-text" class="search-input" type="text" placeholder=""
-                           aria-label="Page Language"
-                           onkeyup="filterPageLangs()">
-                </div>
-                <div id="page-lang-options" class="dropdown-options"></div>
-                <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
-                   href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
-            </div>
-        </div>
-    </div>
-    <div id="right-ctl">
-        <button id="extract-btn" onclick="extract()" disabled></button>
-    </div>
-</div>
 <div id="main">
-    <div id="cvs-wrapper">
-        <div id="upload-wrapper">
-            <div class="upload-area">
-                <input type="file" id="upload" accept="image/*"/>
+    <div id="left-col">
+        <div id="controls">
+            <div id="left-ctl">
+                <div class="dropdown" aria-label="Page language select">
+                    <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text', 'page-lang-close-cover')"
+                            class="drop-btn">
+                        <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
+                        <span id="current-page-lang"></span>
+                    </button>
+                    <div id="page-lang-close-cover" class="dropdown-page-cover"
+                         onclick="closeDropdown('page-lang-dropdown', 'page-lang-close-cover')"></div>
+                    <div id="page-lang-dropdown" class="dropdown-content">
+                        <div class="search-wrapper rounded-top">
+                            <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
+                            <input id="page-lang-text" class="search-input" type="text" placeholder=""
+                                   aria-label="Page Language"
+                                   onkeyup="filterPageLangs()">
+                        </div>
+                        <div id="page-lang-options" class="dropdown-options"></div>
+                        <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
+                           href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
+                    </div>
+                </div>
             </div>
-            <label id="upload-label"></label>
+            <div id="right-ctl">
+                <button id="extract-btn" onclick="extract()" disabled></button>
+            </div>
         </div>
-        <canvas id="cvs" width="1" height="1"></canvas>
-        <p id="explanation"></p>
+        <div id="cvs-wrapper">
+            <div id="upload-wrapper">
+                <div class="upload-area">
+                    <input type="file" id="upload" accept="image/*"/>
+                </div>
+                <label id="upload-label"></label>
+            </div>
+            <canvas id="cvs" width="1" height="1"></canvas>
+            <p id="explanation"></p>
+        </div>
     </div>
     <div id="right-col">
         <div id="result-wrapper">

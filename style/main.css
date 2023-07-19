@@ -1,21 +1,12 @@
 body {
-    margin: 0 auto;
-    width: 97vw;
-    height: 97vh;
+    margin: 10px auto;
+    height: calc(100vh - 20px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #cef0f5;
     font-family: Helvetica, sans-serif;
-}
-
-#right-col {
-    min-width: 33vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
 }
 
 button {
@@ -77,11 +68,20 @@ button:disabled:hover {
 }
 
 #main {
-    width: 95vw;
+    margin: 0 auto;
+    width: 98vw;
     height: 100%;
+    display: grid;
+    grid-template-columns: 67% 33%;
+}
+
+#right-col {
+    grid-row: 1;
+    grid-column: 2;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: stretch;
 }
 
@@ -102,8 +102,8 @@ canvas {
 }
 
 #result-wrapper {
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -229,15 +229,17 @@ textarea {
 }
 
 #links {
+    width: 100%;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     align-content: center;
+    justify-content: flex-end;
 }
 
 .link-logo {
-    height: 96px;
+    height: 64px;
     width: auto;
     margin: 5px;
 }

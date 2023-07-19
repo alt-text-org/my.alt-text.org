@@ -15,6 +15,9 @@
     padding: 15px;
     border: solid 2px #697cc7;
     box-shadow: 1px 1px 1px 1px #a5afdc;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .description-name {
