@@ -2,277 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="'UTF'-8">
-    <title>'OCR'op</title>
-    <style>
-        body {
-            margin: 10px auto;
-            width: 97vw;
-            height: 97vh;
-            display: grid;
-            grid-auto-columns: 67% 33%;
-            grid-column-gap: 30px;
-            background-color: #cef0f5;
-            font-family: Helvetica, sans-serif;
-        }
+    <title>OCRop</title>
+    <link rel="icon" href="images/icon.png">
 
-        #right-col {
-            grid-column: 2;
-            grid-row: 1;
-            margin-right: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-        }
+    <meta property="og:title" content="OCRop"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description"
+          content="Optical Character Recognition/Text Extraction: Built For Building Alt Text"/>
+    <meta property="og:image" content="images/preview.png">
+    <meta property="og:image:alt" content="A selection box in red">
 
-        button {
-            border-radius: 15px;
-            padding: 5px 10px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            align-content: center;
-            gap: 3px;
-            background-color: #FFFFFF;
-            font-size: 1.3em;
-            font-family: Helvetica, sans-serif;
-            font-weight: 900;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        button:hover {
-            background-color: #EDEDED;
-        }
-
-        button:disabled:hover {
-            background-color: #FFFFFF;
-        }
-
-        #controls {
-            padding: 7px 20px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            align-content: center;
-            gap: 10px;
-        }
-
-        #cvs-wrapper {
-            width: 100%;
-            height: 100%;
-            grid-column: 1;
-            grid-row: 1;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            text-align: center;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        #result-wrapper {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: start;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100%;
-        }
-
-        #upload-wrapper {
-            width: 50vw;
-            height: 30vh;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 40px 40px 15px;
-            text-align: center;
-            font-size: 1.3em;
-            font-weight: 900;
-            background-color: #FFFFFF;
-            border-radius: 40px;
-        }
-
-        .upload-area {
-            width: calc(50vw - 5vh);
-            height: 25vh;
-            border: 4px dashed #000;
-            border-radius: 40px;
-            background-image: url("images/upload.svg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 64px 64px;
-            margin-bottom: 15px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            filter: alpha(opacity=50);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            text-align: center;
-        }
-
-        .upload-area:hover,
-        .upload-area.dragging,
-        .upload-area.uploading {
-            filter: alpha(opacity=100);
-            -moz-opacity: 1;
-            opacity: 1;
-        }
-
-        .upload-area input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            cursor: pointer;
-            opacity: 0;
-        }
-
-        .upload-area input:focus {
-            outline: none;
-        }
-
-        .loading {
-            min-height: 100%;
-            background: linear-gradient(-45deg,
-            rgba(255, 0, 0, 1) 0%,
-            rgba(255, 154, 0, 1) 10%,
-            rgba(208, 222, 33, 1) 20%,
-            rgba(79, 220, 74, 1) 30%,
-            rgba(63, 218, 216, 1) 40%,
-            rgba(47, 201, 226, 1) 50%,
-            rgba(28, 127, 238, 1) 60%,
-            rgba(95, 21, 242, 1) 70%,
-            rgba(186, 12, 248, 1) 80%,
-            rgba(251, 7, 217, 1) 90%,
-            rgba(255, 0, 0, 1) 100%
-            );
-            background-size: 400% 400%;
-            animation: loading-a 10s ease infinite;
-            color: #FFFFFF;
-        }
-
-        @keyframes loading-a {
-            0% {
-                background-position: 0 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0 50%;
-            }
-        }
-
-        #links {
-            display: flex;
-            flex-direction: row-reverse;
-            flex-wrap: wrap;
-            align-items: center;
-            align-content: center;
-        }
-
-        .link-logo {
-            height: 50px;
-            width: auto;
-            margin: 5px;
-        }
-
-        #explanation {
-            display: none;
-            font-size: 1.1em;
-            font-weight: 300;
-            font-family: monospace;
-        }
-
-        @media screen and (max-width: 750px) {
-            body {
-                display: flex;
-                flex-direction: column;
-                align-content: center;
-                justify-content: start;
-            }
-
-            button {
-                font-size: 2em;
-            }
-
-            #right-col {
-                width: 90vw;
-                margin-right: 0;
-                margin-left: 10px;
-            }
-
-            #upload-wrapper {
-                width: 70vw;
-                height: 30vh;
-            }
-
-            .upload-area {
-                width: calc(70vw - 5vh);
-                height: 25vh;
-            }
-
-            #result {
-                height: 40vh;
-                font-size: 1.2em;
-            }
-        }
-
-        @media screen and (max-width: 400px) {
-            body {
-                display: flex;
-                flex-direction: column;
-                align-content: center;
-                justify-content: start;
-            }
-
-            button {
-                font-size: 1.2em;
-            }
-
-            #right-col {
-                width: 90vw;
-                margin-right: 0;
-                margin-left: 10px;
-            }
-
-            #upload-wrapper {
-                width: 70vw;
-                height: 30vh;
-                font-size: 1em;
-            }
-
-            .upload-area {
-                width: calc(70vw - 5vh);
-                height: 25vh;
-            }
-
-            #result {
-                height: 40vh;
-                font-size: 1.2em;
-            }
-        }
-
-    </style>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
     <script src="lib/fabric.min.js"></script>
     <script type="module">
+
         const worker = await Tesseract.createWorker();
-        //'TOD'O: Dropdown to select language
+        //TODO: Dropdown to select language
         await worker.loadLanguage('eng');
         await worker.initialize('eng');
 
@@ -280,315 +27,49 @@
     </script>
 </head>
 <body>
-<div id="cvs-wrapper">
-    <div id="upload-wrapper">
-        <div class="upload-area">
-            <input type="file" id="upload"/>
+<div id="controls">
+    <div id="left-ctl">
+        <div class="dropdown">
+            <button id="page-lang-btn" onclick="openDropdown('page-lang-dropdown')" class="drop-btn"></button>
+            <div id="page-lang-dropdown" class="dropdown-content" onselect="changePageLanguage()">
+                <input type="text" placeholder="" id="page-lang-text" aria-label="Page Language"
+                       onkeyup="filterPageLangs()">
+                <div id="page-lang-options"></div>
+            </div>
+            <a id="add-translation-link" class="dropdown-option"
+               href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
         </div>
-        Upload File or Paste Image
     </div>
-    <canvas id="cvs" width="1" height="1"></canvas>
-    <p id="explanation">
-        Try clicking extract, then manipulate the dashed red box, click extract again and see what changes 💜
-    </p>
 </div>
-<div id="right-col">
-    <div id="controls">
-        <button id="extract-bt" onclick="extract()" disabled>Extract Text</button>
-        <button id="copy-bt" onclick="copy()" disabled>Copy</button>
+<div id="right-ctl">
+    <button id="extract-bt" onclick="extract()" disabled>Extract Text</button>
+    <button id="copy-bt" onclick="copy()" disabled>Copy</button>
+</div>
+</div>
+<div id="main">
+    <div id="cvs-wrapper">
+        <div id="upload-wrapper">
+            <div class="upload-area">
+                <input type="file" id="upload"/>
+            </div>
+            <label id="upload-label">
+                Upload File or Paste Image
+            </label>
+        </div>
+        <canvas id="cvs" width="1" height="1"></canvas>
+        <p id="explanation">
+            Try clicking extract, then manipulate the dashed red box, click extract again and see what changes 💜
+        </p>
     </div>
-    <div id="result-wrapper">
-        <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
-    </div>
-    <div id="links">
-        <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-        <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+    <div id="right-col">
+        <div id="result-wrapper">
+            <textarea id="result" cols="33" rows="33" aria-label="result"></textarea>
+        </div>
+        <div id="links">
+            <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+            <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+        </div>
     </div>
 </div>
 </body>
-<script>
-    const explanation = document.getElementById("explanation")
-    const uploadWrapper = document.getElementById("upload-wrapper")
-    const upload = document.getElementById('upload');
-    const extractBtn = document.getElementById("extract-bt")
-    const copyBtn = document.getElementById("copy-bt")
-    const canvasWrapper = document.getElementById("cvs-wrapper")
-    const result = document.getElementById("result")
-    const canvas = new fabric.Canvas("cvs", {
-        uniformScaling: false
-    })
-    let copyAck = null
-
-    window.onresize = () => scaleCanvas(canvas.backgroundImage)
-
-    canvas.on('selection:cleared', () => {
-        let cropper = canvas.item(0);
-        if (cropper) {
-            canvas.setActiveObject(cropper)
-            canvas.renderAll()
-        }
-    });
-
-    document.onpaste = function (event) {
-        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        for (let item of items) {
-            if (item.kind === 'file') {
-                loadFile(item.getAsFile())
-            }
-        }
-    };
-
-    upload.addEventListener('dragenter', () => {
-        upload.parentNode.className = 'area dragging';
-    }, false);
-
-    upload.addEventListener('dragleave', () => {
-        upload.parentNode.className = 'area';
-    }, false);
-
-    upload.addEventListener('dragdrop', () => {
-        const file = upload.files[0]
-        loadFile(file)
-    }, false);
-
-    upload.addEventListener('change', () => {
-        const file = upload.files[0]
-        loadFile(file)
-    }, false);
-
-    function loadFile(file) {
-        const objUrl = URL.createObjectURL(file);
-        fabric.Image.fromURL(objUrl, img => {
-            uploadWrapper.style.display = "none"
-            canvas.clear()
-            const ratio = scaleCanvas(img)
-
-            const cropRect = new fabric.Rect({
-                left: 15,
-                top: 15,
-                width: img.width + 5,
-                height: img.height + 5,
-                fill: 'transparent',
-                stroke: '#FF0000',
-                strokeWidth: 3 / ratio,
-                strokeDashArray: [5 / ratio, 3 / ratio],
-                strokeUniform: true,
-                uniformScaling: false,
-            })
-
-            canvas.setBackgroundImage(img, null, {
-                top: 20,
-                left: 20
-            })
-
-            canvas.add(cropRect)
-            cropRect.on('moving', handleCropMoving)
-            cropRect.on('scaling', handleCropScaling)
-
-            canvas.setActiveObject(canvas.item(0))
-            canvas.renderAll()
-
-            extractBtn.disabled = false
-            copyBtn.disabled = false
-            explanation.style.display = "block"
-        });
-    }
-
-    function scaleCanvas(img) {
-        if (!img) {
-            return
-        }
-
-        const ratio = Math.min(
-            Math.min(canvasWrapper.clientWidth / (img.width + 40), 1),
-            Math.min(canvasWrapper.clientHeight / (img.height + 40), 1),
-        );
-        window.canvasRatio = ratio
-        canvas.setZoom(ratio)
-        canvas.setDimensions({width: (img.width + 40) * ratio, height: (img.height + 40) * ratio})
-
-        return ratio
-    }
-
-    function handleCropMoving() {
-        const cropRect = canvas.item(0)
-
-        if (cropRect.left < 10) {
-            cropRect.left = 10
-        }
-
-        if (cropRect.left + cropRect.width * cropRect.scaleX > canvas.width - 20) {
-            cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
-        }
-
-        if (cropRect.top < 10) {
-            cropRect.top = 10
-        }
-
-        if (cropRect.top + cropRect.height * cropRect.scaleY > canvas.height - 20) {
-            cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
-        }
-    }
-
-    function handleCropScaling() {
-        //'TOD'O: Prevent scaling outside canvas
-    }
-
-    async function extract() {
-        extractBtn.classList.add("loading")
-        const cropRect = canvas.item(0)
-
-        cropRect.opacity = 0
-
-        canvas.setZoom(1)
-        const dataUrl = canvas.toDataURL({
-            left: cropRect.left,
-            top: cropRect.top,
-            width: cropRect.width * cropRect.scaleX,
-            height: cropRect.height * cropRect.scaleY
-        })
-        canvas.setZoom(window.canvasRatio)
-        cropRect.opacity = 1
-
-        let extracted = await recognize(dataUrl);
-        result.value = tidy(extracted)
-        extractBtn.classList.remove("loading")
-    }
-
-    async function recognize(dataUrl) {
-        const {data: {text}} = await window.tesseractWorker.recognize(dataUrl);
-        return text
-    }
-
-    function tidy(text) {
-        return text.replaceAll('\n', ' ').replaceAll(/\s+/g, ' ')
-    }
-
-    function copy() {
-        if (copyAck) {
-            clearTimeout(copyAck)
-        }
-
-        navigator.clipboard.writeText(result.value)
-        copyBtn.innerText = 'Copied!'
-        copyAck = setTimeout(() => copyBtn.innerText = 'Copy', 3000)
-    }
-
-    const tesseractLangs = {
-        'Afrikaans': 'afr',
-        'Amharic': 'amh',
-        'Arabic': 'ara',
-        'Assamese': 'asm',
-        'Azerbaijani': 'aze',
-        'Azerbaijani, Cyrillic': 'aze_cyrl',
-        'Belarusian': 'bel',
-        'Bengali': 'ben',
-        'Tibetan': 'bod',
-        'Bosnian': 'bos',
-        'Bulgarian': 'bul',
-        'Catalan': 'cat',
-        'Cebuano': 'ceb',
-        'Czech': 'ces',
-        'Chinese, Simplified': 'chi_sim',
-        'Chinese, Traditional': 'chi_tra',
-        'Cherokee': 'chr',
-        'Welsh': 'cym',
-        'Danish': 'dan',
-        'German': 'deu',
-        'Dzongkha': 'dzo',
-        'Greek, Modern': 'ell',
-        'English': 'eng',
-        'English, Middle': 'enm',
-        'Esperanto': 'epo',
-        'Estonian': 'est',
-        'Basque': 'eus',
-        'Persian': 'fas',
-        'Finnish': 'fin',
-        'French': 'fra',
-        'Frankish': 'frk',
-        'French, Middle': 'frm',
-        'Irish': 'gle',
-        'Galician': 'glg',
-        'Greek, Ancient': 'grc',
-        'Gujarati': 'guj',
-        'Haitian': 'hat',
-        'Hebrew': 'heb',
-        'Hindi': 'hin',
-        'Croatian': 'hrv',
-        'Hungarian': 'hun',
-        'Inuktitut': 'iku',
-        'Indonesian': 'ind',
-        'Icelandic': 'isl',
-        'Italian': 'ita',
-        'Italian, Old': 'ita_old',
-        'Javanese': 'jav',
-        'Japanese': 'jpn',
-        'Kannada': 'kan',
-        'Georgian': 'kat',
-        'Georgian, Old': 'kat_old',
-        'Kazakh': 'kaz',
-        'Khmer, Central': 'khm',
-        'Kirghiz': 'kir',
-        'Korean': 'kor',
-        'Kurdish': 'kur',
-        'Lao': 'lao',
-        'Latin': 'lat',
-        'Latvian': 'lav',
-        'Lithuanian': 'lit',
-        'Malayalam': 'mal',
-        'Marathi': 'mar',
-        'Macedonian': 'mkd',
-        'Maltese': 'mlt',
-        'Malay': 'msa',
-        'Burmese': 'mya',
-        'Nepali': 'nep',
-        'Flemish': 'nld',
-        'Dutch': 'nld',
-        'Norwegian': 'nor',
-        'Oriya': 'ori',
-        'Panjabi': 'pan',
-        'Punjabi': 'pan',
-        'Polish': 'pol',
-        'Portuguese': 'por',
-        'Pushto': 'pus',
-        'Pashto': 'pus',
-        'Moldovan': 'ron',
-        'Moldavian': 'ron',
-        'Romanian': 'ron',
-        'Russian': 'rus',
-        'Sanskrit': 'san',
-        'Sinhala': 'sin',
-        'Sinhalese': 'sin',
-        'Slovak': 'slk',
-        'Slovenian': 'slv',
-        'Spanish': 'spa',
-        'Castilian': 'spa',
-        'Spanish, Old': 'spa_old',
-        'Albanian': 'sqi',
-        'Serbian': 'srp',
-        'Serbian, Latin': 'srp_latn',
-        'Swahili': 'swa',
-        'Swedish': 'swe',
-        'Syriac': 'syr',
-        'Tamil': 'tam',
-        'Telugu': 'tel',
-        'Tajik': 'tgk',
-        'Tagalog': 'tgl',
-        'Thai': 'tha',
-        'Tigrinya': 'tir',
-        'Turkish': 'tur',
-        'Uighur': 'uig',
-        'Uyghur': 'uig',
-        'Ukrainian': 'ukr',
-        'Urdu': 'urd',
-        'Uzbek': 'uzb',
-        'Uzbek, Cyrillic': 'uzb_cyrl',
-        'Vietnamese': 'vie',
-        'Yiddish': 'yid',
-    }
-
-    const languageList = Object.keys(tesseractLangs)
-    languageList.sort()
-
-</script>
 </html>
