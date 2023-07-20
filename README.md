@@ -7,7 +7,7 @@ See a preview of some functionality live at [https://ocrop.glitch.me](https://oc
 
 
 
-TODO for Alpha
+Alpha
 ----
 
  - Undo?
@@ -17,22 +17,26 @@ TODO for Alpha
  - Import/Export controls - include version in dump
 
 
-Follow On
-=========
- - Accessibility!!!
+Beta
+----
+
+- Accessibility!!!
    - Basics
    - Keyboard controls
    - Zoom canvas
    - Play sound if hit edge of canvas
- - Link for what makes good alt text/resources 
- - Pattern package manager via git, shipped with site
- - Plugin system
-   - Build plugin library separately.
+- Pattern package manager via git, shipped with site
 - Name only first then matching body in search
-- Auto-extract live-dumping into separate text area with a "Save" button
+
+
+Release
+-------
+
+- Browser Extensions
+- Link for what makes good alt text/resources
+- Plugin system
+   - Build plugin library separately.
 - Paste image with alt text into composer? Needs site-specific, but probably doable in usual sites + mastodon by
   looking for appropriate functions/flags
+- Save image and alt to library on right click in extensions
 - Description tags, store images in plugin
-
-Notes
-=====
