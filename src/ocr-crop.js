@@ -100,25 +100,27 @@ function scaleCanvas(img) {
 function handleCropMoving() {
     const cropRect = canvas.item(0)
 
-    if (cropRect.left < 10) {
+    if ((cropRect.left * window.canvasRatio) < 10) {
         cropRect.left = 10
     }
 
-    if (cropRect.left + cropRect.width * cropRect.scaleX > canvas.width - 20) {
+    if ((cropRect.left + cropRect.width * cropRect.scaleX) * window.canvasRatio > canvas.width - 20) {
         cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
     }
 
-    if (cropRect.top < 10) {
+    if ((cropRect.top * window.canvasRatio) < 10) {
         cropRect.top = 10
     }
 
-    if (cropRect.top + cropRect.height * cropRect.scaleY > canvas.height - 20) {
+    if ((cropRect.top + cropRect.height * cropRect.scaleY) * window.canvasRatio > canvas.height - 20) {
         cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
     }
 }
 
 function handleCropScaling() {
     //TODO: Prevent scaling outside canvas
+
+
 }
 
 async function extract() {
