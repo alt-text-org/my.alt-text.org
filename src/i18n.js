@@ -37,23 +37,32 @@ function addDropdownOption(ele, langCode, humanLang, onClick) {
     ele.appendChild(option)
 }
 
-function openDropdown(id, search, mask) {
+function showOverlay() {
+    const overlay = document.getElementById("overlay");
+    overlay.style.visibility = "visible"
+    overlay.classList.add("visible");
+}
+
+function hideOverlay() {
+    const overlay = document.getElementById("overlay");
+    overlay.style.visibility = "hidden"
+    overlay.classList.remove("visible");
+}
+
+function openDropdown(id, search) {
+    showOverlay();
     const elem = document.getElementById(id)
     elem.style.visibility = "visible"
-
-    const maskEle = document.getElementById(mask)
-    maskEle.style.visibility = "visible"
 
     const searchInput = document.getElementById(search)
     searchInput.focus()
 }
 
-function closeDropdown(id, mask) {
-    const elem = document.getElementById(id)
+function closeDropdown() {
+    hideOverlay();
+    // hardcode closing second dropdown here
+    const elem = document.getElementById('page-lang-dropdown')
     elem.style.visibility = "hidden"
-
-    const maskEle = document.getElementById(mask)
-    maskEle.style.visibility = "hidden"
 }
 
 function updatePageLanguage() {

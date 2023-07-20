@@ -48,17 +48,16 @@
 </head>
 <body>
 <div id="main">
+    <div id="overlay" onclick="closeDropdown()"></div>
     <div id="left-col">
         <div id="controls">
             <div id="left-ctl">
                 <div class="dropdown" aria-label="Page language select">
-                    <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text', 'page-lang-close-cover')"
+                    <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
                             class="drop-btn">
                         <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
                         <span id="current-page-lang"></span>
                     </button>
-                    <div id="page-lang-close-cover" class="dropdown-page-cover"
-                         onclick="closeDropdown('page-lang-dropdown', 'page-lang-close-cover')"></div>
                     <div id="page-lang-dropdown" class="dropdown-content">
                         <div class="search-wrapper rounded-top">
                             <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
@@ -96,7 +95,7 @@
         <div id="result-wrapper">
             <div id="filter-wrapper" class="search-wrapper">
                 <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
-                <input id="filter-input" class="search-input" type="text" placeholder="" aria-label="Alt Text Search">
+                <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="Alt Text Search">
             </div>
             <div id="descriptions"></div>
             <div id="import-export">
