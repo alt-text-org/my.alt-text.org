@@ -67,7 +67,7 @@ function closeDropdown() {
 
 function updatePageLanguage() {
     translationLink.innerText = window.i18n.addTranslationTxt
-    currPageLangEle.innerText = window.i18n.displayName
+    currPageLangEle.innerText = `${window.i18n.langButtonPrefixTxt}: ${window.i18n.displayName}`
     extractBtn.innerText = window.i18n.extractBtnTxt
     uploadLbl.innerText = window.i18n.uploadInstr
     explanationEle.innerText = window.i18n.usageInstr

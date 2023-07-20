@@ -99,7 +99,7 @@ function scaleCanvas(img) {
 
 function handleCropMoving() {
     const cropRect = canvas.item(0)
-
+//TODO: Fix, can't move down
     if ((cropRect.left * window.canvasRatio) < 10) {
         cropRect.left = 10
     }
@@ -140,10 +140,6 @@ async function extract() {
     cropRect.opacity = 1
 
     let extracted = await recognize(dataUrl);
-
-
-
-
 
     extractBtn.classList.remove("loading")
 }

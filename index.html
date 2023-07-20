@@ -42,65 +42,80 @@
 
     <script src="src/ocr-crop.js" defer></script>
     <script src="src/image-gen.js" defer></script>
-    <script src="src/results.js" defer></script>
+    <script src="src/descriptions.js" defer></script>
     <script src="src/i18n.js" defer></script>
 
 </head>
 <body>
-    <div id="overlay" onclick="closeDropdown()"></div>
-    <div id="main">
-        <div id="left-col">
-            <div id="controls">
-                <div class="dropdown" aria-label="Page language select">
-                    <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
-                            class="drop-btn">
-                        <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true" alt="">
-                        <span id="current-page-lang"></span>
-                    </button>
-                    <div id="page-lang-dropdown" class="dropdown-content">
-                        <div class="search-wrapper rounded-top">
-                            <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                            <input id="page-lang-text" class="search-input" type="text" placeholder=""
-                                aria-label="Page Language"
-                                onkeyup="filterPageLangs()">
-                        </div>
-                        <div id="page-lang-options" class="dropdown-options"></div>
-                        <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
-                        href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
+<div id="overlay" onclick="closeDropdown()"></div>
+<div id="main">
+    <div id="left-col">
+        <div id="controls">
+            <div class="dropdown" aria-label="Page language select">
+                <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
+                        class="drop-btn">
+                    <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true"
+                         alt="">
+                    <span id="current-page-lang"></span>
+                </button>
+                <div id="page-lang-dropdown" class="dropdown-content">
+                    <div class="search-wrapper rounded-top">
+                        <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
+                        <input id="page-lang-text" class="search-input" type="text" placeholder=""
+                               aria-label="Page Language"
+                               onkeyup="filterPageLangs()">
                     </div>
+                    <div id="page-lang-options" class="dropdown-options"></div>
+                    <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
+                       href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
                 </div>
+            </div>
 
-                <button id="extract-btn" onclick="extract()" disabled></button>
+            <button id="extract-btn" onclick="extract()" disabled></button>
 
-            </div>
-            <div id="cvs-wrapper">
-                <div id="upload-wrapper">
-                    <div class="upload-area">
-                        <input type="file" id="upload" accept="image/*"/>
-                    </div>
-                    <label id="upload-label"></label>
-                </div>
-                <canvas id="cvs" width="1" height="1"></canvas>
-                <p id="explanation"></p>
-            </div>
         </div>
-        <div id="right-col">
-            <div id="result-wrapper">
-                <div id="filter-wrapper" class="search-wrapper">
-                    <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
-                    <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="Alt Text Search">
+        <div id="cvs-wrapper">
+            <div id="upload-wrapper">
+                <div class="upload-area">
+                    <input type="file" id="upload" accept="image/*"/>
                 </div>
-                <div id="descriptions"></div>
-                <div id="import-export">
-                    <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>
-                </div>
+                <label id="upload-label"></label>
             </div>
-        </div>
-        <div id="links">
-            <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-            <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
-            <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+            <canvas id="cvs" width="1" height="1"></canvas>
+            <p id="explanation"></p>
         </div>
     </div>
+    <div id="right-col">
+        <div id="result-wrapper">
+            <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
+                <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
+                <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="Alt Text Search">
+            </div>
+            <div id="description-wrapper">
+                <button>➕</button>
+                <div id="descriptions"></div>
+            </div>
+            <div id="import-export">
+                <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>
+            </div>
+        </div>
+    </div>
+    <div id="links">
+        <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+        <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
+        <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+    </div>
+</div>
+<div id="settings" style="visibility: hidden">
+    <h1>Settings</h1>
+    <div class="setting-section">
+        <h3>General</h3>
+        <div id="general-controls"></div>
+    </div>
+    <div class="setting-section">
+        <h3>Keyboard Controls</h3>
+        <div id="keyboard-controls"></div>
+    </div>
+</div>
 </body>
 </html>

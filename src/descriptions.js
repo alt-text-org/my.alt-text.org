@@ -1,23 +1,26 @@
 const index = new FlexSearch.Index({});
+const searchIndices = []
+let nextSearchIdx = 0
+
 
 let displayDescriptions = []
 let userDescriptions = {}
 
 const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
-resultFilter.oninput = () => searchResults(resultFilter.value)
+resultFilter.oninput = () => searchArchive(resultFilter.value)
 
 loadDescriptions()
-updateMtimeOrderedResults()
+updateMtimeOrderedDescs()
 
-function updateMtimeOrderedResults() {
+function updateMtimeOrderedDescs() {
     const mtimeDescriptions = Object.values(userDescriptions)
     mtimeDescriptions.sort((a, b) => a.mtime - b.mtime)
     displayDescriptions = mtimeDescriptions.slice(0, 100)
     renderDescriptions()
 }
 
-function searchResults(search) {
+function searchArchive(search) {
     index.searchAsync(search).then(searchResults => {
         for (let result of searchResults) {
             console.log(JSON.stringify(result))
@@ -25,7 +28,7 @@ function searchResults(search) {
     })
 }
 
-function addResult(name, lang, imgHash, text) {
+function addDescription(name, lang, imgHash, text) {
     userDescriptions[imgHash] = {
         hash: imgHash,
         name,
@@ -34,13 +37,19 @@ function addResult(name, lang, imgHash, text) {
         maxLen: 0,
         mtime: Date.now()
     }
-    index.add(imgHash, text)
-    index.add(`${imgHash}-name`, name)
-    saveDescriptions()
-    renderDescriptions()
 }
 
-function updateResult(hash, name, text, maxLen) {
+function addSearch(hash, name, text) {
+    searchIndices[nextSearchIdx] = hash
+    index.add(nextSearchIdx, text)
+    nextSearchIdx++
+
+    searchIndices[nextSearchIdx] = hash
+    index.add(nextSearchIdx, name)
+    nextSearchIdx++
+}
+
+function updateDescription(hash, name, text, maxLen) {
     const description = userDescriptions[hash]
     description.name = name || description.name
     description.text = text || description.text
@@ -50,15 +59,15 @@ function updateResult(hash, name, text, maxLen) {
     renderDescriptions()
 }
 
-function combineResults(srcHash, dstHash) {
+function combineDescriptions(srcHash, dstHash) {
     const dest = userDescriptions[dstHash]
     const src = userDescriptions[srcHash]
 
-    updateResult(dstHash, null, dest.text + src.text, null)
-    deleteResult(srcHash)
+    updateDescription(dstHash, null, dest.text + src.text, null)
+    deleteDescription(srcHash)
 }
 
-function deleteResult(hash) {
+function deleteDescription(hash) {
     delete userDescriptions[hash]
     saveDescriptions()
     renderDescriptions()
@@ -82,7 +91,7 @@ function makeDescriptionEle(description) {
     name.type = "text"
     name.value = description.name
     name.onchange = () => {
-        updateResult(description.hash, name.value, null, null)
+        updateDescription(description.hash, name.value, null, null)
     }
 
     const wrapper = document.createElement("div")
@@ -107,7 +116,7 @@ function makeTextSection(description) {
         editor.cols = 42
 
         editor.oninput = () => counter.innerText = `${editor.value.length}`
-        editor.onblur = () => updateResult(description.hash, null, editor.value, null)
+        editor.onblur = () => updateDescription(description.hash, null, editor.value, null)
         textSection.innerHTML = ""
         textSection.appendChild(editor)
         textSection.appendChild(counter)
@@ -238,7 +247,7 @@ function makeFooter(description) {
     const trashBtn = document.createElement("button")
     trashBtn.classList.add("emoji-button")
     trashBtn.innerText = "🚮"
-    trashBtn.onclick = () => deleteResult(description.hash)
+    trashBtn.onclick = () => deleteDescription(description.hash)
 
     footer.appendChild(maxLenEle)
     footer.appendChild(trashBtn)
@@ -255,6 +264,15 @@ function loadDescriptions() {
 
 function filterNonDigits(str) {
     return str.replaceAll(/[^0-9]/g, '')
+}
+
+
+function focusFilter() {
+    filterInput.focus()
+}
+
+function addBlankDescription() {
+
 }
 
 function saveDescriptions() {
