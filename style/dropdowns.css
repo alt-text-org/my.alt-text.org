@@ -3,7 +3,12 @@
 }
 
 .drop-btn {
+    display: flex;
     min-width: 256px;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    gap: 3px;
 }
 
 .drop-btn:hover {

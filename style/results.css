@@ -104,3 +104,14 @@
     height: 100vh;
     backdrop-filter: blur(5px);
 }
+
+#import-export {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 400px) {
+    #result-wrapper {
+        justify-content: center;
+    }
+}

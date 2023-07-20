@@ -51,29 +51,27 @@
     <div id="main">
         <div id="left-col">
             <div id="controls">
-                <div id="left-ctl">
-                    <div class="dropdown" aria-label="Page language select">
-                        <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
-                                class="drop-btn">
-                            <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true" alt="">
-                            <span id="current-page-lang"></span>
-                        </button>
-                        <div id="page-lang-dropdown" class="dropdown-content">
-                            <div class="search-wrapper rounded-top">
-                                <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                                <input id="page-lang-text" class="search-input" type="text" placeholder=""
-                                    aria-label="Page Language"
-                                    onkeyup="filterPageLangs()">
-                            </div>
-                            <div id="page-lang-options" class="dropdown-options"></div>
-                            <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
-                            href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
+                <div class="dropdown" aria-label="Page language select">
+                    <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
+                            class="drop-btn">
+                        <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true" alt="">
+                        <span id="current-page-lang"></span>
+                    </button>
+                    <div id="page-lang-dropdown" class="dropdown-content">
+                        <div class="search-wrapper rounded-top">
+                            <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
+                            <input id="page-lang-text" class="search-input" type="text" placeholder=""
+                                aria-label="Page Language"
+                                onkeyup="filterPageLangs()">
                         </div>
+                        <div id="page-lang-options" class="dropdown-options"></div>
+                        <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
+                        href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
                     </div>
                 </div>
-                <div id="right-ctl">
-                    <button id="extract-btn" onclick="extract()" disabled></button>
-                </div>
+
+                <button id="extract-btn" onclick="extract()" disabled></button>
+
             </div>
             <div id="cvs-wrapper">
                 <div id="upload-wrapper">
@@ -85,11 +83,6 @@
                 <canvas id="cvs" width="1" height="1"></canvas>
                 <p id="explanation"></p>
             </div>
-            <div id="links">
-                <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-                <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
-                <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
-            </div>
         </div>
         <div id="right-col">
             <div id="result-wrapper">
@@ -99,9 +92,14 @@
                 </div>
                 <div id="descriptions"></div>
                 <div id="import-export">
-                    <button id="import-btn" onclick="exportDescriptions()"></button>
+                    <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>
                 </div>
             </div>
+        </div>
+        <div id="links">
+            <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+            <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
+            <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
         </div>
     </div>
 </body>
