@@ -47,6 +47,10 @@ input {
 
 }
 
+#left-col {
+    flex-grow: 1;
+}
+
 #left-ctl {
     grid-row: 1;
     grid-column: 1;
@@ -76,8 +80,7 @@ input {
     margin: 0 auto;
     width: 98vw;
     height: 100%;
-    display: grid;
-    grid-template-columns: 67% 33%;
+    display: flex;
 }
 
 #right-col {
@@ -285,10 +288,19 @@ textarea {
         font-size: 2em;
     }
 
+    #main {
+        flex-direction: column;
+    }
+
+    #left-col {
+        flex-grow: initial;
+    }
+
     #right-col {
         width: 90vw;
         margin-right: 0;
         margin-left: 10px;
+        flex-grow: 1;
     }
 
     #upload-wrapper {
