@@ -31,6 +31,11 @@ button:disabled:hover {
     background-color: #FFFFFF;
 }
 
+input {
+    background: white;
+    border: none;
+}
+
 #controls {
     padding: 7px 20px;
     display: grid;
@@ -120,22 +125,20 @@ textarea {
 }
 
 .search-wrapper {
-    padding: 5px 10px 5px 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 3px;
-    background-color: #f4f9fc;
+    background-color: #FFFFFF;
     box-shadow: 1px 1px 1px 1px #443838;
     border-bottom: solid 2px black;
+    padding-right: 10px;
 }
 
 .search-input {
     width: 100%;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-    padding: 3px;
+    padding: 10px 5px;;
     font-size: 1.3rem;
 }
 
@@ -249,10 +252,15 @@ textarea {
     font-family: monospace;
 }
 
+#magnifying-glass-icon {
+    padding: 0 5px 0 10px;
+}
+
 .inline-icon {
     height: auto;
     width: 10px;
     opacity: 0.75;
+    padding: 0 5px;
 }
 
 .emoji-button {
