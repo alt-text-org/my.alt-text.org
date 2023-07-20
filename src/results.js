@@ -265,6 +265,14 @@ function saveDescriptions() {
     }
 }
 
+function exportDescriptions() {
+
+}
+
+function importDescriptions() {
+
+}
+
 function splitText(text, maxLen) {
     let result = [];
     let lastSpan = {end: 0};

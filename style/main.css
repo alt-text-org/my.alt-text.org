@@ -87,7 +87,7 @@ button:disabled:hover {
 
 #cvs-wrapper {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 120px) ;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -102,8 +102,6 @@ canvas {
 }
 
 #result-wrapper {
-    /*width: 100%;*/
-    /*height: 100%;*/
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -235,7 +233,7 @@ textarea {
     flex-wrap: wrap;
     align-items: center;
     align-content: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .link-logo {

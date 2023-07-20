@@ -1,7 +1,3 @@
-//TODO: Undo?
-//TODO: Save some configs to localStorage
-//TODO: Zip localstorage?
-
 const explanation = document.getElementById("explanation")
 const uploadWrapper = document.getElementById("upload-wrapper")
 const upload = document.getElementById('upload');

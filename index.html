@@ -10,7 +10,7 @@
     <meta property="og:description"
           content="Built For Building Image Descriptions"/>
     <meta property="og:image" content="images/preview.png">
-    <meta property="og:image:alt" content="A selection box in red">
+    <meta property="og:image:alt" content="Alt-Text.org, white on a library green">
 
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/results.css">
@@ -86,6 +86,11 @@
             <canvas id="cvs" width="1" height="1"></canvas>
             <p id="explanation"></p>
         </div>
+        <div id="links">
+            <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+            <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
+            <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+        </div>
     </div>
     <div id="right-col">
         <div id="result-wrapper">
@@ -94,11 +99,9 @@
                 <input id="filter-input" class="search-input" type="text" placeholder="" aria-label="Alt Text Search">
             </div>
             <div id="descriptions"></div>
-        </div>
-        <div id="links">
-            <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-            <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
-            <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
+            <div id="import-export">
+                <button id="import-btn" onclick="exportDescriptions()"></button>
+            </div>
         </div>
     </div>
 </div>
