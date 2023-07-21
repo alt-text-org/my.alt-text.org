@@ -1,33 +1,20 @@
-const index = new FlexSearch.Index({});
-const searchIndices = []
-let nextSearchIdx = 0
+const textIndex = new FlexSearch.Index({});
+const textSearchIndices = []
+let textNextSearchIdx = 0
 
-const displayDescriptions = []
-const inFlight = []
+const nameIndex = new FlexSearch.Index({});
+const nameSearchIndices = []
+let nameNextSearchIdx = 0
+
+let displayDescriptions = []
 
 const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
 resultFilter.oninput = () => searchArchive(resultFilter.value)
 
 loadDescriptions()
-updateMtimeOrderedDescs()
 
-
-function addInFlight() {
-
-}
-
-function saveInFlight() {
-
-}
-
-function discardInFlight() {
-
-}
-
-
-
-
+// updateMtimeOrderedDescs()
 
 
 
@@ -38,36 +25,45 @@ function updateMtimeOrderedDescs() {
     renderDescriptions()
 }
 
-function searchArchive(search) {
-    index.searchAsync(search).then(searchResults => {
-        for (let result of searchResults) {
-            console.log(JSON.stringify(result))
-        }
-    })
+function searchArchive(search, limit) {
+    displayDescriptions.length = 0
+
+    const foundIds = []
+    const foundByName = nameIndex.search(search, limit);
+    for (let byName of foundByName) {
+        console.log(JSON.stringify(byName))
+    }
+
+    let remaining = limit ? limit - foundByName.length : null
+    let foundByText = textIndex.search(search, remaining);
+    for (let byText of foundByText) {
+        console.log(JSON.stringify(byText))
+    }
+
+    renderDescriptions()
 }
 
-function addDescription(name, lang, imgHash, text) {
-
-    userDescriptions[imgHash] = {
-        hash: imgHash,
-        name,
-        text,
-        lang,
+function addDescription(chunk) {
+    const desc = {
+        name: chunk.name || getLocalized(),
+        lang: chunk.lang,
+        imgHash: chunk.hash,
+        text: chunk.text,
         maxLen: 0,
         mtime: Date.now()
     }
-    addSearch(imgHash, name, text)
-    saveDescription()
+    const descId = saveDescription(desc)
+    addSearch(descId, chunk.name, chunk.text)
 }
 
-function addSearch(hash, name, text) {
-    searchIndices[nextSearchIdx] = hash
-    index.add(nextSearchIdx, text)
-    nextSearchIdx++
+function addSearch(descId, hash, name, text) {
+    textSearchIndices[textNextSearchIdx] = descId
+    textIndex.add(textNextSearchIdx, text)
+    textNextSearchIdx++
 
-    searchIndices[nextSearchIdx] = hash
-    index.add(nextSearchIdx, name)
-    nextSearchIdx++
+    nameSearchIndices[nameNextSearchIdx] = descId
+    nameIndex.add(nameNextSearchIdx, name)
+    nameNextSearchIdx++
 }
 
 function updateDescription(hash, name, text, maxLen) {
@@ -216,7 +212,7 @@ function popupAuxImage(lang, textPart, partNum, numParts) {
     controls.classList.add("popup-controls")
 
     const copyImageBtn = document.createElement("button")
-    copyImageBtn.innerText = window.MyAltTextOrg.i18n.popupCopyImage
+    copyImageBtn.innerText = MyAltTextOrg.i18n.popupCopyImage
     copyImageBtn.onclick = () => {
         auxCanvas.toBlob(function (blob) {
             const item = new ClipboardItem({"image/png": blob});
@@ -226,7 +222,7 @@ function popupAuxImage(lang, textPart, partNum, numParts) {
     controls.appendChild(copyImageBtn)
 
     const copyTextBtn = document.createElement("button")
-    copyTextBtn.innerText = window.MyAltTextOrg.i18n.popupCopyText
+    copyTextBtn.innerText = MyAltTextOrg.i18n.popupCopyText
     copyTextBtn.onclick = () => {
         navigator.clipboard.writeText(textPart)
     }
@@ -256,7 +252,7 @@ function makeFooter(description) {
     const maxLenEle = document.createElement("input")
     maxLenEle.classList.add("maxlen-field")
     maxLenEle.type = "text"
-    maxLenEle.placeholder = window.MyAltTextOrg.i18n.maxLenTxt
+    maxLenEle.placeholder = MyAltTextOrg.i18n.maxLenTxt
     maxLenEle.oninput = () => maxLenEle.value = filterNonDigits(maxLenEle.value)
     maxLenEle.onchange = () => renderDescriptions()
     if (description.maxLen) {
@@ -276,8 +272,8 @@ function makeFooter(description) {
 function loadDescriptions() {
     userDescriptions = JSON.parse(window.localStorage.getItem("results") || "{}")
     Object.entries(userDescriptions).forEach(description => {
-        index.add(description[0], description[1].text)
-        index.add(`${description[0]}-name`, description[1].name)
+        textIndex.add(description[0], description[1].text)
+        textIndex.add(`${description[0]}-name`, description[1].name)
     })
 }
 

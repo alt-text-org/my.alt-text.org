@@ -6,35 +6,40 @@ A static site for handling alt text.
 See a preview of some functionality live at [https://ocrop.glitch.me](https://ocrop.glitch.me)
 
 
-
 Alpha
 ----
 
- - Undo?
- - Save some configs to localStorage
- - OCR cleanup filtering
  - Help/About
- - Import/Export controls - include version in dump
- - Add blank: for image or not 
+ - Add blank
+ - Load second image
  - Multi-crop
+ - Basic styling
+
 
 Beta
 ----
 
-- Accessibility!!!
+- Accessibility
    - Basics
    - Keyboard controls
    - Zoom canvas
-   - Play sound if hit edge of canvas
+   - Option to play sound if hit edge of canvas
+- Undo
 - Pattern package manager via git, shipped with site
 - Name only first then matching body in search
-- Filter by language, incl user entered
-- Filter ordering
-
+- Filter archive by language, incl user entered
+- Filters
+  - Ordering
+  - Re-arrangeable popup menu 
+  - Editable if just search/replace
+- Expand editor
+- Import/Export controls - include version in dump
+- Configuration exposed
 
 Release
 -------
 
+- As accessible as possible
 - Browser Extensions
 - Link for what makes good alt text/resources
 - Plugin system
@@ -43,3 +48,4 @@ Release
   looking for appropriate functions/flags
 - Save image and alt to library on right click in extensions
 - Description tags, store images in plugin
+- Support PDFs

@@ -9,19 +9,6 @@ async function hashImage(file) {
     })
 }
 
-const additionalImageText = {
-    default: "Alt Text Continued",
-    ca: "Continuació de la descripció de les imatges",
-    de: "Bildbeschreibung fortgesetzt",
-    en: "Alt Text Continued",
-    es: "Continuación de la descripción de las imágenes",
-    fa: "توضیحات عکس ادامه دارد",
-    fr: "Description de l'image, suite",
-    ja: "画像の説明（続き",
-    nl: "Overloop van tekst uit het vorige plaatje",
-    pt: "Descrição da imagem continuação"
-}
-
 const auxImageEdgeLength = 1000;
 const auxImageFontPixels = 100
 
@@ -30,7 +17,7 @@ function getAuxCanvas(lang, num, total) {
     canvas.width = auxImageEdgeLength
     canvas.height = auxImageEdgeLength
     const ctx = canvas.getContext('2d');
-    const text = (i18nText[lang] || window.MyAltTextOrg.i18n || i18nText[DEFAULT_EXTRACTION_LANG_ISO]).additionalImageTag
+    const text = additionalImageText[lang] || additionalImageText[DEFAULT_ADDTL_IMAGE_TXT]
 
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, auxImageEdgeLength, auxImageEdgeLength)

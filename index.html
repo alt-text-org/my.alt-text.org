@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="'UTF'-8">
+    <meta charset="UTF-8">
     <title>Alt Composer</title>
     <link rel="icon" href="images/icon.png">
 
@@ -21,13 +21,13 @@
     <script src="https://unpkg.com/canvas-txt"></script>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
     <script>
-        window.MyAltTextOrg = {
-            dicts: {}
+        MyAltTextOrg = {
+            c: {}, // processed configuration
+            f: {}, // functions
+            dicts: {},
+            tesseract: {},
         }
         initI18n()
-    </script>
-    <script type="module">
-        await initOcr()
     </script>
 
     <script src="lib/fabric.min.js" defer></script>
@@ -37,17 +37,22 @@
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
     <script src="src/canvas.js" defer></script>
-    <script src="src/images.js" defer></script>
+    <script src="src/configs.js"></script>
+    <script src="src/core.js" defer></script>
     <script src="src/descriptions.js" defer></script>
+    <script src="src/filter-lib.js" defer></script>
     <script src="src/i18n.js" defer></script>
-
+    <script src="src/images.js" defer></script>
+    <script src="src/storage.js" defer></script>
+    <script src="src/tesseract.js" defer></script>
+    <script src="src/in-flight.js" defer></script>
 </head>
 <body>
 <div id="overlay" onclick="closeDropdown()"></div>
 <div id="main">
     <div id="left-col">
         <div id="controls">
-            <div class="dropdown" aria-label="Page language select">
+            <div class="dropdown" aria-label="PLACEHOLDER">
                 <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
                         class="drop-btn">
                     <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true"
@@ -66,23 +71,29 @@
                        href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
                 </div>
             </div>
+            <div>
+                <label id="open-file-lbl" for="top-upload"></label>
+                <input type="file" id="top-upload" name="top-upload" accept="image/*">
+            </div>
             <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
         </div>
-        <div id="cvs-wrapper">
-            <div id="upload-wrapper">
-                <div class="upload-area">
-                    <input type="file" id="upload" accept="image/*"/>
-                </div>
-                <label id="upload-label"></label>
+        <div id="upload-wrapper">
+            <div class="upload-area">
+                <input type="file" id="upload" name="upload" accept="image/*"/>
             </div>
-            <canvas id="cvs" width="1" height="1"></canvas>
-            <p id="explanation"></p>
+            <label id="upload-label" for="upload"></label>
         </div>
-        <div id="in-flight-wrapper">
+        <div id="cvs-wrapper">
+            <canvas id="cvs" width="1" height="1"></canvas>
+        </div>
+        <div id="in-flight-wrapper" class="bordered-area">
+            <div id="add-in-flight" class="column-emoji-controls">
+                <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕</button>
+            </div>
             <div id="in-flight"></div>
-            <div id="in-flight-controls">
-                <button id="save-in-flight" class="emoji-button in-flight-btn" onclick="saveInFlight()">💾</button>
-                <button id="discard-in-flight" class="emoji-button in-flight-btn" onclick="discardInFlight()">🚮</button>
+            <div id="in-flight-controls" class="column-emoji-controls">
+                <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
+                <button id="discard-in-flight" class="emoji-button large-emoji" onclick="removeInFlight()">🚮</button>
             </div>
         </div>
     </div>
@@ -90,33 +101,22 @@
         <div id="result-wrapper">
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
                 <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
-                <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="Alt Text Search">
+                <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="PLACEHOLDER">
             </div>
-            <div id="description-wrapper">
-                <button>➕</button>
-                <div id="descriptions"></div>
-            </div>
-            <div id="import-export">
+            <div id="descriptions" class="bordered-area"></div>
+<!--            <div id="import-export">-->
 <!--                <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>-->
+<!--            </div>-->
+            <div id="links">
+                <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
+                <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
+                <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
             </div>
         </div>
     </div>
-    <div id="links">
-        <a href="https://social.alt-text.org/@hannah"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-        <a href="https://alt-text.org"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
-        <a href="https://github.com/alt-text-org/ocrop"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
-    </div>
 </div>
-<div id="settings" style="visibility: hidden">
-    <h1>Settings</h1>
-    <div class="setting-section">
-        <h3>General</h3>
-        <div id="general-controls"></div>
-    </div>
-    <div class="setting-section">
-        <h3>Keyboard Controls</h3>
-        <div id="keyboard-controls"></div>
-    </div>
-</div>
+<!--<div id="settings">-->
+<!--    <h1>Settings</h1>-->
+<!--</div>-->
 </body>
 </html>

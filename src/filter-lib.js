@@ -1,7 +1,7 @@
 const filterLibrary = {
     dictionary_filter: {
-        name: 'Collapse Whitespace',
-        desc: 'Collapse all chains of whitespace to a single space',
+        name: 'Filter To Dictionary',
+        desc: 'Remove all words not in dictionary',
         clean: dictionaryFilter,
         active: true
     },
@@ -15,14 +15,20 @@ const filterLibrary = {
 }
 
 function dictionaryFilter(input) {
-    if (!window.MyAltTextOrg.dicts)
-
-
-
-
+    if (!MyAltTextOrg.dicts[MyAltTextOrg.i18n.isoCode]) {
+        const script = document.createElement("script")
+        script.src = `dict/${MyAltTextOrg.i18n.isoCode}.js`
+        document.body.appendChild(script)
+        if (!MyAltTextOrg.dicts[MyAltTextOrg.i18n.isoCode]) {
+            return
+        }
+    }
+    const dict = MyAltTextOrg.dicts[MyAltTextOrg.i18n.isoCode]
     const savedWords = []
     for (let maybeWord of splitter.split(input)) {
-
+        if (dict[maybeWord]) {
+            savedWords.push(maybeWord)
+        }
     }
 
     return savedWords.join(' ')

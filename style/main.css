@@ -12,14 +12,12 @@ body {
 button {
     border-radius: 15px;
     padding: 5px 10px;
-    background-color: #FFFFFF;
     font-size: 1.3em;
     font-family: Helvetica, sans-serif;
     font-weight: 900;
-    
     background: #73c4e6;
     border: none;
-    box-shadow: 0px 3px 0px 0px rgba(0,0,0, 10%);
+    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
 }
 
 button:hover {
@@ -30,7 +28,6 @@ button:hover {
 button:disabled, button:disabled:hover {
     background: #99b0b9;
     color: rgba(16, 16, 16, 0.3);
-    
 }
 
 input {
@@ -45,9 +42,38 @@ input {
     justify-content: space-between;
 }
 
+#top-upload {
+    display: none;
+}
+
+#open-file-lbl {
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 1.3em;
+    font-family: Helvetica, sans-serif;
+    font-weight: 900;
+    background: #73c4e6;
+    border: none;
+    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
+}
+
+#open-file-lbl:hover {
+    background: #57a4c3;
+    cursor: pointer;
+}
+
 #left-col {
-    flex-grow: 1;
+    height: 95vh;
+    width: 60vw;
+    flex-grow: 2;
     padding-right: 3rem;
+}
+
+#right-col {
+    width: 30vw;
+    height: 95vh;
+    margin: 0;
+    flex-grow: 1;
 }
 
 #main {
@@ -58,9 +84,10 @@ input {
 }
 
 #cvs-wrapper {
-    width: 100%;
-    padding: 4rem 0px;
-    display: flex;
+    width: 60vw;
+    height: 50vh;
+    padding: 1rem 0;
+    display: none;
     flex-direction: column;
     align-content: center;
     justify-content: center;
@@ -78,6 +105,15 @@ canvas {
     flex-direction: column;
     align-content: center;
     justify-content: start;
+}
+
+.bordered-area {
+    border: solid 2px #697cc7;
+    box-shadow: 1px 1px 1px 1px #a5afdc;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 15px;
 }
 
 textarea {
@@ -111,7 +147,8 @@ textarea {
 
 #upload-wrapper {
     width: 50vw;
-    height: 30vh;
+    height: 40vh;
+    margin: 3vh 0;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -203,11 +240,7 @@ textarea {
     flex-wrap: wrap;
     align-items: center;
     align-content: center;
-    justify-content: flex-start;
-
-    position: absolute;
-    left: 2vw;
-    bottom: 1vh;
+    justify-content: center;
 }
 
 .link-logo {
@@ -235,13 +268,20 @@ textarea {
 }
 
 .emoji-button {
+    font-family: Arial, sans-serif;
     font-size: 2rem;
     border: none;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
+    box-shadow: none;
+    padding: 3px 8px;
 }
 
 .emoji-button:hover {
     opacity: 80%;
+}
+
+.large-emoji {
+    font-size: 3rem;
 }
 
 @media screen and (max-width: 750px) {
@@ -280,6 +320,7 @@ textarea {
 
     #right-col {
         width: 90vw;
+        height: 90vh;
         margin: 0;
         flex-grow: 1;
     }

@@ -1,8 +1,8 @@
 const uploadLbl = document.getElementById("upload-label")
-const explanationEle = document.getElementById("explanation")
 const currPageLangEle = document.getElementById("current-page-lang")
 const filterInput = document.getElementById("filter-input")
 const translationLink = document.getElementById('add-translation-link')
+const topUploadLbl = document.getElementById('open-file-lbl')
 
 const pageLangOptionsEle = document.getElementById("page-lang-options")
 const pageLangText = document.getElementById("page-lang-text")
@@ -10,18 +10,15 @@ const pageLangDropdown = document.getElementById("page-lang-dropdown")
 
 // const extractionLangEle = document.getElementById("")
 
-function initI18n() {
-    const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
-    window.MyAltTextOrg.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
-}
-
 populateDropdowns()
 updatePageLanguage()
+
 function populateDropdowns() {
     pageLanguageList.forEach(humanLang => {
         const langCode = i18nOptions[humanLang]
         addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
-            window.MyAltTextOrg.i18n = i18nText[langCode]
+            MyAltTextOrg.i18n = i18nText[langCode]
+            
             pageLangDropdown.style.visibility = "hidden"
             updatePageLanguage()
         })
@@ -31,6 +28,10 @@ function populateDropdowns() {
     //     const langCode = tesseractLangs[humanLang]
     //     addDropdownOption(extractionLangEle)
     // })
+}
+
+function getLocalized(key) {
+    return MyAltTextOrg.i18n[key] || i18nText[DEFAULT_PAGE_LANG][key]
 }
 
 function addDropdownOption(ele, langCode, humanLang, onClick) {
@@ -43,13 +44,13 @@ function addDropdownOption(ele, langCode, humanLang, onClick) {
 
 function showOverlay() {
     const overlay = document.getElementById("overlay");
-    overlay.style.visibility = "visible"
+    overlay.style.display = "block"
     overlay.classList.add("visible");
 }
 
 function hideOverlay() {
     const overlay = document.getElementById("overlay");
-    overlay.style.visibility = "hidden"
+    overlay.style.display = "none"
     overlay.classList.remove("visible");
 }
 
@@ -70,12 +71,22 @@ function closeDropdown() {
 }
 
 function updatePageLanguage() {
-    translationLink.innerText = window.MyAltTextOrg.i18n.addTranslationTxt
-    currPageLangEle.innerText = `${window.MyAltTextOrg.i18n.langButtonPrefixTxt}: ${window.MyAltTextOrg.i18n.displayName}`
-    extractBtn.innerText = window.MyAltTextOrg.i18n.extractBtnTxt
-    uploadLbl.innerText = window.MyAltTextOrg.i18n.uploadInstr
-    explanationEle.innerText = window.MyAltTextOrg.i18n.usageInstr
-    filterInput.placeholder = window.MyAltTextOrg.i18n.searchPrompt
+    translationLink.innerText = getLocalized("addTranslationTxt")
+    currPageLangEle.innerText = `${getLocalized("langButtonPrefixTxt")}: ${getLocalized("displayName")}`
+    extractBtn.innerText = getLocalized("extractBtnTxt")
+    uploadLbl.innerText = getLocalized("centralUploadInstr")
+    topUploadLbl.innerText = getLocalized("topUploadLbl")
+    filterInput.placeholder = getLocalized("searchPrompt")
+    
+    for (let inFlightName of document.querySelectorAll('.name-input')) {
+        inFlightName.placeholder = getLocalized("untitledName")
+        inFlightName.ariaLabel = getLocalized("nameLabel")
+    }
+
+    for (let textArea of document.querySelectorAll('.in-flight-text')) {
+        textArea.ariaLabel = getLocalized("inFlightItemTextArea")
+    }
+
 }
 
 function filterPageLangs() {
@@ -87,7 +98,7 @@ function filterPageLangs() {
         foundLanguages.forEach(humanLang => {
             const langCode = i18nOptions[humanLang]
             addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
-                window.MyAltTextOrg.i18n = i18nText[langCode]
+                MyAltTextOrg.i18n = i18nText[langCode]
                 pageLangDropdown.hidden = true
                 updatePageLanguage()
             })
@@ -95,7 +106,7 @@ function filterPageLangs() {
     } else {
         const noLangFound = document.createElement("div")
         noLangFound.classList.add("no-lang-found")
-        noLangFound.innerText = window.MyAltTextOrg.i18n.noLangsFound
+        noLangFound.innerText = MyAltTextOrg.i18n.noLangsFound || MyAltTextOrg.defaultI18.noLangsFound
         pageLangOptionsEle.appendChild(noLangFound)
     }
 }
