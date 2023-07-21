@@ -2,9 +2,8 @@ const index = new FlexSearch.Index({});
 const searchIndices = []
 let nextSearchIdx = 0
 
-
-let displayDescriptions = []
-let userDescriptions = {}
+const displayDescriptions = []
+const inFlight = []
 
 const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
@@ -12,6 +11,25 @@ resultFilter.oninput = () => searchArchive(resultFilter.value)
 
 loadDescriptions()
 updateMtimeOrderedDescs()
+
+
+function addInFlight() {
+
+}
+
+function saveInFlight() {
+
+}
+
+function discardInFlight() {
+
+}
+
+
+
+
+
+
 
 function updateMtimeOrderedDescs() {
     const mtimeDescriptions = Object.values(userDescriptions)
@@ -29,6 +47,7 @@ function searchArchive(search) {
 }
 
 function addDescription(name, lang, imgHash, text) {
+
     userDescriptions[imgHash] = {
         hash: imgHash,
         name,
@@ -37,6 +56,8 @@ function addDescription(name, lang, imgHash, text) {
         maxLen: 0,
         mtime: Date.now()
     }
+    addSearch(imgHash, name, text)
+    saveDescription()
 }
 
 function addSearch(hash, name, text) {
@@ -67,10 +88,8 @@ function combineDescriptions(srcHash, dstHash) {
     deleteDescription(srcHash)
 }
 
-function deleteDescription(hash) {
-    delete userDescriptions[hash]
-    saveDescriptions()
-    renderDescriptions()
+function addBlankDescription() {
+
 }
 
 function renderDescriptions() {
@@ -197,7 +216,7 @@ function popupAuxImage(lang, textPart, partNum, numParts) {
     controls.classList.add("popup-controls")
 
     const copyImageBtn = document.createElement("button")
-    copyImageBtn.innerText = window.i18n.popupCopyImage
+    copyImageBtn.innerText = window.MyAltTextOrg.i18n.popupCopyImage
     copyImageBtn.onclick = () => {
         auxCanvas.toBlob(function (blob) {
             const item = new ClipboardItem({"image/png": blob});
@@ -207,7 +226,7 @@ function popupAuxImage(lang, textPart, partNum, numParts) {
     controls.appendChild(copyImageBtn)
 
     const copyTextBtn = document.createElement("button")
-    copyTextBtn.innerText = window.i18n.popupCopyText
+    copyTextBtn.innerText = window.MyAltTextOrg.i18n.popupCopyText
     copyTextBtn.onclick = () => {
         navigator.clipboard.writeText(textPart)
     }
@@ -237,7 +256,7 @@ function makeFooter(description) {
     const maxLenEle = document.createElement("input")
     maxLenEle.classList.add("maxlen-field")
     maxLenEle.type = "text"
-    maxLenEle.placeholder = window.i18n.maxLenTxt
+    maxLenEle.placeholder = window.MyAltTextOrg.i18n.maxLenTxt
     maxLenEle.oninput = () => maxLenEle.value = filterNonDigits(maxLenEle.value)
     maxLenEle.onchange = () => renderDescriptions()
     if (description.maxLen) {
@@ -269,26 +288,6 @@ function filterNonDigits(str) {
 
 function focusFilter() {
     filterInput.focus()
-}
-
-function addBlankDescription() {
-
-}
-
-function saveDescriptions() {
-    try {
-        window.localStorage.setItem("results", JSON.stringify(userDescriptions))
-    } catch (err) {
-        alert("Alt text storage full.\nThis limit is set by the browser.\nPlease delete unused alt text to save new alt text.")
-    }
-}
-
-function exportDescriptions() {
-
-}
-
-function importDescriptions() {
-
 }
 
 function splitText(text, maxLen) {

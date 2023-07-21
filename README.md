@@ -15,7 +15,8 @@ Alpha
  - OCR cleanup filtering
  - Help/About
  - Import/Export controls - include version in dump
-
+ - Add blank: for image or not 
+ - Multi-crop
 
 Beta
 ----
@@ -27,6 +28,8 @@ Beta
    - Play sound if hit edge of canvas
 - Pattern package manager via git, shipped with site
 - Name only first then matching body in search
+- Filter by language, incl user entered
+- Filter ordering
 
 
 Release

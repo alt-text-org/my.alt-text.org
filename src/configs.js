@@ -1,22 +1,23 @@
-const defaultOcrFilters = [
-    {
+const defaultOcrFilters = {
+    remove_newlines: {
         name: 'Remove Newlines',
         desc: 'Replace all newlines in the text with spaces',
         find: '\n',
         replace: ' ',
         active: true
     },
-    {
+    collapse_whitespace: {
         name: 'Collapse Whitespace',
         desc: 'Collapse all chains of whitespace to a single space',
         find: /\s+/g,
         replace: ' ',
         active: true
     }
-]
+}
+
 const OCR_FILTER_KEY = 'configs.ocr_filters';
-window.ocrFilters = loadSettings(OCR_FILTER_KEY, defaultOcrFilters)
-window.ocrFilters.save = () => saveSettings(OCR_FILTER_KEY, window.ocrFilters)
+window.MyAltTextOrg.ocrFilters = loadSettings(OCR_FILTER_KEY, defaultOcrFilters)
+window.MyAltTextOrg.ocrFilters.save = () => saveSettings(OCR_FILTER_KEY, window.MyAltTextOrg.ocrFilters)
 
 const defaultConfigs = {
     extractDelay: {
@@ -50,11 +51,31 @@ const defaultConfigs = {
 
         }
     },
+    discardCropsOnNewImg: {
+        def: true,
+        user: null,
+        name: 'Discard Crops On New Image',
+        desc: '',
+        type: 'boolean',
+        onchange: (oldVal, newVal) => {
+
+        }
+    }
 }
 
 const GEN_CONFIG_KEY = 'configs.general';
-window.composerConfigs = loadSettings(GEN_CONFIG_KEY, defaultConfigs)
-window.composerConfigs.save = () => saveSettings(GEN_CONFIG_KEY, window.composerConfigs)
+window.MyAltTextOrg.composerConfigs = loadSettings(GEN_CONFIG_KEY, defaultConfigs)
+window.MyAltTextOrg.conf = processConfigs(window.MyAltTextOrg.composerConfigs)
+window.MyAltTextOrg.composerConfigs.save = () => saveSettings(GEN_CONFIG_KEY, window.MyAltTextOrg.composerConfigs)
+
+function processConfigs(composerConfigs) {
+    const result = {}
+    for (let [key, obj] of Object.entries(window.MyAltTextOrg.composerConfigs)) {
+        result[key] = obj.user || obj.default
+    }
+
+    return result
+}
 
 const defaultKeyboardControls = [
     {
@@ -269,8 +290,8 @@ const defaultKeyboardControls = [
     },
 ]
 const KEYB_CONFIG_KEY = 'config.keyboard';
-window.keyboardControls = loadSettings(KEYB_CONFIG_KEY, defaultKeyboardControls)
-window.keyboardControls.save = () => saveSettings(KEYB_CONFIG_KEY, window.keyboardControls)
+window.MyAltTextOrg.keyboardControls = loadSettings(KEYB_CONFIG_KEY, defaultKeyboardControls)
+window.MyAltTextOrg.keyboardControls.save = () => saveSettings(KEYB_CONFIG_KEY, window.MyAltTextOrg.keyboardControls)
 
 function loadSettings(key, def) {
     const savedVal = window.localStorage.getItem(key)

@@ -10,6 +10,10 @@ const pageLangDropdown = document.getElementById("page-lang-dropdown")
 
 // const extractionLangEle = document.getElementById("")
 
+function initI18n() {
+    const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
+    window.MyAltTextOrg.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
+}
 
 populateDropdowns()
 updatePageLanguage()
@@ -17,7 +21,7 @@ function populateDropdowns() {
     pageLanguageList.forEach(humanLang => {
         const langCode = i18nOptions[humanLang]
         addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
-            window.i18n = i18nText[langCode]
+            window.MyAltTextOrg.i18n = i18nText[langCode]
             pageLangDropdown.style.visibility = "hidden"
             updatePageLanguage()
         })
@@ -66,12 +70,12 @@ function closeDropdown() {
 }
 
 function updatePageLanguage() {
-    translationLink.innerText = window.i18n.addTranslationTxt
-    currPageLangEle.innerText = `${window.i18n.langButtonPrefixTxt}: ${window.i18n.displayName}`
-    extractBtn.innerText = window.i18n.extractBtnTxt
-    uploadLbl.innerText = window.i18n.uploadInstr
-    explanationEle.innerText = window.i18n.usageInstr
-    filterInput.placeholder = window.i18n.searchPrompt
+    translationLink.innerText = window.MyAltTextOrg.i18n.addTranslationTxt
+    currPageLangEle.innerText = `${window.MyAltTextOrg.i18n.langButtonPrefixTxt}: ${window.MyAltTextOrg.i18n.displayName}`
+    extractBtn.innerText = window.MyAltTextOrg.i18n.extractBtnTxt
+    uploadLbl.innerText = window.MyAltTextOrg.i18n.uploadInstr
+    explanationEle.innerText = window.MyAltTextOrg.i18n.usageInstr
+    filterInput.placeholder = window.MyAltTextOrg.i18n.searchPrompt
 }
 
 function filterPageLangs() {
@@ -83,7 +87,7 @@ function filterPageLangs() {
         foundLanguages.forEach(humanLang => {
             const langCode = i18nOptions[humanLang]
             addDropdownOption(pageLangOptionsEle, langCode, humanLang, () => {
-                window.i18n = i18nText[langCode]
+                window.MyAltTextOrg.i18n = i18nText[langCode]
                 pageLangDropdown.hidden = true
                 updatePageLanguage()
             })
@@ -91,7 +95,7 @@ function filterPageLangs() {
     } else {
         const noLangFound = document.createElement("div")
         noLangFound.classList.add("no-lang-found")
-        noLangFound.innerText = window.i18n.noLangsFound
+        noLangFound.innerText = window.MyAltTextOrg.i18n.noLangsFound
         pageLangOptionsEle.appendChild(noLangFound)
     }
 }

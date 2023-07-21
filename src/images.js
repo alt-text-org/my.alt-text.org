@@ -1,3 +1,14 @@
+async function hashImage(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = async function () {
+            let hash = await crypto.subtle.digest("SHA-256", reader.result);
+            resolve(hash)
+        };
+    })
+}
+
 const additionalImageText = {
     default: "Alt Text Continued",
     ca: "Continuació de la descripció de les imatges",
@@ -19,7 +30,7 @@ function getAuxCanvas(lang, num, total) {
     canvas.width = auxImageEdgeLength
     canvas.height = auxImageEdgeLength
     const ctx = canvas.getContext('2d');
-    const text = (i18nText[lang] || window.i18n || i18nText[DEFAULT_EXTRACTION_LANG_ISO]).additionalImageTag
+    const text = (i18nText[lang] || window.MyAltTextOrg.i18n || i18nText[DEFAULT_EXTRACTION_LANG_ISO]).additionalImageTag
 
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, auxImageEdgeLength, auxImageEdgeLength)

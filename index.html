@@ -13,25 +13,21 @@
     <meta property="og:image:alt" content="Alt-Text.org, white on a library green">
 
     <link rel="stylesheet" href="style/main.css">
-    <link rel="stylesheet" href="style/results.css">
+    <link rel="stylesheet" href="style/descriptions.css">
     <link rel="stylesheet" href="style/dropdowns.css">
+    <link rel="stylesheet" href="style/in-flight.css">
 
     <script src="src/i18n-data.js"></script>
     <script src="https://unpkg.com/canvas-txt"></script>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
     <script>
-        const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
-        window.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
+        window.MyAltTextOrg = {
+            dicts: {}
+        }
+        initI18n()
     </script>
     <script type="module">
-        const isoExtractionLang = window.navigator.language || DEFAULT_EXTRACTION_LANG_ISO
-        const initialExtractionLang = iso639_2ToTesseract[isoExtractionLang] || iso639_2ToTesseract[DEFAULT_EXTRACTION_LANG_ISO]
-
-        const worker = await Tesseract.createWorker();
-        await worker.loadLanguage(initialExtractionLang);
-        await worker.initialize(initialExtractionLang);
-
-        window.tesseractWorker = worker
+        await initOcr()
     </script>
 
     <script src="lib/fabric.min.js" defer></script>
@@ -40,8 +36,8 @@
     <script src="lib/unicode-break.js" defer></script>
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
-    <script src="src/ocr-crop.js" defer></script>
-    <script src="src/image-gen.js" defer></script>
+    <script src="src/canvas.js" defer></script>
+    <script src="src/images.js" defer></script>
     <script src="src/descriptions.js" defer></script>
     <script src="src/i18n.js" defer></script>
 
@@ -70,9 +66,7 @@
                        href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
                 </div>
             </div>
-
-            <button id="extract-btn" onclick="extract()" disabled></button>
-
+            <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
         </div>
         <div id="cvs-wrapper">
             <div id="upload-wrapper">
@@ -83,6 +77,13 @@
             </div>
             <canvas id="cvs" width="1" height="1"></canvas>
             <p id="explanation"></p>
+        </div>
+        <div id="in-flight-wrapper">
+            <div id="in-flight"></div>
+            <div id="in-flight-controls">
+                <button id="save-in-flight" class="emoji-button in-flight-btn" onclick="saveInFlight()">💾</button>
+                <button id="discard-in-flight" class="emoji-button in-flight-btn" onclick="discardInFlight()">🚮</button>
+            </div>
         </div>
     </div>
     <div id="right-col">
@@ -96,7 +97,7 @@
                 <div id="descriptions"></div>
             </div>
             <div id="import-export">
-                <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>
+<!--                <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>-->
             </div>
         </div>
     </div>
