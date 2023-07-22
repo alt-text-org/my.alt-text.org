@@ -30,9 +30,10 @@ const i18nText = {
         inFlightItemTextArea: "Chunk text",
         deleteChunk: "Delete Chunk",
         saveChunk: "Save Chunk",
+        copyChunk: "Copy Chunk",
         closeImage: "Close Image",
         textButtonDemo: "Text Button",
-        help: "Help"
+        help: "Help",
     }
 }
 

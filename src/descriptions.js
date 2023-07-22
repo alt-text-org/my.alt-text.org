@@ -10,12 +10,12 @@ let displayDescriptions = []
 
 const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
-resultFilter.oninput = () => updateDisplayDescriptions()
+resultFilter.oninput = () => updateDescriptionDisplay()
 
-updateDisplayDescriptions()
+updateDescriptionDisplay()
 initializeSearch()
 
-function updateDisplayDescriptions() {
+function updateDescriptionDisplay() {
     if (MyAltTextOrg.currImage && resultFilter.value) {
         displayDescriptions = searchArchive(resultFilter.value, MyAltTextOrg.currImage.hash)
     } else if (MyAltTextOrg.currImage) {
@@ -69,7 +69,7 @@ function addDescription(chunk) {
     }
     const descId = saveDescription(desc)
     indexForSearch(descId, chunk.name, chunk.text)
-    updateDisplayDescriptions()
+    updateDescriptionDisplay()
 }
 
 function indexForSearch(descId, name, text) {
@@ -88,12 +88,26 @@ function indexForSearch(descId, name, text) {
 
 function updateDescription(descId, desc) {
     saveDescription(desc)
-    updateDisplayDescriptions()
+    updateDescriptionDisplay()
 }
 
 function editDescription(descId) {
     const desc = getDescription(descId)
     addInFlight(desc.text, desc.id, desc.name, desc.imgHash, desc.lang, desc.maxLen)
+}
+
+function duplicateDescription(id) {
+    const desc = getDescription(id)
+    const copy = {
+        name: desc.name,
+        lang: desc.lang,
+        imgHash: desc.imgHash,
+        text: desc.text,
+        maxLen: desc.maxLen,
+        mtime: Date.now()
+    }
+    saveDescription(copy)
+    updateDescriptionDisplay()
 }
 
 function textLen(text) {
@@ -113,12 +127,12 @@ function combineDescriptions(srcId, dstId) {
 
     updateDescription(dstId, dst)
     deleteDescription(srcId)
-    updateDisplayDescriptions()
+    updateDescriptionDisplay()
 }
 
 function removeDescription(descId) {
     deleteDescription(descId)
-    updateDisplayDescriptions()
+    updateDescriptionDisplay()
 }
 
 function renderDescriptions() {
@@ -234,6 +248,12 @@ function makeFooter(description) {
         maxLenEle.value = `${description.maxLen}`
     }
     footer.appendChild(maxLenEle)
+
+    const copyBtn = document.createElement("button")
+    copyBtn.classList.add("emoji-button")
+    copyBtn.innerText = "👯"
+    copyBtn.onclick = () => duplicateDescription(description.id)
+    footer.appendChild(copyBtn)
 
     const trashBtn = document.createElement("button")
     trashBtn.classList.add("emoji-button")

@@ -30,6 +30,20 @@ function addInFlight(text, id, name, imgHash, lang, maxLen) {
     renderInFlight()
 }
 
+function duplicateChunk(idx) {
+    const src = inFlight[idx]
+    const dst = {
+        id: src.id,
+        text: src.text,
+        name: src.name,
+        imgHash: src.imgHash,
+        lang: src.lang,
+        maxLen: src.maxLen
+    }
+    inFlight.push(dst)
+    renderInFlight()
+}
+
 function saveInFlight(idx) {
     if (inFlight[idx]) {
         addDescription(inFlight[idx])
@@ -103,6 +117,13 @@ function buildInFlightItem(idx, chunk) {
     trashBtn.ariaLabel = getLocalized("deleteChunk")
     trashBtn.onclick = () => removeInFlight(idx)
     controls.appendChild(trashBtn)
+
+    const copyBtn = document.createElement("button")
+    copyBtn.classList.add("emoji-button")
+    copyBtn.innerText = "👯"
+    copyBtn.ariaLabel = getLocalized("copyChunk")
+    copyBtn.onclick = () => duplicateChunk(idx)
+    controls.appendChild(copyBtn)
 
     const saveBtn = document.createElement("button")
     saveBtn.classList.add("emoji-button")
