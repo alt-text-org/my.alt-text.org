@@ -292,6 +292,52 @@ textarea {
     font-size: 3rem;
 }
 
+.splash-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 1.5s;
+    opacity: 0;
+    background: #6882e8;
+    z-index: 500;
+}
+
+.splash-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 50px;
+    padding: 50px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    transition: opacity 1.5s;
+    opacity: 0;
+    z-index: 501;
+    background: #0f1e50;
+    color: #EDEDED;
+    overflow-y: scroll;
+    border-radius: 50px;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+a, a:visited {
+    color: white;
+}
+
+.splash {
+    /*text-align: center;*/
+    font-family: Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
 @media screen and (max-width: 750px) {
     body {
         display: flex;
