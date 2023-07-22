@@ -25,11 +25,16 @@ function getAuxCanvas(lang, num, total) {
     ctx.fillStyle = "black"
     ctx.font = `bold ${auxImageFontPixels}px sans-serif`;
 
-    window.canvasTxt.fontSize = 100
-    window.canvasTxt.fontStyle = "bold"
-    window.canvasTxt.align = "center"
-    window.canvasTxt.vAlign = "middle"
-    window.canvasTxt.drawText(ctx, text, 50, 0, auxImageEdgeLength - 100, auxImageEdgeLength - 100)
+    window.canvasTxt.drawText(ctx, text, {
+        width: auxImageEdgeLength - 100,
+        height: auxImageEdgeLength - 100,
+        x: 50,
+        y: 50,
+        align: 'center',
+        vAlign: 'middle',
+        fontSize: 100,
+        fontStyle: "bold",
+    })
 
     ctx.textAlign = "right"
     ctx.textBaseline = "bottom"

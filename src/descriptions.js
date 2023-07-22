@@ -190,10 +190,10 @@ function makeTextSection(description) {
         const controls = document.createElement("div")
         controls.classList.add("text-part-controls")
         if (idx > 0) {
-            const auxImage = getAuxCanvas(description.lang,)
+            const auxImage = getAuxCanvas(description.lang, idx + 1, textParts.length)
             const imgButton = document.createElement("button")
             imgButton.classList.add("emoji-button")
-            imgButton.innerHTML = `<img src="${auxImage.toDataURL()}" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
+            imgButton.innerHTML = `<img src="${auxImage.toDataURL()}" class="aux-image" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
             imgButton.onclick = () => {
                 //TODO: Popup copy/download
             }

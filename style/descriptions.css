@@ -16,6 +16,7 @@
     display: inline-flex;
     flex-direction: column;
     gap: 5px;
+    overflow-y: scroll;
 }
 
 .description-wrapper {
@@ -89,6 +90,11 @@
 
 .popup-controls {
 
+}
+
+.aux-image {
+    width: 30px;
+    height: 30px;
 }
 
 .popup-close-x {

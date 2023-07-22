@@ -10,7 +10,6 @@ Alpha
 ----
 
  - Multi-crop
- - Drag-to-combine
  - Basic styling
 
 
