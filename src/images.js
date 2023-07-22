@@ -3,7 +3,10 @@ async function hashImage(file) {
         const reader = new FileReader();
         reader.readAsArrayBuffer(file);
         reader.onloadend = async function () {
-            let imgHash = await crypto.subtle.digest("SHA-256", reader.result);
+            let imgHashArr = await crypto.subtle.digest("SHA-256", reader.result);
+            let imgHash = [...new Uint8Array(imgHashArr)]
+                .map(b => b.toString(16).padStart(2, "0"))
+                .join("");
             resolve(imgHash)
         };
     })

@@ -12,8 +12,8 @@ const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
 resultFilter.oninput = () => updateDescriptionDisplay()
 
-updateDescriptionDisplay()
 initializeSearch()
+updateDescriptionDisplay()
 
 function updateDescriptionDisplay() {
     if (MyAltTextOrg.currImage && resultFilter.value) {

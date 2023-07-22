@@ -43,6 +43,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    align-content: stretch;
 }
 
 .frozen-text-part {
@@ -69,7 +70,7 @@
 }
 
 .maxlen-field {
-
+    width: 4em;
 }
 
 .aux-image-popup {

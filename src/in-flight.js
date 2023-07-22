@@ -15,7 +15,6 @@ function addBlankInFlight() {
 }
 
 function addInFlight(text, id, name, imgHash, lang, maxLen) {
-    console.log(text)
     let ifName = name || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name : "")
     let ifHash = imgHash || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash : null)
     let ifLang = lang || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.lang : MyAltTextOrg.i18n.isoCode)

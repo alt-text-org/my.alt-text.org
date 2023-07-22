@@ -89,6 +89,7 @@ async function loadFile(file) {
         // cropRect.on('scaling', handleCropScaling)
 
         canvas.renderAll()
+        updateDescriptionDisplay()
 
         closeImgBtn.disabled = false
         extractBtn.disabled = false
@@ -213,7 +214,6 @@ function scaleCanvas(img) {
         return
     }
 
-    console.log(`W: ${canvasWrapper.clientWidth} H: ${canvasWrapper.clientHeight}`)
     const ratio = Math.min(
         Math.min(canvasWrapper.clientWidth / (img.width + 40), 1),
         Math.min(canvasWrapper.clientHeight / (img.height + 40), 1),
@@ -221,7 +221,6 @@ function scaleCanvas(img) {
     canvas.setZoom(ratio)
     canvas.setDimensions({width: (img.width + 40) * ratio, height: (img.height + 40) * ratio})
     canvas.renderAll()
-    // console.log(ratio)
     return ratio
 }
 

@@ -10,8 +10,6 @@ async function cropExtractAndAddInFlight() {
         extracted.forEach(e => allExtracted.push(e))
     }
 
-    console.log(JSON.stringify(allExtracted))
-
     for (let text of allExtracted.reverse()) {
         if (text) {
             addInFlight(text)

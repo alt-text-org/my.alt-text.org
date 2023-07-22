@@ -155,7 +155,7 @@ textarea {
 #upload-wrapper {
     width: 50vw;
     height: 40vh;
-    margin: 3vh 0;
+    margin: 3vh auto;
     display: flex;
     flex-direction: column;
     align-content: center;

@@ -10,7 +10,6 @@ Alpha
 ----
 
  - Multi-crop
- - Basic styling
 
 
 Beta

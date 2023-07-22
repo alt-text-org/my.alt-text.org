@@ -39,7 +39,7 @@ function getRecentDescriptions(limit, imgHash) {
         mtimeDescriptions = mtimeDescriptions.filter(desc => desc.imgHash === imgHash)
     }
 
-    mtimeDescriptions.sort((a, b) => a.mtime - b.mtime)
+    mtimeDescriptions.sort((a, b) => b.mtime - a.mtime)
     return mtimeDescriptions.slice(0, limit).map(desc => desc.id)
 }
 
