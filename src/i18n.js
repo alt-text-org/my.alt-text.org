@@ -5,11 +5,26 @@ const closeImgBtn = document.getElementById('clear-image')
 const pageLangName = document.getElementById("page-lang-name")
 const helpBtn = document.getElementById("help-button")
 
-const localizableElements = []
+const localizableElements = {}
 registerLocalizableStatics()
 
+function onElementRemoved(element, callback) {
+    new MutationObserver(function(mutations) {
+        if(!document.body.contains(element)) {
+            callback();
+            this.disconnect();
+        }
+    }).observe(element.parentElement, {childList: true});
+}
+
 function registerLocalizedElement(elem, elemKey, i18nKey) {
-    localizableElements.push({elem, elemKey, i18nKey})
+    let localizationId = makeId()
+    elem.localizationId = localizationId
+    localizableElements[localizationId] = {elem, elemKey, i18nKey}
+    onElementRemoved(elem, function() {
+        delete localizableElements[localizationId]
+    });
+
     return getLocalized(i18nKey)
 }
 
@@ -19,7 +34,7 @@ function getLocalized(key) {
 
 function updatePageLanguage(isoLang) {
     MyAltTextOrg.i18n = i18nText[isoLang] || i18nText[DEFAULT_PAGE_LANG]
-    for (let localizedElem of localizableElements) {
+    for (let localizedElem of Object.values(localizableElements)) {
         localizedElem.elem[localizedElem.elemKey] = getLocalized(localizedElem.i18nKey)
     }
 }

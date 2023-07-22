@@ -14,14 +14,6 @@ function saveDescriptions() {
 }
 
 function saveDescription(desc) {
-    function makeId() {
-        if (window.location.protocol === 'https:') {
-            return crypto.randomUUID()
-        } else {
-            return `${Math.random()}`
-        }
-    }
-
     desc.id = desc.id || makeId()
     userDescriptions[desc.id] = desc
     saveDescriptions()
