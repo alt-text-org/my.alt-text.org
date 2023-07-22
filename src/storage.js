@@ -16,7 +16,7 @@ function saveDescriptions() {
 function saveDescription(desc) {
     function makeId() {
         if (window.location.protocol === 'https:') {
-            return Crypto.randomUUID()
+            return crypto.randomUUID()
         } else {
             return `${Math.random()}`
         }
