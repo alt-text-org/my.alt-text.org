@@ -28,9 +28,9 @@ function showSplash() {
     wrapper.innerHTML = `
 <div class="splash">
     
-    <h1 style="text-align: center">My.Alt-Text.org</h1>
+    <h1 style="text-align: center"><u>My.Alt-Text.org</u></h1>
     <h2 style="text-align: center">Status: Alpha</h2>
-    <h3 style="text-align: center">This is a tool to make alt text easier</h3>
+    <h3 style="text-align: center">This is a tool to make alt text easier.</h3>
     <p>
         I write a lot of alt text, and it's always struck me how useless the user interface offered by every social
         media site is. I wanted to build the composer I wished they had. This is a start. It's going to get even better.

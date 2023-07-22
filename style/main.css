@@ -301,7 +301,7 @@ textarea {
     height: 100vh;
     transition: opacity 1.5s;
     opacity: 0;
-    background: #6882e8;
+    background: #101633;
     z-index: 500;
 }
 
