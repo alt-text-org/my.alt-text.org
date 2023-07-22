@@ -11,7 +11,6 @@ Alpha
 
  - Multi-crop
 
-
 Beta
 ----
 
