@@ -87,6 +87,9 @@ function showSplash() {
         feedback on <a href="https://github.com/alt-text-org/my.alt-text.org">GitHub</a> or
         <a href="https://social.alt-text.org/@hannah">Mastodon</a>
     </p>
+    <div style="text-align: center; width: 100%">
+        <button>Close</button>
+    </div>
 </div>
     `
     document.body.appendChild(backdrop)
