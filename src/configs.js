@@ -73,6 +73,16 @@ const defaultConfigs = {
 
             }
         },
+        defaultMaxLen: {
+            def: 0,
+            user: null,
+            name: 'Default split length',
+            desc: '',
+            type: 'number',
+            onChange: (oldVal, newVal) => {
+
+            }
+        }
     },
     a11y: {
         textAreaSize: {

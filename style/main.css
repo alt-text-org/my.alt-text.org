@@ -7,7 +7,6 @@ body {
     align-items: stretch;
     background-color: #cef0f5;
     font-family: Helvetica, sans-serif;
-    overflow-y: scroll;
 }
 
 button {
@@ -332,9 +331,13 @@ a, a:visited {
 }
 
 .splash {
-    /*text-align: center;*/
     font-family: Helvetica, sans-serif;
     font-size: 1.2rem;
+}
+
+#help-button {
+    font-size: 4rem;
+    margin-right: 20px;
 }
 
 @media screen and (max-width: 750px) {

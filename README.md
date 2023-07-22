@@ -11,7 +11,8 @@ Alpha
 
  - Help/About
  - Multi-crop
- - Set extraction lang
+ - Drag-to-combine
+ - Copy in archive/inflight
  - Basic styling
 
 

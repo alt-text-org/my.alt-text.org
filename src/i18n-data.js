@@ -32,6 +32,7 @@ const i18nText = {
         saveChunk: "Save Chunk",
         closeImage: "Close Image",
         textButtonDemo: "Text Button",
+        help: "Help"
     }
 }
 
