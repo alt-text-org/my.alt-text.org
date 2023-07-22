@@ -254,6 +254,7 @@ textarea {
     height: 64px;
     width: auto;
     margin: 5px;
+    cursor: pointer;
 }
 
 #explanation {
