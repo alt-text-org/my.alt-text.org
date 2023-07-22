@@ -1,20 +1,48 @@
 addDropdown(
     "page-lang-dropdown",
-    isoPageLangToDisplay,
-    (isoLang) => {
+    "page-lang-btn",
+    "page-lang-lbl",
+    MyAltTextOrg.i18n.displayName,
+    i18nOptions,
+    (display, isoLang) => {
+        const label = document.getElementById("page-lang-lbl")
+        label.innerText = display
         updatePageLanguage(isoLang)
     },
     makePageLangFooter(),
     {
-        buttonText: "displayName",
         searchPlaceholder: "langSearchPlaceholder",
         searchLabel: "pageLangSearchLbl",
         notFound: "noLangsFound"
     }
 )
 
+
+addDropdown(
+    "extract-lang-dropdown",
+    "extract-lang-btn",
+    "extract-lang-lbl",
+    DEFAULT_EXTRACTION_LANG_HUMAN,
+    tesseractLangs,
+    async (display, tessLang) => {
+        const label = document.getElementById("extract-lang-lbl")
+        label.innerText = display
+        await updateExtractionLanguage(tessLang)
+    },
+    null,
+    {
+        searchPlaceholder: "langSearchPlaceholder",
+        searchLabel: "pageLangSearchLbl",
+        notFound: "noLangsFound"
+    }
+)
+
+
 function addDropdown(
     parentId,
+    buttonId,
+    buttonLabelId,
+    buttonDefault,
     options,
     onSelection,
     footer,
@@ -24,11 +52,14 @@ function addDropdown(
     wrapper.classList.add("dropdown")
 
     const openDropdownBtn = document.createElement("button")
+    openDropdownBtn.id = buttonId
     openDropdownBtn.classList.add("drop-btn")
     openDropdownBtn.innerHTML =
         `<img src="images/dropdown.svg" class="inline-icon rotated" aria-hidden="true" alt="">`
     const displayVal = document.createElement("span");
-    displayVal.innerText = registerLocalizedElement(displayVal, "innerText", i18nKeys.buttonText)
+    displayVal.id = buttonLabelId
+    displayVal.innerText = buttonDefault
+
     openDropdownBtn.appendChild(displayVal)
     wrapper.appendChild(openDropdownBtn)
 
@@ -42,7 +73,7 @@ function addDropdown(
     const dropdownOptions = document.createElement("div")
     dropdownOptions.classList.add("dropdown-options")
     Object.entries(options).forEach(kv => {
-        dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[0], kv[1], onSelection))
+        dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[1], kv[0], onSelection))
     })
 
     const search = document.createElement("input")
@@ -63,13 +94,13 @@ function addDropdown(
 
         let prefix = search.value.toLowerCase()
         let searchResult = Object.entries(options)
-            .filter(kv => kv[1].toLowerCase().startsWith(prefix))
+            .filter(kv => kv[0].toLowerCase().startsWith(prefix))
         searchResult.sort(compare)
 
         dropdownOptions.innerHTML = ""
         if (searchResult.length) {
             searchResult.forEach(kv => {
-                dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[0], kv[1], onSelection))
+                dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[1], kv[0], onSelection))
             })
         } else {
             const notFound = document.createElement("div")
@@ -85,6 +116,10 @@ function addDropdown(
 
     if (footer) {
         dropdown.appendChild(footer)
+    } else {
+        const padFooter = document.createElement("div")
+        padFooter.classList.add("dropdown-footer")
+        dropdown.appendChild(padFooter)
     }
 
     openDropdownBtn.onclick = () => {
@@ -104,7 +139,7 @@ function makeDropdownOption(dropdown, value, display, onClick) {
     option.innerText = display
     option.onclick = () => {
         closeDropdowns()
-        onClick(value)
+        onClick(display, value)
     }
 
     return option
@@ -131,7 +166,7 @@ function closeDropdowns() {
 
 function makePageLangFooter() {
     const link = document.createElement("a")
-    link.id = "add-translation-link"
+    link.classList.add("dropdown-footer")
     link.target = "_blank"
     link.rel = "noreferrer noopener"
     link.href = "https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"

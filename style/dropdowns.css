@@ -4,7 +4,7 @@
 
 .drop-btn {
     display: flex;
-    min-width: 256px;
+    /*min-width: 256px;*/
     flex-direction: row;
     align-items: center;
     align-content: center;
@@ -81,7 +81,7 @@
     background-color: #e1e0e0;
 }
 
-#add-translation-link {
+.dropdown-footer {
     width: 100%;
     padding: 10px 0;
     text-align: center;
@@ -90,4 +90,38 @@
     border-top: solid 2px black;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+#extract-btn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#extract-lang-btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+#page-lang-name {
+    padding: 5px 10px;
+    font-size: 1.3em;
+    font-family: Helvetica, sans-serif;
+    font-weight: 900;
+    background: #09173d;
+    color: #EDEDED;
+    border: none;
+    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
+    border-radius: 15px 0 0 15px;
+    cursor: default;
+}
+
+#page-lang-btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.now-kiss {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
 }

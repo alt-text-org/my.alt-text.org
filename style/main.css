@@ -258,13 +258,6 @@ textarea {
     cursor: pointer;
 }
 
-#explanation {
-    display: none;
-    font-size: 1.1em;
-    font-weight: 300;
-    font-family: monospace;
-}
-
 #magnifying-glass-icon {
     padding: 0 5px 0 10px;
 }

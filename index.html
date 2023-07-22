@@ -53,13 +53,19 @@
 <div id="main">
     <div id="left-col">
         <div id="controls">
-            <div id="page-lang-dropdown"></div>
+            <div class="now-kiss">
+                <div id="page-lang-name"></div>
+                <div id="page-lang-dropdown"></div>
+            </div>
             <div>
                 <label id="open-file-lbl" for="top-upload"></label>
                 <input type="file" id="top-upload" name="top-upload" accept="image/*">
             </div>
             <button id="clear-image" onclick="clearImage()" disabled></button>
-            <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
+            <div class="now-kiss">
+                <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
+                <div id="extract-lang-dropdown"></div>
+            </div>
         </div>
         <div id="upload-wrapper">
             <div class="upload-area">

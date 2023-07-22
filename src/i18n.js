@@ -1,9 +1,8 @@
 const uploadLbl = document.getElementById("upload-label")
-const currPageLangEle = document.getElementById("current-page-lang")
 const filterInput = document.getElementById("filter-input")
-const translationLink = document.getElementById('add-translation-link')
 const topUploadLbl = document.getElementById('open-file-lbl')
 const closeImgBtn = document.getElementById('clear-image')
+const pageLangName = document.getElementById("page-lang-name")
 
 const localizableElements = []
 registerLocalizableStatics()
@@ -29,6 +28,7 @@ async function updateExtractionLanguage(langCode) {
 }
 
 function registerLocalizableStatics() {
+    pageLangName.innerText = registerLocalizedElement(pageLangName, "innerText", "langButtonPrefixTxt")
     extractBtn.innerText = registerLocalizedElement(extractBtn, "innerText", "extractBtnTxt")
     uploadLbl.innerText = registerLocalizedElement(uploadLbl, "innerText", "centralUploadInstr")
     topUploadLbl.innerText = registerLocalizedElement(topUploadLbl, "innerText", "topUploadLbl")

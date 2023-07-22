@@ -36,10 +36,8 @@ const i18nText = {
 }
 
 const i18nOptions = {}
-const isoPageLangToDisplay = {}
 const pageLanguageList = Object.keys(i18nOptions)
 Object.entries(i18nText).forEach(lang => i18nOptions[lang[1].displayName] = lang[0])
-Object.entries(i18nText).forEach(lang => isoPageLangToDisplay[lang[0]] = lang[1].displayName)
 pageLanguageList.sort()
 
 const DEFAULT_ADDTL_IMAGE_TXT = "en"
