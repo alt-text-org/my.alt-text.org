@@ -45,32 +45,15 @@
     <script src="src/in-flight.js" defer></script>
     <script src="src/filter-lib.js" defer></script>
     <script src="src/tesseract.js" defer></script>
+    <script src="src/dropdowns.js" defer></script>
     <script src="src/core.js" defer></script>
 </head>
 <body>
-<div id="overlay" onclick="closeDropdown()"></div>
+<div id="overlay" onclick="closeDropdowns()"></div>
 <div id="main">
     <div id="left-col">
         <div id="controls">
-            <div class="dropdown" aria-label="PLACEHOLDER">
-                <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
-                        class="drop-btn">
-                    <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true"
-                         alt="">
-                    <span id="current-page-lang"></span>
-                </button>
-                <div id="page-lang-dropdown" class="dropdown-content">
-                    <div class="search-wrapper rounded-top">
-                        <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                        <input id="page-lang-text" class="search-input" type="text" placeholder=""
-                               aria-label="Page Language"
-                               onkeyup="filterPageLangs()">
-                    </div>
-                    <div id="page-lang-options" class="dropdown-options"></div>
-                    <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
-                       href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
-                </div>
-            </div>
+            <div id="page-lang-dropdown"></div>
             <div>
                 <label id="open-file-lbl" for="top-upload"></label>
                 <input type="file" id="top-upload" name="top-upload" accept="image/*">

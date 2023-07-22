@@ -1,3 +1,8 @@
+updatePageLanguage()
+showSplash()
+
+
+
 async function cropExtractAndAddInFlight() {
     extractBtn.classList.add("loading")
     let cropped = crop()
@@ -16,8 +21,6 @@ async function cropExtractAndAddInFlight() {
     }
     extractBtn.classList.remove("loading")
 }
-
-showSplash()
 
 function showSplash() {
     const backdrop = document.createElement("div")
@@ -50,7 +53,7 @@ function showSplash() {
         <li>An archive of all the descriptions you write with it, searchable by text or image</li>
         <li>
             Optical Character Recognition (OCR) turned up to the next level. The ability to pre-select which areas of
-            the image to extract from.
+            the image to extract from. 100+ languages supported.
         </li>
         <li>
             Unicode-aware split-on-whitespace for limited character counts, except you can go back and edit the whole
@@ -103,27 +106,3 @@ function showSplash() {
     }
 }
 
-function buildDropdown(onSelection) {
-    let html = `
-             <div class="dropdown" aria-label="PLACEHOLDER">
-                <button onclick="openDropdown('page-lang-dropdown', 'page-lang-text')"
-                        class="drop-btn">
-                    <img src="images/dropdown.svg" class="inline-icon" id="magnifying-glass-icon" aria-hidden="true"
-                         alt="">
-                    <span id="current-page-lang"></span>
-                </button>
-                <div id="page-lang-dropdown" class="dropdown-content">
-                    <div class="search-wrapper rounded-top">
-                        <img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">
-                        <input id="page-lang-text" class="search-input" type="text" placeholder=""
-                               aria-label="Page Language"
-                               onkeyup="filterPageLangs()">
-                    </div>
-                    <div id="page-lang-options" class="dropdown-options"></div>
-                    <a id="add-translation-link" target="_blank" rel="noreferrer noopener"
-                       href="https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"></a>
-                </div>
-            </div>
-    `
-    const wrapper = document.createElement("div")
-}

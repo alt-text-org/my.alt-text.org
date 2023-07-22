@@ -17,6 +17,7 @@ const i18nText = {
         noLangsFound: 'No supported matching languages found.',
         langButtonPrefixTxt: 'Page',
         langSearchPlaceholder: 'Language',
+        pageLangSearchLbl: 'Page Language',
         extractBtnTxt: 'Extract',
         additionalImageTag: "Alt Text Continued",
         addTranslationTxt: "Add Translation",
@@ -35,10 +36,10 @@ const i18nText = {
 }
 
 const i18nOptions = {}
-Object.entries(i18nText).forEach(lang => {
-    i18nOptions[lang[1].displayName] = lang[0]
-})
+const isoPageLangToDisplay = {}
 const pageLanguageList = Object.keys(i18nOptions)
+Object.entries(i18nText).forEach(lang => i18nOptions[lang[1].displayName] = lang[0])
+Object.entries(i18nText).forEach(lang => isoPageLangToDisplay[lang[0]] = lang[1].displayName)
 pageLanguageList.sort()
 
 const DEFAULT_ADDTL_IMAGE_TXT = "en"
