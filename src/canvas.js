@@ -90,7 +90,7 @@ async function loadFile(file) {
 
         canvas.renderAll()
 
-
+        closeImgBtn.disabled = false
         extractBtn.disabled = false
     });
 }
@@ -101,6 +101,7 @@ function clearImage() {
     canvasWrapper.style.display = "none"
     MyAltTextOrg.currImage = null
     closeImgBtn.disabled = true
+    extractBtn.disabled = true
 }
 
 let primaryMouseButtonDown = false;
@@ -248,7 +249,7 @@ function handleCropScaling() {
     //TODO: Prevent scaling outside canvas
 }
 
-async function crop() {
+function crop() {
     canvas.setZoom(1)
     let crops = canvas.getActiveObject() ? [canvas.getActiveObject()] : canvas.getObjects("rect");
     if (crops.length > 0) {

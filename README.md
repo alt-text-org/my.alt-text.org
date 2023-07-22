@@ -10,9 +10,8 @@ Alpha
 ----
 
  - Help/About
- - Add blank
- - Load second image
  - Multi-crop
+ - Set extraction lang
  - Basic styling
 
 

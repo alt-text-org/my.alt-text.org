@@ -14,17 +14,20 @@ function addBlankInFlight() {
     renderInFlight()
 }
 
-function addInFlight(text, name, imgHash, lang, maxLen) {
-    let ifName = name || MyAltTextOrg.currImage.name || ""
-    let ifHash = imgHash || MyAltTextOrg.currImage.hash || null
-    let ifLang = lang || MyAltTextOrg.currImage.lang || MyAltTextOrg.i18n.isoCode
+function addInFlight(text, id, name, imgHash, lang, maxLen) {
+    console.log(text)
+    let ifName = name || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name : "")
+    let ifHash = imgHash || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash : null)
+    let ifLang = lang || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.lang : MyAltTextOrg.i18n.isoCode)
     inFlight.push({
+        id,
         text, 
         name: ifName,
         imgHash: ifHash,
         lang: ifLang,
         maxLen: maxLen
     })
+    renderInFlight()
 }
 
 function saveInFlight(idx) {
@@ -66,6 +69,7 @@ function renderInFlight() {
 function buildInFlightItem(idx, chunk) {
     const outer = document.createElement("div")
     outer.classList.add("in-flight-item")
+    outer.classList.add("display-item")
 
     const nameInput = document.createElement("input")
     nameInput.classList.add("name-input")

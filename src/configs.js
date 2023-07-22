@@ -28,7 +28,7 @@ const defaultConfigs = {
             name: "Enable Keyboard Controls",
             desc: '',
             type: 'boolean',
-            onchange: (oldVal, newVal) => {
+            onChange: (oldVal, newVal) => {
 
             }
         },
@@ -39,7 +39,7 @@ const defaultConfigs = {
             desc: '',
             type: 'options',
             options: ['Canvas', 'Crop'],
-            onchange: (oldVal, newVal) => {
+            onChange: (oldVal, newVal) => {
 
             }
         },
@@ -49,7 +49,7 @@ const defaultConfigs = {
             name: 'Discard Crops On New Image',
             desc: '',
             type: 'boolean',
-            onchange: (oldVal, newVal) => {
+            onChange: (oldVal, newVal) => {
 
             }
         },
@@ -59,7 +59,7 @@ const defaultConfigs = {
             name: 'Treat unicode as a single char when computing length',
             desc: '',
             type: 'boolean',
-            onchange: (oldVal, newVal) => {
+            onChange: (oldVal, newVal) => {
 
             }
         },
@@ -69,7 +69,46 @@ const defaultConfigs = {
             name: 'Search archive live',
             desc: '',
             type: 'boolean',
-            onchange: (oldVal, newVal) => {
+            onChange: (oldVal, newVal) => {
+
+            }
+        },
+    },
+    a11y: {
+        textAreaSize: {
+            def: 0.25,
+            user: null,
+            name: "Composer Font Size",
+            desc: '',
+            type: 'slider',
+            makeDemo: () => {
+                const demoDiv = document.createElement("div")
+                demoDiv.innerHTML = `
+                    <textarea rows="4" cols="20">
+                `
+                return demoDiv
+            },
+            onChange: (oldVal, newVal) => {
+
+            }
+        },
+        buttonFontSize: {
+            def: 0.2,
+            user: null,
+            name: "Button Size",
+            desc: '',
+            type: 'slider',
+            makeDemo: () => {
+                const demoDiv = document.createElement("div")
+                demoDiv.innerHTML = `
+                    <div style="display: flex; flex-direction: row; gap: 20px; align-items: center; justify-content: flex-start">
+                        <button class="emoji-button">💖</button>
+                        <button>${getLocalized("textButtonDemo")}</button>
+                    </div>
+                `
+                return demoDiv
+            },
+            onChange: (oldVal, newVal) => {
 
             }
         }

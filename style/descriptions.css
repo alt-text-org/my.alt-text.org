@@ -13,6 +13,9 @@
     margin: 15px auto;
     width: 100%;
     height: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .description {
@@ -27,16 +30,12 @@
 
 }
 
-.description-composer {
-
-}
-
 .text-part-wrapper {
 
 }
 
 .frozen-text-part {
-
+    resize: vertical;
 }
 
 .text-part-controls {

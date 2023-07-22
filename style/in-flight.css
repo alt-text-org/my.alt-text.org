@@ -37,9 +37,6 @@
     height: 25vh;
     min-width: 50px;
     max-width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #6882e8;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

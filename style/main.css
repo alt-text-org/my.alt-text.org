@@ -1,6 +1,6 @@
 body {
     margin: 10px auto;
-    height: calc(100vh - 20px);
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -79,7 +79,7 @@ input {
 
 #main {
     margin: 0 auto;
-    width: 98vw;
+    width: 95vw;
     height: 100%;
     display: flex;
 }
@@ -120,7 +120,7 @@ canvas {
 textarea {
     width: 100%;
     height: 100%;
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 .rounded-top {
@@ -144,6 +144,12 @@ textarea {
     width: 100%;
     padding: 10px 5px;;
     font-size: 1.3rem;
+}
+
+.display-item {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #6882e8;
 }
 
 #upload-wrapper {
