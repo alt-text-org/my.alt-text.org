@@ -1,4 +1,3 @@
-const explanation = document.getElementById("explanation")
 const uploadWrapper = document.getElementById("upload-wrapper")
 const upload = document.getElementById('upload');
 const topUpload = document.getElementById('top-upload')
@@ -90,9 +89,18 @@ async function loadFile(file) {
         // cropRect.on('scaling', handleCropScaling)
 
         canvas.renderAll()
+
+
         extractBtn.disabled = false
-        explanation.style.display = "block"
     });
+}
+
+function clearImage() {
+    canvas.clear()
+    uploadWrapper.style.display = "flex"
+    canvasWrapper.style.display = "none"
+    MyAltTextOrg.currImage = null
+    closeImgBtn.disabled = true
 }
 
 let primaryMouseButtonDown = false;

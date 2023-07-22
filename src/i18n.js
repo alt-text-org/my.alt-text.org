@@ -3,6 +3,7 @@ const currPageLangEle = document.getElementById("current-page-lang")
 const filterInput = document.getElementById("filter-input")
 const translationLink = document.getElementById('add-translation-link')
 const topUploadLbl = document.getElementById('open-file-lbl')
+const closeImgBtn = document.getElementById('clear-image')
 
 const pageLangOptionsEle = document.getElementById("page-lang-options")
 const pageLangText = document.getElementById("page-lang-text")
@@ -77,6 +78,7 @@ function updatePageLanguage() {
     uploadLbl.innerText = getLocalized("centralUploadInstr")
     topUploadLbl.innerText = getLocalized("topUploadLbl")
     filterInput.placeholder = getLocalized("searchPrompt")
+    closeImgBtn.innerText = getLocalized('closeImage')
     
     for (let inFlightName of document.querySelectorAll('.name-input')) {
         inFlightName.placeholder = getLocalized("untitledName")

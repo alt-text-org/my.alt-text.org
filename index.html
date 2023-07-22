@@ -36,16 +36,16 @@
     <script src="lib/unicode-break.js" defer></script>
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
-    <script src="src/canvas.js" defer></script>
     <script src="src/configs.js"></script>
-    <script src="src/core.js" defer></script>
-    <script src="src/descriptions.js" defer></script>
-    <script src="src/filter-lib.js" defer></script>
+    <script src="src/storage.js" defer></script>
+    <script src="src/canvas.js" defer></script>
     <script src="src/i18n.js" defer></script>
     <script src="src/images.js" defer></script>
-    <script src="src/storage.js" defer></script>
-    <script src="src/tesseract.js" defer></script>
+    <script src="src/descriptions.js" defer></script>
     <script src="src/in-flight.js" defer></script>
+    <script src="src/filter-lib.js" defer></script>
+    <script src="src/tesseract.js" defer></script>
+    <script src="src/core.js" defer></script>
 </head>
 <body>
 <div id="overlay" onclick="closeDropdown()"></div>
@@ -75,6 +75,7 @@
                 <label id="open-file-lbl" for="top-upload"></label>
                 <input type="file" id="top-upload" name="top-upload" accept="image/*">
             </div>
+            <button id="clear-image" onclick="clearImage()" disabled></button>
             <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
         </div>
         <div id="upload-wrapper">

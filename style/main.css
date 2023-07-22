@@ -28,6 +28,7 @@ button:hover {
 button:disabled, button:disabled:hover {
     background: #99b0b9;
     color: rgba(16, 16, 16, 0.3);
+    cursor: auto;
 }
 
 input {

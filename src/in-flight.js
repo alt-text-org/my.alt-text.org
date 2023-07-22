@@ -3,22 +3,28 @@ const inFlightEle = document.getElementById('in-flight')
 const inFlight = []
 
 function addBlankInFlight() {
-    let name = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name || getLocalized("untitledName") : getLocalized("untitledName")
-    let hash = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash || null : null
+    let name = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name || "" : ""
+    let imgHash = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash || null : null
     inFlight.push({
         name,
-        hash,
+        imgHash,
         lang: MyAltTextOrg.i18n.isoCode,
         text: ""
     })
     renderInFlight()
 }
 
-function addInFlight(text) {
-    let name = MyAltTextOrg.currImage.name || ""
-    let hash = MyAltTextOrg.currImage.hash || null
-    let lang = MyAltTextOrg.currImage.lang || MyAltTextOrg.i18n.isoCode
-    inFlight.push({name, hash, lang, text})
+function addInFlight(text, name, imgHash, lang, maxLen) {
+    let ifName = name || MyAltTextOrg.currImage.name || ""
+    let ifHash = imgHash || MyAltTextOrg.currImage.hash || null
+    let ifLang = lang || MyAltTextOrg.currImage.lang || MyAltTextOrg.i18n.isoCode
+    inFlight.push({
+        text, 
+        name: ifName,
+        imgHash: ifHash,
+        lang: ifLang,
+        maxLen: maxLen
+    })
 }
 
 function saveInFlight(idx) {
@@ -80,8 +86,8 @@ function buildInFlightItem(idx, chunk) {
     textArea.cols = 1
     textArea.value = chunk.text
     textArea.onchange = () => inFlight[idx].text = textArea.value
-    charCounter.innerText = `${textArea.value.length}`
-    textArea.oninput = () => charCounter.innerText = `${textArea.value.length}`
+    charCounter.innerText = `${textLen(textArea.value)}`
+    textArea.oninput = () => charCounter.innerText = `${textLen(textArea.value.length)}`
     outer.appendChild(textArea)
 
     const controls = document.createElement("div")

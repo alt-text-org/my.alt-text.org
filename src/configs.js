@@ -52,6 +52,26 @@ const defaultConfigs = {
             onchange: (oldVal, newVal) => {
 
             }
+        },
+        unicodeSingleChar: {
+            def: true,
+            user: null,
+            name: 'Treat unicode as a single char when computing length',
+            desc: '',
+            type: 'boolean',
+            onchange: (oldVal, newVal) => {
+
+            }
+        },
+        liveSearch: {
+            def: true,
+            user: null,
+            name: 'Search archive live',
+            desc: '',
+            type: 'boolean',
+            onchange: (oldVal, newVal) => {
+
+            }
         }
     }
 }
