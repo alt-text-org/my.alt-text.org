@@ -3,13 +3,11 @@ My.Alt-Text.org
 
 A static site for handling alt text.
 
-See a preview of some functionality live at [https://ocrop.glitch.me](https://ocrop.glitch.me)
+See a preview of some functionality live at [https://my-alt-text-org.glitch.me](https://my-alt-text-org.glitch.me)
 
 
-Alpha
-----
-
- - Multi-crop
+Rough Release Roadmap
+=====================
 
 Beta
 ----
