@@ -273,8 +273,9 @@ textarea {
     font-size: 2rem;
     border: none;
     background-color: transparent;
-    box-shadow: none;
+    box-shadow: 1px 1px 1px 1px #11131a;
     padding: 3px 8px;
+    margin: 3px;
 }
 
 .emoji-button:hover {

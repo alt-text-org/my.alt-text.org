@@ -234,6 +234,18 @@ function makeFooter(description) {
     editBtn.onclick = () => editDescription(description.id)
     footer.appendChild(editBtn)
 
+    const copyBtn = document.createElement("button")
+    copyBtn.classList.add("emoji-button")
+    copyBtn.innerText = "👯"
+    copyBtn.onclick = () => duplicateDescription(description.id)
+    footer.appendChild(copyBtn)
+
+    const trashBtn = document.createElement("button")
+    trashBtn.classList.add("emoji-button")
+    trashBtn.innerText = "🚮"
+    trashBtn.onclick = () => removeDescription(description.id)
+    footer.appendChild(trashBtn)
+
     const maxLenEle = document.createElement("input")
     maxLenEle.classList.add("maxlen-field")
     maxLenEle.type = "text"
@@ -248,18 +260,6 @@ function makeFooter(description) {
         maxLenEle.value = `${description.maxLen}`
     }
     footer.appendChild(maxLenEle)
-
-    const copyBtn = document.createElement("button")
-    copyBtn.classList.add("emoji-button")
-    copyBtn.innerText = "👯"
-    copyBtn.onclick = () => duplicateDescription(description.id)
-    footer.appendChild(copyBtn)
-
-    const trashBtn = document.createElement("button")
-    trashBtn.classList.add("emoji-button")
-    trashBtn.innerText = "🚮"
-    trashBtn.onclick = () => removeDescription(description.id)
-    footer.appendChild(trashBtn)
 
     return footer
 }

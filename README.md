@@ -9,10 +9,8 @@ See a preview of some functionality live at [https://ocrop.glitch.me](https://oc
 Alpha
 ----
 
- - Help/About
  - Multi-crop
  - Drag-to-combine
- - Copy in archive/inflight
  - Basic styling
 
 
