@@ -24,10 +24,6 @@ function updatePageLanguage(isoLang) {
     }
 }
 
-async function updateExtractionLanguage(langCode) {
-
-}
-
 function registerLocalizableStatics() {
     helpBtn.innerText = registerLocalizedElement(helpBtn, "innerText", "help")
     pageLangName.innerText = registerLocalizedElement(pageLangName, "innerText", "langButtonPrefixTxt")

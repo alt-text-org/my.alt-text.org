@@ -67,7 +67,6 @@ input {
     height: 95vh;
     width: 60vw;
     flex-grow: 2;
-    padding-right: 3rem;
 }
 
 #right-col {

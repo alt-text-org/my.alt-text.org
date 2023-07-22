@@ -15,7 +15,7 @@
     height: 100%;
     display: inline-flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     overflow-y: scroll;
 }
 
@@ -40,14 +40,22 @@
 
 .text-part-wrapper {
     display: flex;
+    padding: 5px;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     align-content: stretch;
 }
 
+.addtl-text-part-wrapper {
+    border-top: solid 2px #b4c0e7;
+
+}
+
 .frozen-text-part {
     resize: vertical;
+    height: 100%;
+    background-color: #d1d1f8;
 }
 
 .text-part-controls {
@@ -57,6 +65,14 @@
     justify-content: space-around;
     align-items: center;
     align-content: center;
+}
+
+.aux-image-button {
+    border: none;
+    background-color: transparent;
+    box-shadow: 1px 1px 1px 1px #11131a;
+    padding: 3px;
+    margin: 3px;
 }
 
 .description-footer {
@@ -96,6 +112,8 @@
 .aux-image {
     width: 30px;
     height: 30px;
+    margin-bottom: -5px;
+    padding: 6px;
 }
 
 .popup-close-x {

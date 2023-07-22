@@ -19,3 +19,7 @@ async function extractText(dataUrl) {
     return [text]
 }
 
+async function setExtractionLang(tesseractCode) {
+    await MyAltTextOrg.tesseract.worker.loadLanguage(tesseractCode);
+    await MyAltTextOrg.tesseract.worker.initialize(tesseractCode);
+}

@@ -27,7 +27,7 @@ addDropdown(
     async (display, tessLang) => {
         const label = document.getElementById("extract-lang-lbl")
         label.innerText = display
-        await updateExtractionLanguage(tessLang)
+        await setExtractionLang(tessLang)
     },
     null,
     {

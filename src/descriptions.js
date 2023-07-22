@@ -183,21 +183,22 @@ function makeTextSection(description) {
 
         const textArea = document.createElement("textarea")
         textArea.classList.add("frozen-text-part")
+        textArea.rows = 5
         textArea.value = part
         textArea.readOnly = true
-
 
         const controls = document.createElement("div")
         controls.classList.add("text-part-controls")
         if (idx > 0) {
             const auxImage = getAuxCanvas(description.lang, idx + 1, textParts.length)
             const imgButton = document.createElement("button")
-            imgButton.classList.add("emoji-button")
+            imgButton.classList.add("aux-image-button")
             imgButton.innerHTML = `<img src="${auxImage.toDataURL()}" class="aux-image" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
             imgButton.onclick = () => {
                 //TODO: Popup copy/download
             }
             controls.appendChild(imgButton)
+            textPartWrapper.classList.add("addtl-text-part-wrapper")
         }
 
         let copyAck = null
