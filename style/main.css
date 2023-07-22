@@ -1,12 +1,13 @@
 body {
     margin: 10px auto;
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #cef0f5;
     font-family: Helvetica, sans-serif;
+    overflow-y: scroll;
 }
 
 button {
@@ -313,15 +314,15 @@ textarea {
     align-items: center;
     align-content: center;
     justify-content: center;
-    margin: 50px;
-    padding: 50px;
+    margin: 20px 50px;
+    padding: 20px 50px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     transition: opacity 1.5s;
     opacity: 0;
     z-index: 501;
-    background: #0f1e50;
+    background: #081b49;
     color: #EDEDED;
     overflow-y: scroll;
     border-radius: 50px;
