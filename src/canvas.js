@@ -1,3 +1,5 @@
+const CVS_PADDING = 0
+
 const uploadWrapper = document.getElementById("upload-wrapper")
 const upload = document.getElementById('upload');
 const topUpload = document.getElementById('top-upload')
@@ -35,7 +37,7 @@ document.onpaste = function (event) {
     const items = (event.clipboardData || event.originalEvent.clipboardData).items;
     for (let item of items) {
         if (item.kind === 'file') {
-            loadFile("Unknown", item.getAsFile())
+            loadFile(item.getAsFile())
         }
     }
 };
@@ -80,8 +82,8 @@ async function loadFile(file) {
         }
 
         canvas.setBackgroundImage(img, null, {
-            top: 20,
-            left: 20
+            top: CVS_PADDING,
+            left: CVS_PADDING
         })
 
         //TODO: don't let crops outside canvas
@@ -116,17 +118,18 @@ document.addEventListener("mousemove", setPrimaryButtonState);
 document.addEventListener("mouseup", setPrimaryButtonState);
 
 
-canvas.on('mouse:move', handleMouseMove)
-canvas.on('mouse:up', handleMouseUp)
-canvas.on('mouse:down', handleMouseDown)
-canvas.on('mouse:over', handleMouseOver)
-canvas.on('mouse:out', handleMouseOut)
-
+// canvas.on('mouse:move', handleMouseMove)
+// canvas.on('mouse:up', handleMouseUp)
+// canvas.on('mouse:down', handleMouseDown)
+// canvas.on('mouse:over', handleMouseOver)
+// canvas.on('mouse:out', handleMouseOut)
 
 let currRect = null
 let currRectStart = null
-
+let lastPoint = null
+let justEntered = false
 function handleMouseDown(e) {
+    console.log(`Down: ${JSON.stringify(e.pointer)}`)
     if (e.button !== 1 || isOverActiveObject(e.pointer) || currRect) {
         return
     }
@@ -135,6 +138,11 @@ function handleMouseDown(e) {
 }
 
 function handleMouseMove(e) {
+    // console.log(`Move: ${JSON.stringify(e.pointer)}`)
+    if (e.pointer) {
+        lastPoint = e.pointer
+    }
+
     if (!primaryMouseButtonDown || !currRect) {
         return
     }
@@ -143,29 +151,22 @@ function handleMouseMove(e) {
 }
 
 function handleMouseUp(e) {
+    console.log(`Up: ${JSON.stringify(e.pointer)}`)
+
     currRect = null
     currRectStart = null
 }
 
 function handleMouseOver(e) {
-    if (!primaryMouseButtonDown) {
-        if (currRect) {
-            currRect = null
-            currRectStart = null
-        }
-        return
-    }
-
-    if (currRect) {
-        renderRect(e.pointer)
-    } else if (!isOverActiveObject(e.pointer)) {
-        addRect(e.pointer)
-    }
+    console.log(`Over`)
+    justEntered = true
 }
 
 function handleMouseOut(e) {
+    console.log(`Out: ${JSON.stringify(lastPoint)}`)
+
     if (primaryMouseButtonDown && currRect) {
-        renderRect(e.pointer)
+        renderRect(lastPoint)
     }
 }
 
@@ -215,11 +216,14 @@ function scaleCanvas(img) {
     }
 
     const ratio = Math.min(
-        Math.min(canvasWrapper.clientWidth / (img.width + 40), 1),
-        Math.min(canvasWrapper.clientHeight / (img.height + 40), 1),
+        Math.min(canvasWrapper.clientWidth / img.width, 1),
+        Math.min(canvasWrapper.clientHeight / img.height, 1),
     );
     canvas.setZoom(ratio)
-    canvas.setDimensions({width: (img.width + 40) * ratio, height: (img.height + 40) * ratio})
+    canvas.setDimensions({
+        width: img.width * ratio + CVS_PADDING * 2,
+        height: img.height * ratio + CVS_PADDING * 2
+    })
     canvas.renderAll()
     return ratio
 }

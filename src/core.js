@@ -37,8 +37,7 @@ function showSplash() {
     <ul>
         <li>An archive of all the descriptions you write with it, searchable by text or image</li>
         <li>
-            Optical Character Recognition (OCR) turned up to the next level. The ability to pre-select which areas of
-            the image to extract from with 100+ languages supported.
+            Optical Character Recognition (OCR) with 100+ languages supported.
         </li>
         <li>
             Unicode-aware split-on-whitespace for limited character counts, except you can go back and edit the whole
@@ -60,6 +59,7 @@ function showSplash() {
     </p>
     <ul>
         <li>Accessibility. This is a tool for everyone.</li>
+        <li>Ability to extract from only a portion of the image</li>
         <li>Browser extensions. Use this tool inline on any site.</li>
         <li>
             Archive in the extensions can save the images alongside the alt text. Search your image library based on
