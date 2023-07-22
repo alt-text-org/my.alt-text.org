@@ -88,7 +88,7 @@ function showSplash() {
         <a href="https://social.alt-text.org/@hannah">Mastodon</a>
     </p>
     <div style="text-align: center; width: 100%">
-        <button style="font-size: 3rem; padding: 10px">Close</button>
+        <button style="font-size: 3rem; padding: 10px; background-color: #09173d; color: #cef0f5">Close</button>
     </div>
 </div>
     `

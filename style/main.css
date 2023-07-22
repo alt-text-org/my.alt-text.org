@@ -322,15 +322,15 @@ textarea {
     transition: opacity 1.5s;
     opacity: 0;
     z-index: 501;
-    background: #081b49;
-    color: #EDEDED;
+    background: #b3bedf;
+    color: #1b1b2f;
     overflow-y: scroll;
     border-radius: 50px;
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 a, a:visited {
-    color: white;
+    color: #09173d;
 }
 
 .splash {
