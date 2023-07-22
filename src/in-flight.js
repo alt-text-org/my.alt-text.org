@@ -105,7 +105,7 @@ function buildInFlightItem(idx, chunk) {
     textArea.value = chunk.text
     textArea.onchange = () => inFlight[idx].text = textArea.value
     charCounter.innerText = `${textLen(textArea.value)}`
-    textArea.oninput = () => charCounter.innerText = `${textLen(textArea.value.length)}`
+    textArea.oninput = () => charCounter.innerText = `${textLen(textArea.value)}`
     outer.appendChild(textArea)
 
     const controls = document.createElement("div")
