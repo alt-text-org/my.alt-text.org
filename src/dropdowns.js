@@ -79,8 +79,6 @@ function addDropdown(
     const search = document.createElement("input")
     search.classList.add("search-input")
     search.type = "text"
-    search.placeholder = registerLocalizedElement(search, "placeholder", i18nKeys.searchPlaceholder)
-    search.ariaLabel = registerLocalizedElement(search, "ariaLabel", i18nKeys.searchLabel)
     search.oninput = () => {
         function compare(a, b) {
             if (a[1] < b[1]) {
@@ -111,6 +109,9 @@ function addDropdown(
     }
 
     searchWrapper.appendChild(search)
+    search.placeholder = registerLocalizedElement(search, "placeholder", i18nKeys.searchPlaceholder)
+    search.ariaLabel = registerLocalizedElement(search, "ariaLabel", i18nKeys.searchLabel)
+
     dropdown.appendChild(searchWrapper)
     dropdown.appendChild(dropdownOptions)
 

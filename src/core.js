@@ -1,14 +1,6 @@
 updatePageLanguage()
 showSplash()
 
-function makeId() {
-    if (window.location.protocol === 'https:') {
-        return crypto.randomUUID()
-    } else {
-        return `${Math.random()}`
-    }
-}
-
 async function cropExtractAndAddInFlight() {
     extractBtn.classList.add("loading")
     let cropped = crop()

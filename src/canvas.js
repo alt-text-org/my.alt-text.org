@@ -105,6 +105,7 @@ function clearImage() {
     MyAltTextOrg.currImage = null
     closeImgBtn.disabled = true
     extractBtn.disabled = true
+    updateDescriptionDisplay()
 }
 
 let primaryMouseButtonDown = false;

@@ -1,13 +1,8 @@
-function initI18n() {
-    const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
-    MyAltTextOrg.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
-    MyAltTextOrg.defaultI18n = i18nText[DEFAULT_PAGE_LANG]
-
-    const isoTesseractLang = window.navigator.language || DEFAULT_EXTRACTION_LANG_ISO
-    MyAltTextOrg.tesseract.isoLang = iso639_2ToTesseract[isoTesseractLang] ? isoTesseractLang : DEFAULT_EXTRACTION_LANG_ISO
-}
-
 const DEFAULT_PAGE_LANG = 'en'
+const DEFAULT_ADDTL_IMAGE_TXT = "en"
+const DEFAULT_EXTRACTION_LANG_ISO = "en"
+const DEFAULT_EXTRACTION_LANG_HUMAN = "English"
+
 const i18nText = {
     en: {
         isoCode: "en",
@@ -34,6 +29,8 @@ const i18nText = {
         closeImage: "Close Image",
         textButtonDemo: "Text Button",
         help: "Help",
+        importBtn: "Import",
+        exportBtn: "Export"
     }
 }
 
@@ -42,7 +39,6 @@ const pageLanguageList = Object.keys(i18nOptions)
 Object.entries(i18nText).forEach(lang => i18nOptions[lang[1].displayName] = lang[0])
 pageLanguageList.sort()
 
-const DEFAULT_ADDTL_IMAGE_TXT = "en"
 const additionalImageText = {
     ca: "Continuació de la descripció de les imatges",
     de: "Bildbeschreibung fortgesetzt",
@@ -55,8 +51,7 @@ const additionalImageText = {
     pt: "Descrição da imagem continuação"
 }
 
-const DEFAULT_EXTRACTION_LANG_ISO = "en"
-const DEFAULT_EXTRACTION_LANG_HUMAN = "English"
+
 const tesseractLangs = {
     'Afrikaans': 'afr',
     'Amharic': 'amh',
@@ -268,3 +263,10 @@ for (let [iso, tess] of Object.entries(iso639_2ToTesseract)) {
 
 const tesseractLanguageList = Object.keys(tesseractLangs)
 tesseractLanguageList.sort()
+
+const isoPageLang = window.navigator.language || DEFAULT_PAGE_LANG
+MyAltTextOrg.i18n = i18nText[isoPageLang] || i18nText[DEFAULT_PAGE_LANG]
+MyAltTextOrg.defaultI18n = i18nText[DEFAULT_PAGE_LANG]
+
+const isoTesseractLang = window.navigator.language || DEFAULT_EXTRACTION_LANG_ISO
+MyAltTextOrg.tesseract.isoLang = iso639_2ToTesseract[isoTesseractLang] ? isoTesseractLang : DEFAULT_EXTRACTION_LANG_ISO

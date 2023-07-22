@@ -17,26 +17,18 @@
     <link rel="stylesheet" href="style/dropdowns.css">
     <link rel="stylesheet" href="style/in-flight.css">
 
+    <script src="src/init.js"></script>
     <script src="src/i18n-data.js"></script>
-    <script src="https://unpkg.com/canvas-txt"></script>
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
-    <script>
-        MyAltTextOrg = {
-            c: {}, // processed configuration
-            f: {}, // functions
-            dicts: {},
-            tesseract: {},
-        }
-        initI18n()
-    </script>
+    <script src="src/configs.js"></script>
 
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js' defer></script>
+    <script src="https://unpkg.com/canvas-txt" defer></script>
     <script src="lib/fabric.min.js" defer></script>
     <script src="lib/flexsearch.min.js" defer></script>
     <script src="lib/findBoundaries.js" defer></script>
     <script src="lib/unicode-break.js" defer></script>
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
-    <script src="src/configs.js"></script>
     <script src="src/storage.js" defer></script>
     <script src="src/canvas.js" defer></script>
     <script src="src/i18n.js" defer></script>
@@ -46,6 +38,7 @@
     <script src="src/filter-lib.js" defer></script>
     <script src="src/tesseract.js" defer></script>
     <script src="src/dropdowns.js" defer></script>
+    <script src="src/import-export.js" defer></script>
     <script src="src/core.js" defer></script>
 </head>
 <body>
@@ -94,9 +87,10 @@
                 <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="PLACEHOLDER">
             </div>
             <div id="descriptions" class="bordered-area"></div>
-<!--            <div id="import-export">-->
-<!--                <button id="import-btn" onclick="exportDescriptions()">PLACEHOLDER TEXT</button>-->
-<!--            </div>-->
+            <div id="import-export-btns">
+                <button id="import-btn" onclick="openImport()">Import PLACEHOLDER</button>
+                <button id="export-btn" onclick="exportArchive()">Export PLACEHOLDER</button>
+            </div>
             <div id="links">
                 <button id="help-button" onclick="openHelp()"></button>
                 <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
@@ -105,6 +99,9 @@
             </div>
         </div>
     </div>
+</div>
+<div >
+
 </div>
 <!--<div id="settings">-->
 <!--    <h1>Settings</h1>-->

@@ -335,6 +335,21 @@ a, a:visited {
     font-size: 1.2rem;
 }
 
+#import-export-btns {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+#import-export-btns > button{
+    padding: 10px;
+}
+
 #help-button {
     font-size: 4rem;
     margin-right: 20px;

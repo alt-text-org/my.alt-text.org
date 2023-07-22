@@ -21,9 +21,13 @@ function registerLocalizedElement(elem, elemKey, i18nKey) {
     let localizationId = makeId()
     elem.localizationId = localizationId
     localizableElements[localizationId] = {elem, elemKey, i18nKey}
-    onElementRemoved(elem, function() {
-        delete localizableElements[localizationId]
-    });
+    if (elem.parentElement) {
+        onElementRemoved(elem, function() {
+            delete localizableElements[localizationId]
+        });
+    } else {
+        console.log(`Can't automate cleanup for elem with i18n key: ${i18nKey}`)
+    }
 
     return getLocalized(i18nKey)
 }
