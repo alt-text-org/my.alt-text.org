@@ -1,11 +1,10 @@
-const inFlightEle = document.getElementById('in-flight')
 
-const inFlight = []
+MyAltTextOrg.inFlight = []
 
 function addBlankInFlight() {
     let name = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name || "" : ""
     let imgHash = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash || null : null
-    inFlight.push({
+    MyAltTextOrg.inFlight.push({
         name,
         imgHash,
         lang: MyAltTextOrg.i18n.isoCode,
@@ -18,7 +17,7 @@ function addInFlight(text, id, name, imgHash, lang, maxLen) {
     let ifName = name || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name : "")
     let ifHash = imgHash || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash : null)
     let ifLang = lang || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.lang : MyAltTextOrg.i18n.isoCode)
-    inFlight.push({
+    MyAltTextOrg.inFlight.push({
         id,
         text, 
         name: ifName,
@@ -30,7 +29,7 @@ function addInFlight(text, id, name, imgHash, lang, maxLen) {
 }
 
 function duplicateChunk(idx) {
-    const src = inFlight[idx]
+    const src = MyAltTextOrg.inFlight[idx]
     const dst = {
         id: src.id,
         text: src.text,
@@ -39,19 +38,19 @@ function duplicateChunk(idx) {
         lang: src.lang,
         maxLen: src.maxLen
     }
-    inFlight.push(dst)
+    MyAltTextOrg.inFlight.push(dst)
     renderInFlight()
 }
 
 function saveInFlight(idx) {
-    if (inFlight[idx]) {
-        addDescription(inFlight[idx])
+    if (MyAltTextOrg.inFlight[idx]) {
+        addDescription(MyAltTextOrg.inFlight[idx])
         removeInFlight(idx)
     }
 }
 
 function saveAllInFlight() {
-    for (let chunk of inFlight) {
+    for (let chunk of MyAltTextOrg.inFlight) {
         if (chunk) {
             addDescription(chunk)
         }
@@ -60,18 +59,20 @@ function saveAllInFlight() {
 }
 
 function removeInFlight(idx) {
-    inFlight[idx] = null
+    MyAltTextOrg.inFlight[idx] = null
     renderInFlight()
 }
 
 function clearInFlight() {
-    inFlight.length = 0
+    MyAltTextOrg.inFlight.length = 0
     renderInFlight()
 }
 
 function renderInFlight() {
+    const inFlightEle = document.getElementById('in-flight')
+
     inFlightEle.innerHTML = ""
-    inFlight.reverse().forEach((chunk, idx) => {
+    MyAltTextOrg.inFlight.reverse().forEach((chunk, idx) => {
         if (chunk) {
             const elem = buildInFlightItem(idx, chunk)
             inFlightEle.appendChild(elem)

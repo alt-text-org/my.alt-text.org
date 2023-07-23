@@ -1,8 +1,15 @@
 MyAltTextOrg = {
     c: {}, // processed configuration
     f: {}, // functions
+    const: {},
     dicts: {},
+    crops: {},
+
+    desc: {},
+    i18n: {},
+    storage: {},
     tesseract: {},
+
 }
 
 function makeId() {

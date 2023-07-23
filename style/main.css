@@ -6,14 +6,13 @@ body {
     justify-content: flex-start;
     align-items: stretch;
     background-color: #cef0f5;
-    font-family: Helvetica, sans-serif;
+    font-family: "Atkinson Hyperlegible", sans-serif;
 }
 
 button {
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 1.3em;
-    font-family: Helvetica, sans-serif;
     font-weight: 900;
     background: #73c4e6;
     border: none;
@@ -40,18 +39,21 @@ input {
     padding: 7px 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-#top-upload {
+input[type=file] {
     display: none;
+
 }
 
-#open-file-lbl {
+.file-input-lbl {
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 1.3em;
-    font-family: Helvetica, sans-serif;
     font-weight: 900;
     background: #73c4e6;
     border: none;
@@ -114,6 +116,7 @@ canvas {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border-radius: 15px;
+    resize: vertical;
 }
 
 textarea {
@@ -293,8 +296,8 @@ textarea {
     height: 100vh;
     transition: opacity 1.5s;
     opacity: 0;
+    z-index: 1001;
     background: #101633;
-    z-index: 500;
 }
 
 .splash-wrapper {
@@ -313,7 +316,7 @@ textarea {
     -webkit-box-sizing: border-box;
     transition: opacity 1.5s;
     opacity: 0;
-    z-index: 501;
+    z-index: 1001;
     background: #b3bedf;
     color: #1b1b2f;
     overflow-y: scroll;
@@ -331,8 +334,8 @@ a, a:visited {
 }
 
 .splash {
-    font-family: Helvetica, sans-serif;
     font-size: 1.2rem;
+    z-index: 1500;
 }
 
 #import-export-btns {
@@ -351,11 +354,11 @@ a, a:visited {
 }
 
 #help-button {
-    font-size: 4rem;
+    font-size: 3rem;
     margin-right: 20px;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 399px) {
     body {
         display: flex;
         flex-direction: column;
@@ -367,6 +370,10 @@ a, a:visited {
         font-size: 2em;
     }
 
+    .file-input-lbl {
+        font-size: 2em;
+    }
+
     #main {
         flex-direction: column;
         width: 90vw;
@@ -375,7 +382,8 @@ a, a:visited {
     #controls {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+
+        gap: 30px;
     }
     
     #links {

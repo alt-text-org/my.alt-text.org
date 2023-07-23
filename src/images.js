@@ -12,25 +12,26 @@ async function hashImage(file) {
     })
 }
 
-const auxImageEdgeLength = 1000;
-const auxImageFontPixels = 100
+MyAltTextOrg.const.AUX_IMG_EDGE_PX = 1000;
+MyAltTextOrg.const.AUX_IMG_FONT_PX = 100
 
 function getAuxCanvas(lang, num, total) {
     const canvas = document.createElement("canvas")
-    canvas.width = auxImageEdgeLength
-    canvas.height = auxImageEdgeLength
+    canvas.width = MyAltTextOrg.const.AUX_IMG_EDGE_PX
+    canvas.height = MyAltTextOrg.const.AUX_IMG_EDGE_PX
     const ctx = canvas.getContext('2d');
-    const text = additionalImageText[lang] || additionalImageText[DEFAULT_ADDTL_IMAGE_TXT]
+    const text = MyAltTextOrg.i18n.additionalImageText[lang]
+        || MyAltTextOrg.i18n.additionalImageText[MyAltTextOrg.const.DEFAULT_ADDTL_IMAGE_TXT]
 
     ctx.fillStyle = "white"
-    ctx.fillRect(0, 0, auxImageEdgeLength, auxImageEdgeLength)
+    ctx.fillRect(0, 0, MyAltTextOrg.const.AUX_IMG_EDGE_PX, MyAltTextOrg.const.AUX_IMG_EDGE_PX)
 
     ctx.fillStyle = "black"
-    ctx.font = `bold ${auxImageFontPixels}px sans-serif`;
+    ctx.font = `bold ${MyAltTextOrg.const.AUX_IMG_FONT_PX}px sans-serif`;
 
     window.canvasTxt.drawText(ctx, text, {
-        width: auxImageEdgeLength - 100,
-        height: auxImageEdgeLength - 100,
+        width: MyAltTextOrg.const.AUX_IMG_EDGE_PX - 100,
+        height: MyAltTextOrg.const.AUX_IMG_EDGE_PX - 100,
         x: 50,
         y: 50,
         align: 'center',
@@ -41,8 +42,8 @@ function getAuxCanvas(lang, num, total) {
 
     ctx.textAlign = "right"
     ctx.textBaseline = "bottom"
-    ctx.font = `${auxImageFontPixels / 2}px sans-serif`
-    ctx.fillText(`${num}/${total}`, auxImageEdgeLength - 20, auxImageEdgeLength - 20)
+    ctx.font = `${MyAltTextOrg.const.AUX_IMG_FONT_PX / 2}px sans-serif`
+    ctx.fillText(`${num}/${total}`, MyAltTextOrg.const.AUX_IMG_EDGE_PX - 20, MyAltTextOrg.const.AUX_IMG_EDGE_PX - 20)
 
     return canvas
 }

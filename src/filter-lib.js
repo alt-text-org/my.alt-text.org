@@ -1,4 +1,4 @@
-const filterLibrary = {
+MyAltTextOrg.filterLibrary = {
     dictionary_filter: {
         name: 'Filter To Dictionary',
         desc: 'Remove all words not in dictionary',
