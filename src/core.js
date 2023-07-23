@@ -1,7 +1,8 @@
-updatePageLanguage()
-showSplash()
+
 
 async function cropExtractAndAddInFlight() {
+    const extractBtn = document.getElementById("extract-btn")
+
     extractBtn.classList.add("loading")
     let cropped = crop()
     let allExtracted = []

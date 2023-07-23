@@ -12,14 +12,17 @@
     <meta property="og:image" content="images/preview.png">
     <meta property="og:image:alt" content="Our logo, on a green background, an eye with an A in front of it, seeming like a beam from the eye">
 
+    <link rel="stylesheet" href="style/fonts.css">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/descriptions.css">
     <link rel="stylesheet" href="style/dropdowns.css">
     <link rel="stylesheet" href="style/in-flight.css">
 
-    <script src="src/init.js"></script>
+    <script src="src/first.js"></script>
     <script src="src/i18n-data.js"></script>
+    <script src="src/i18n.js"></script>
     <script src="src/configs.js"></script>
+    <script src="src/tesseract.js"></script>
 
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js' defer></script>
     <script src="https://unpkg.com/canvas-txt" defer></script>
@@ -31,18 +34,18 @@
 
     <script src="src/storage.js" defer></script>
     <script src="src/canvas.js" defer></script>
-    <script src="src/i18n.js" defer></script>
     <script src="src/images.js" defer></script>
     <script src="src/descriptions.js" defer></script>
     <script src="src/in-flight.js" defer></script>
     <script src="src/filter-lib.js" defer></script>
-    <script src="src/tesseract.js" defer></script>
     <script src="src/dropdowns.js" defer></script>
     <script src="src/import-export.js" defer></script>
     <script src="src/core.js" defer></script>
+
+    <script src="src/last.js" defer></script>
 </head>
 <body>
-<div id="overlay" onclick="closeDropdowns()"></div>
+<div id="overlay" class="openable" onclick="hideEscapable()"></div>
 <div id="main">
     <div id="left-col">
         <div id="controls">
@@ -51,7 +54,7 @@
                 <div id="page-lang-dropdown"></div>
             </div>
             <div>
-                <label id="open-file-lbl" for="top-upload"></label>
+                <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
                 <input type="file" id="top-upload" name="top-upload" accept="image/*">
             </div>
             <button id="clear-image" onclick="clearImage()" disabled></button>
@@ -100,11 +103,19 @@
         </div>
     </div>
 </div>
-<div >
-
+<div class="prompt-wrapper openable">
+    <div id="import-prompt" class="prompt">
+        <div id="import-choices">
+            <div>
+                <label id="import-archive-lbl" for="import-archive-btn" class="file-input-lbl"></label>
+                <input type="file" id="import-archive-btn" name="import-archive-btn" accept="application/json" onchange="importArchive()">
+            </div>
+            <button id="open-masto-import"></button>
+        </div>
+    </div>
 </div>
-<!--<div id="settings">-->
-<!--    <h1>Settings</h1>-->
-<!--</div>-->
+<div id="settings" class="openable">
+    <h1>Settings</h1>
+</div>
 </body>
 </html>

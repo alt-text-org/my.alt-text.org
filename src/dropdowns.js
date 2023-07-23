@@ -1,41 +1,3 @@
-addDropdown(
-    "page-lang-dropdown",
-    "page-lang-btn",
-    "page-lang-lbl",
-    MyAltTextOrg.i18n.displayName,
-    i18nOptions,
-    (display, isoLang) => {
-        const label = document.getElementById("page-lang-lbl")
-        label.innerText = display
-        updatePageLanguage(isoLang)
-    },
-    makePageLangFooter(),
-    {
-        searchPlaceholder: "langSearchPlaceholder",
-        searchLabel: "pageLangSearchLbl",
-        notFound: "noLangsFound"
-    }
-)
-
-
-addDropdown(
-    "extract-lang-dropdown",
-    "extract-lang-btn",
-    "extract-lang-lbl",
-    DEFAULT_EXTRACTION_LANG_HUMAN,
-    tesseractLangs,
-    async (display, tessLang) => {
-        const label = document.getElementById("extract-lang-lbl")
-        label.innerText = display
-        await setExtractionLang(tessLang)
-    },
-    null,
-    {
-        searchPlaceholder: "langSearchPlaceholder",
-        searchLabel: "pageLangSearchLbl",
-        notFound: "noLangsFound"
-    }
-)
 
 
 function addDropdown(
@@ -64,7 +26,7 @@ function addDropdown(
     wrapper.appendChild(openDropdownBtn)
 
     const dropdown = document.createElement("div")
-    dropdown.classList.add("dropdown-content")
+    dropdown.classList.add("dropdown-content", "openable")
 
     const searchWrapper = document.createElement("div")
     searchWrapper.classList.add("search-wrapper", "rounded-top")
@@ -92,7 +54,7 @@ function addDropdown(
 
         let prefix = search.value.toLowerCase()
         let searchResult = Object.entries(options)
-            .filter(kv => kv[0].toLowerCase().startsWith(prefix))
+            .filter(kv => kv[0].toLowerCase().indexOf(prefix) >= 0)
         searchResult.sort(compare)
 
         dropdownOptions.innerHTML = ""
@@ -124,8 +86,7 @@ function addDropdown(
     }
 
     openDropdownBtn.onclick = () => {
-        showOverlay();
-        dropdown.style.visibility = "visible"
+        showEscapable(dropdown)
         search.focus()
     }
     wrapper.appendChild(dropdown)
@@ -139,31 +100,29 @@ function makeDropdownOption(dropdown, value, display, onClick) {
     option.classList.add("dropdown-option")
     option.innerText = display
     option.onclick = () => {
-        closeDropdowns()
+        hideEscapable()
         onClick(display, value)
     }
 
     return option
 }
 
-function showOverlay() {
+const toEscape = []
+function showEscapable(elem) {
     const overlay = document.getElementById("overlay");
-    overlay.style.display = "block"
-    overlay.classList.add("visible");
+    overlay.classList.add("open");
+    elem.classList.add("open");
+    toEscape.push(elem)
 }
 
-function hideOverlay() {
+function hideEscapable() {
     const overlay = document.getElementById("overlay");
-    overlay.style.display = "none"
-    overlay.classList.remove("visible");
+    overlay.classList.remove("open");
+    toEscape.forEach(elem => {
+        elem.classList.remove("open")
+    })
+    toEscape.length = 0
 }
-
-function closeDropdowns() {
-    hideOverlay();
-    document.querySelectorAll(".dropdown-content")
-        .forEach(elem => elem.style.visibility = "hidden")
-}
-
 
 function makePageLangFooter() {
     const link = document.createElement("a")
@@ -171,7 +130,7 @@ function makePageLangFooter() {
     link.target = "_blank"
     link.rel = "noreferrer noopener"
     link.href = "https://github.com/alt-text-org/ocrop/issues/new?&template=translation.md&title=%5BTranslation%5D+Language"
-    link.innerText = registerLocalizedElement(link, "innerText", "addTranslationTxt")
+    link.innerHTML = registerLocalizedElement(link, "innerHTML", "addTranslationTxt")
 
     return link
 }

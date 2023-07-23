@@ -1,29 +1,25 @@
-const textIndex = new FlexSearch.Index({});
-const textSearchIndices = []
-let textNextSearchIdx = 0
+MyAltTextOrg.desc.textIndex = new FlexSearch.Index({});
+MyAltTextOrg.desc.textSearchIndices = []
+MyAltTextOrg.desc.textNextSearchIdx = 0
 
-const nameIndex = new FlexSearch.Index({});
-const nameSearchIndices = []
-let nameNextSearchIdx = 0
+MyAltTextOrg.desc.nameIndex = new FlexSearch.Index({});
+MyAltTextOrg.desc.nameSearchIndices = []
+MyAltTextOrg.desc.nameNextSearchIdx = 0
 
-let displayDescriptions = []
+MyAltTextOrg.desc.displayDescriptions = []
 
-const descriptionsEle = document.getElementById("descriptions")
 const resultFilter = document.getElementById("filter-input")
 resultFilter.oninput = () => updateDescriptionDisplay()
 
-initializeSearch()
-updateDescriptionDisplay()
-
 function updateDescriptionDisplay() {
     if (MyAltTextOrg.currImage && resultFilter.value) {
-        displayDescriptions = searchArchive(resultFilter.value, MyAltTextOrg.currImage.hash)
+        MyAltTextOrg.desc.displayDescriptions = searchArchive(resultFilter.value, MyAltTextOrg.currImage.hash)
     } else if (MyAltTextOrg.currImage) {
-        displayDescriptions = getRecentDescriptions(100, MyAltTextOrg.currImage.hash)
+        MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100, MyAltTextOrg.currImage.hash)
     } else if (resultFilter.value) {
-        displayDescriptions = searchArchive(resultFilter.value)
+        MyAltTextOrg.desc.displayDescriptions = searchArchive(resultFilter.value)
     } else {
-        displayDescriptions = getRecentDescriptions(100)
+        MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100)
     }
 
     renderDescriptions()
@@ -44,14 +40,14 @@ function searchArchive(search, imgHash) {
     }
 
     const foundIds = {}
-    const foundByName = nameIndex.search(search);
+    const foundByName = MyAltTextOrg.desc.nameIndex.search(search);
     for (let key of foundByName) {
-        foundIds[nameSearchIndices[key]] = true
+        foundIds[MyAltTextOrg.desc.nameSearchIndices[key]] = true
     }
 
-    let foundByText = textIndex.search(search);
+    let foundByText = MyAltTextOrg.desc.textIndex.search(search);
     for (let key of foundByText) {
-        foundIds[textSearchIndices[key]] = true
+        foundIds[MyAltTextOrg.desc.textSearchIndices[key]] = true
     }
 
     return Object.keys(foundIds).filter(id => hashDescs ? hashDescs[id] : true)
@@ -74,15 +70,15 @@ function addDescription(chunk) {
 
 function indexForSearch(descId, name, text) {
     if (name) {
-        nameSearchIndices[nameNextSearchIdx] = descId
-        nameIndex.add(nameNextSearchIdx, name)
-        nameNextSearchIdx++
+        MyAltTextOrg.desc.nameSearchIndices[MyAltTextOrg.desc.nameNextSearchIdx] = descId
+        MyAltTextOrg.desc.nameIndex.add(MyAltTextOrg.desc.nameNextSearchIdx, name)
+        MyAltTextOrg.desc.nameNextSearchIdx++
     }
 
     if (text) {
-        textSearchIndices[textNextSearchIdx] = descId
-        textIndex.add(textNextSearchIdx, text)
-        textNextSearchIdx++
+        MyAltTextOrg.desc.textSearchIndices[MyAltTextOrg.desc.textNextSearchIdx] = descId
+        MyAltTextOrg.desc.textIndex.add(MyAltTextOrg.desc.textNextSearchIdx, text)
+        MyAltTextOrg.desc.textNextSearchIdx++
     }
 }
 
@@ -136,10 +132,12 @@ function removeDescription(descId) {
 }
 
 function renderDescriptions() {
+    const descriptionsEle = document.getElementById("descriptions")
+
     const scrollPx = descriptionsEle.scrollHeight
     descriptionsEle.innerHTML = ""
 
-    displayDescriptions.forEach(descId => {
+    MyAltTextOrg.desc.displayDescriptions.forEach(descId => {
         let description = getDescription(descId);
         let descEle = makeDescriptionEle(description)
         descriptionsEle.appendChild(descEle)
@@ -270,6 +268,7 @@ function filterNonDigits(str) {
 }
 
 function focusFilter() {
+    const filterInput = document.getElementById("filter-input")
     filterInput.focus()
 }
 

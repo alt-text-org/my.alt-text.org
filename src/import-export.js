@@ -1,8 +1,5 @@
-const importBtn = document.getElementById("import-btn")
-const exportBtn = document.getElementById("export-btn")
 
-importBtn.innerText = registerLocalizedElement(importBtn, "innerText", "importBtn")
-exportBtn.innerText = registerLocalizedElement(exportBtn, "innerText", "exportBtn")
+
 
 function exportArchive() {
     const archive = getExportableDescriptions()
@@ -24,7 +21,8 @@ function openImport() {
 
 }
 
-function importArchive() {
+function importArchive(file) {
+
 
 }
 

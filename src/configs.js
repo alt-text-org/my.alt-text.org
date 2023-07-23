@@ -1,25 +1,26 @@
-const defaultOcrFilters = {
-    remove_newlines: {
-        name: 'Remove Newlines',
-        desc: 'Replace all newlines in the text with spaces',
-        find: '\n',
-        replace: ' ',
-        active: true
-    },
-    collapse_whitespace: {
-        name: 'Collapse Whitespace',
-        desc: 'Collapse all chains of whitespace to a single space',
-        find: /\s+/g,
-        replace: ' ',
-        active: true
+MyAltTextOrg.const.OCR_FILTER_KEY = 'configs.ocr_filters';
+MyAltTextOrg.ocrFilters = loadSettings(MyAltTextOrg.const.OCR_FILTER_KEY, {
+        remove_newlines: {
+            name: 'Remove Newlines',
+            desc: 'Replace all newlines in the text with spaces',
+            find: '\n',
+            replace: ' ',
+            active: true
+        },
+        collapse_whitespace: {
+            name: 'Collapse Whitespace',
+            desc: 'Collapse all chains of whitespace to a single space',
+            find: /\s+/g,
+            replace: ' ',
+            active: true
+        }
     }
-}
+)
+MyAltTextOrg.ocrFilters.save = () => saveSettings(MyAltTextOrg.const.OCR_FILTER_KEY, MyAltTextOrg.ocrFilters)
 
-const OCR_FILTER_KEY = 'configs.ocr_filters';
-MyAltTextOrg.ocrFilters = loadSettings(OCR_FILTER_KEY, defaultOcrFilters)
-MyAltTextOrg.ocrFilters.save = () => saveSettings(OCR_FILTER_KEY, MyAltTextOrg.ocrFilters)
 
-const defaultConfigs = {
+MyAltTextOrg.const.GEN_CONFIG_KEY = 'configs.general';
+MyAltTextOrg.composerConfigs = loadSettings(MyAltTextOrg.const.GEN_CONFIG_KEY, {
     gen: {
         __name: "General",
         keyboardCtl: {
@@ -123,12 +124,10 @@ const defaultConfigs = {
             }
         }
     }
-}
+})
 
-const GEN_CONFIG_KEY = 'configs.general';
-MyAltTextOrg.composerConfigs = loadSettings(GEN_CONFIG_KEY, defaultConfigs)
 processConfigs(MyAltTextOrg.composerConfigs)
-MyAltTextOrg.composerConfigs.save = () => saveSettings(GEN_CONFIG_KEY, MyAltTextOrg.composerConfigs)
+MyAltTextOrg.composerConfigs.save = () => saveSettings(MyAltTextOrg.const.GEN_CONFIG_KEY, MyAltTextOrg.composerConfigs)
 
 function processConfigs() {
     MyAltTextOrg.c = {}
@@ -140,7 +139,8 @@ function processConfigs() {
     }
 }
 
-const defaultKeyboardControls = [
+MyAltTextOrg.const.KEYB_CONFIG_KEY = 'config.keyboard';
+MyAltTextOrg.keyboardControls = loadSettings(MyAltTextOrg.const.KEYB_CONFIG_KEY, [
     {
         query: '*',
         name: 'Everywhere',
@@ -351,10 +351,8 @@ const defaultKeyboardControls = [
             }
         },
     },
-]
-const KEYB_CONFIG_KEY = 'config.keyboard';
-MyAltTextOrg.keyboardControls = loadSettings(KEYB_CONFIG_KEY, defaultKeyboardControls)
-MyAltTextOrg.keyboardControls.save = () => saveSettings(KEYB_CONFIG_KEY, MyAltTextOrg.keyboardControls)
+])
+MyAltTextOrg.keyboardControls.save = () => saveSettings(MyAltTextOrg.const.KEYB_CONFIG_KEY, MyAltTextOrg.keyboardControls)
 
 function loadSettings(key, def) {
     const savedVal = window.localStorage.getItem(key)

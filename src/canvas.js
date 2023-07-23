@@ -1,37 +1,18 @@
-const CVS_PADDING = 0
+MyAltTextOrg.const.CVS_PADDING = 0
 
-const uploadWrapper = document.getElementById("upload-wrapper")
-const upload = document.getElementById('upload');
-const topUpload = document.getElementById('top-upload')
-const extractBtn = document.getElementById("extract-btn")
-const canvasWrapper = document.getElementById("cvs-wrapper")
-const canvas = new fabric.Canvas("cvs", {
+MyAltTextOrg.canvas = new fabric.Canvas("cvs", {
     uniformScaling: false
 })
 
 window.onresize = () => {
-    if (canvas.backgroundImage) {
-        MyAltTextOrg.currImage.scale = scaleCanvas(canvas.backgroundImage)
+    if (MyAltTextOrg.canvas.backgroundImage) {
+        MyAltTextOrg.currImage.scale = scaleCanvas(MyAltTextOrg.canvas.backgroundImage)
     }
 }
 
-canvas.selectionColor = 'transparent'
-canvas.selectionBorderColor = "transparent"
+MyAltTextOrg.canvas.selectionColor = 'transparent'
+MyAltTextOrg.canvas.selectionBorderColor = "transparent"
 
-const BACKSPACE_KEY = 8
-//TODO: Move into general controls
-document.body.addEventListener('keyup', (e) => {
-    if (e.isComposing) {
-        return
-    }
-
-    if (e.keyCode === BACKSPACE_KEY) {
-        const active = canvas.getActiveObject()
-        if (active) {
-            canvas.remove(active)
-        }
-    }
-})
 
 document.onpaste = function (event) {
     const items = (event.clipboardData || event.originalEvent.clipboardData).items;
@@ -42,36 +23,45 @@ document.onpaste = function (event) {
     }
 };
 
-upload.addEventListener('dragenter', () => {
-    upload.parentNode.className = 'area dragging';
-}, false);
+(() => {
+    const upload = document.getElementById('upload');
+    const topUpload = document.getElementById('top-upload')
 
-upload.addEventListener('dragleave', () => {
-    upload.parentNode.className = 'area';
-}, false);
+    upload.addEventListener('dragenter', () => {
+        upload.parentNode.className = 'area dragging';
+    }, false);
 
-upload.addEventListener('dragdrop', () => {
-    const file = upload.files[0]
-    loadFile(file)
-}, false);
+    upload.addEventListener('dragleave', () => {
+        upload.parentNode.className = 'area';
+    }, false);
 
-upload.addEventListener('change', async () => {
-    const file = upload.files[0]
-    await loadFile(file)
-}, false);
+    upload.addEventListener('dragdrop', () => {
+        const file = upload.files[0]
+        loadFile(file)
+    }, false);
 
-topUpload.addEventListener('change', async () => {
-    const file = topUpload.files[0]
-    await loadFile(file)
-}, false);
+    upload.addEventListener('change', async () => {
+        const file = upload.files[0]
+        await loadFile(file)
+    }, false);
+
+    topUpload.addEventListener('change', async () => {
+        const file = topUpload.files[0]
+        await loadFile(file)
+    }, false);
+})()
 
 async function loadFile(file) {
     const objUrl = URL.createObjectURL(file);
     if (MyAltTextOrg.c.discardCropsOnNewImg) {
-        canvas.clear()
+        MyAltTextOrg.canvas.clear()
     }
 
     fabric.Image.fromURL(objUrl, async img => {
+        const extractBtn = document.getElementById("extract-btn")
+        const uploadWrapper = document.getElementById("upload-wrapper")
+        const canvasWrapper = document.getElementById("cvs-wrapper")
+
         uploadWrapper.style.display = "none"
         canvasWrapper.style.display = "flex"
 
@@ -81,16 +71,16 @@ async function loadFile(file) {
             scale: scaleCanvas(img)
         }
 
-        canvas.setBackgroundImage(img, null, {
-            top: CVS_PADDING,
-            left: CVS_PADDING
+        MyAltTextOrg.canvas.setBackgroundImage(img, null, {
+            top: MyAltTextOrg.const.CVS_PADDING,
+            left: MyAltTextOrg.const.CVS_PADDING
         })
 
         //TODO: don't let crops outside canvas
         // cropRect.on('moving', handleCropMoving)
         // cropRect.on('scaling', handleCropScaling)
 
-        canvas.renderAll()
+        MyAltTextOrg.canvas.renderAll()
         updateDescriptionDisplay()
 
         closeImgBtn.disabled = false
@@ -99,7 +89,11 @@ async function loadFile(file) {
 }
 
 function clearImage() {
-    canvas.clear()
+    const uploadWrapper = document.getElementById("upload-wrapper")
+    const extractBtn = document.getElementById("extract-btn")
+    const canvasWrapper = document.getElementById("cvs-wrapper")
+
+    MyAltTextOrg.canvas.clear()
     uploadWrapper.style.display = "flex"
     canvasWrapper.style.display = "none"
     MyAltTextOrg.currImage = null
@@ -109,6 +103,7 @@ function clearImage() {
 }
 
 let primaryMouseButtonDown = false;
+
 function setPrimaryButtonState(e) {
     const flags = e.buttons !== undefined ? e.buttons : e.which;
     primaryMouseButtonDown = (flags & 1) === 1;
@@ -125,13 +120,16 @@ document.addEventListener("mouseup", setPrimaryButtonState);
 // canvas.on('mouse:over', handleMouseOver)
 // canvas.on('mouse:out', handleMouseOut)
 
-let currRect = null
-let currRectStart = null
-let lastPoint = null
-let justEntered = false
+MyAltTextOrg.crops.active = {
+    currRect: null,
+    currRectStart: null,
+    lastPoint: null,
+    justEntered: false
+}
+
 function handleMouseDown(e) {
     console.log(`Down: ${JSON.stringify(e.pointer)}`)
-    if (e.button !== 1 || isOverActiveObject(e.pointer) || currRect) {
+    if (e.button !== 1 || isOverActiveObject(e.pointer) || MyAltTextOrg.crops.active.currRect) {
         return
     }
 
@@ -141,10 +139,10 @@ function handleMouseDown(e) {
 function handleMouseMove(e) {
     // console.log(`Move: ${JSON.stringify(e.pointer)}`)
     if (e.pointer) {
-        lastPoint = e.pointer
+        MyAltTextOrg.crops.active.lastPoint = e.pointer
     }
 
-    if (!primaryMouseButtonDown || !currRect) {
+    if (!primaryMouseButtonDown || !MyAltTextOrg.crops.active.currRect) {
         return
     }
 
@@ -154,20 +152,20 @@ function handleMouseMove(e) {
 function handleMouseUp(e) {
     console.log(`Up: ${JSON.stringify(e.pointer)}`)
 
-    currRect = null
-    currRectStart = null
+    MyAltTextOrg.crops.active.currRect = null
+    MyAltTextOrg.crops.active.currRectStart = null
 }
 
 function handleMouseOver(e) {
     console.log(`Over`)
-    justEntered = true
+    MyAltTextOrg.crops.active.justEntered = true
 }
 
 function handleMouseOut(e) {
-    console.log(`Out: ${JSON.stringify(lastPoint)}`)
+    console.log(`Out: ${JSON.stringify(MyAltTextOrg.crops.active.lastPoint)}`)
 
-    if (primaryMouseButtonDown && currRect) {
-        renderRect(lastPoint)
+    if (primaryMouseButtonDown && MyAltTextOrg.crops.active.currRect) {
+        renderRect(MyAltTextOrg.crops.active.lastPoint)
     }
 }
 
@@ -184,16 +182,16 @@ function addRect(pointer) {
         strokeUniform: true,
         uniformScaling: false,
     })
-    canvas.add(cropRect)
-    currRect = cropRect
-    currRectStart = {
+    MyAltTextOrg.canvas.add(cropRect)
+    MyAltTextOrg.crops.active.currRect = cropRect
+    MyAltTextOrg.crops.active.currRectStart = {
         x: pointer.x,
         y: pointer.y
     }
 }
 
 function isOverActiveObject(pointer) {
-    const active = canvas.getActiveObject()
+    const active = MyAltTextOrg.canvas.getActiveObject()
     if (!active) {
         return
     }
@@ -203,15 +201,19 @@ function isOverActiveObject(pointer) {
 }
 
 function renderRect(pointer) {
+    let currRect = MyAltTextOrg.crops.active.currRect
+    currRectStart = MyAltTextOrg.crops.active.currRectStart
     currRect.scale(1)
     currRect.left = Math.min(pointer.x, currRectStart.x) * MyAltTextOrg.currImage.scale
     currRect.top = Math.min(pointer.y, currRectStart.y) * MyAltTextOrg.currImage.scale
     currRect.width = (Math.max(pointer.x, currRectStart.x) - currRect.left) * MyAltTextOrg.currImage.scale
     currRect.height = (Math.max(pointer.y, currRectStart.y) - currRect.top) * MyAltTextOrg.currImage.scale
-    canvas.renderAll()
+    MyAltTextOrg.canvas.renderAll()
 }
 
 function scaleCanvas(img) {
+    const canvasWrapper = document.getElementById("cvs-wrapper")
+
     if (!img) {
         return
     }
@@ -220,32 +222,32 @@ function scaleCanvas(img) {
         Math.min(canvasWrapper.clientWidth / img.width, 1),
         Math.min(canvasWrapper.clientHeight / img.height, 1),
     );
-    canvas.setZoom(ratio)
-    canvas.setDimensions({
-        width: img.width * ratio + CVS_PADDING * 2,
-        height: img.height * ratio + CVS_PADDING * 2
+    MyAltTextOrg.canvas.setZoom(ratio)
+    MyAltTextOrg.canvas.setDimensions({
+        width: img.width * ratio + MyAltTextOrg.const.CVS_PADDING * 2,
+        height: img.height * ratio + MyAltTextOrg.const.CVS_PADDING * 2
     })
-    canvas.renderAll()
+    MyAltTextOrg.canvas.renderAll()
     return ratio
 }
 
 function handleCropMoving() {
-    const cropRect = canvas.getActiveObject()
+    const cropRect = MyAltTextOrg.canvas.getActiveObject()
     //TODO: Can't move to bottom or right sides
     if ((cropRect.left * MyAltTextOrg.currImage.scale) < 10) {
         cropRect.left = 10
     }
 
-    if ((cropRect.left + cropRect.width * cropRect.scaleX) * MyAltTextOrg.currImage.scale > canvas.width - 20) {
-        cropRect.left = canvas.width - 20 - cropRect.width * cropRect.scaleX
+    if ((cropRect.left + cropRect.width * cropRect.scaleX) * MyAltTextOrg.currImage.scale > MyAltTextOrg.canvas.width - 20) {
+        cropRect.left = MyAltTextOrg.canvas.width - 20 - cropRect.width * cropRect.scaleX
     }
 
     if ((cropRect.top * MyAltTextOrg.currImage.scale) < 10) {
         cropRect.top = 10
     }
 
-    if ((cropRect.top + cropRect.height * cropRect.scaleY) * MyAltTextOrg.currImage.scale > canvas.height - 20) {
-        cropRect.top = canvas.height - 20 - cropRect.height * cropRect.scaleY
+    if ((cropRect.top + cropRect.height * cropRect.scaleY) * MyAltTextOrg.currImage.scale > MyAltTextOrg.canvas.height - 20) {
+        cropRect.top = MyAltTextOrg.canvas.height - 20 - cropRect.height * cropRect.scaleY
     }
 }
 
@@ -254,13 +256,16 @@ function handleCropScaling() {
 }
 
 function crop() {
-    canvas.setZoom(1)
-    let crops = canvas.getActiveObject() ? [canvas.getActiveObject()] : canvas.getObjects("rect");
+    MyAltTextOrg.canvas.setZoom(1)
+    let crops = MyAltTextOrg.canvas.getActiveObject()
+        ? [MyAltTextOrg.canvas.getActiveObject()]
+        : MyAltTextOrg.canvas.getObjects("rect");
+
     if (crops.length > 0) {
         const result = []
         for (let crop of crops) {
             crop.opacity = 0
-            const dataUrl = canvas.toDataURL({
+            const dataUrl = MyAltTextOrg.canvas.toDataURL({
                 left: crop.left,
                 top: crop.top,
                 width: crop.width * crop.scaleX,
@@ -270,10 +275,10 @@ function crop() {
             result.push(dataUrl)
         }
 
-        canvas.setZoom(MyAltTextOrg.currImage.scale)
+        MyAltTextOrg.canvas.setZoom(MyAltTextOrg.currImage.scale)
         return result
     } else {
-        canvas.setZoom(MyAltTextOrg.currImage.scale)
-        return [canvas.toDataURL()]
+        MyAltTextOrg.canvas.setZoom(MyAltTextOrg.currImage.scale)
+        return [MyAltTextOrg.canvas.toDataURL()]
     }
 }
