@@ -11,6 +11,14 @@ MyAltTextOrg.desc.displayDescriptions = []
 const resultFilter = document.getElementById("filter-input")
 resultFilter.oninput = () => updateDescriptionDisplay()
 
+function toggleSearchResults(img) {
+
+}
+
+function toggleImageFilter(btn) {
+
+}
+
 function updateDescriptionDisplay() {
     if (MyAltTextOrg.currImage && resultFilter.value) {
         MyAltTextOrg.desc.displayDescriptions = searchArchive(resultFilter.value, MyAltTextOrg.currImage.hash)

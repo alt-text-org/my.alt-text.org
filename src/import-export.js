@@ -54,7 +54,6 @@ function importMastodonJson(jsonFile, sampleUrl, reportPct) {
                 }
             }
         }
-
     }).catch((e) => {
         console.log(e)
         alert("Failed to import from Mastodon")

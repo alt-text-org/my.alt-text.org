@@ -10,7 +10,8 @@
     <meta property="og:description"
           content="Built For Building Image Descriptions">
     <meta property="og:image" content="images/preview.png">
-    <meta property="og:image:alt" content="Our logo, on a green background, an eye with an A in front of it, seeming like a beam from the eye">
+    <meta property="og:image:alt"
+          content="Our logo, on a green background, an eye with an A in front of it, seeming like a beam from the eye">
 
     <link rel="stylesheet" href="style/fonts.css">
     <link rel="stylesheet" href="style/main.css">
@@ -45,24 +46,38 @@
     <script src="src/last.js" defer></script>
 </head>
 <body>
-<div id="overlay" class="openable" onclick="hideEscapable()"></div>
 <div id="main">
-    <div id="left-col">
-        <div id="controls">
+    <div id="top-controls">
+        <div id="left-controls">
+            <button id="help-button" onclick="openHelp()"></button>
             <div class="now-kiss">
                 <div id="page-lang-name"></div>
                 <div id="page-lang-dropdown"></div>
             </div>
-            <div>
-                <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
-                <input type="file" id="top-upload" name="top-upload" accept="image/*">
-            </div>
-            <button id="clear-image" onclick="clearImage()" disabled></button>
-            <div class="now-kiss">
-                <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
-                <div id="extract-lang-dropdown"></div>
-            </div>
         </div>
+        <div id="links">
+            <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg"
+                                                                               alt="Mastodon"></a>
+            <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
+                                                                alt="Alt-Text.org"></a>
+            <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo"
+                                                                                           src="images/github.svg"
+                                                                                           alt="GitHub"></a>
+        </div>
+        <div class="search-toggles search-width">
+            <button onclick="toggleSearchResults(this)" aria-label="PLACEHOLDER">
+                <img src="images/dropdown.svg" height="14" width="28" class="expand-btn rotated" alt=""
+                     aria-hidden="true">
+            </button>
+            <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
+                <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
+                <input id="filter-input" class="search-input" type="text" aria-label="PLACEHOLDER"
+                       placeholder="PLACEHOLDER" onload="">
+            </div>
+            <button class="emoji-button" onclick="toggleImageFilter(this)" aria-label="PLACEHOLDER">🌠</button>
+        </div>
+    </div>
+    <div id="img-area">
         <div id="upload-wrapper">
             <div class="upload-area">
                 <input type="file" id="upload" name="upload" accept="image/*"/>
@@ -72,43 +87,36 @@
         <div id="cvs-wrapper">
             <canvas id="cvs" width="1" height="1"></canvas>
         </div>
-        <div id="in-flight-wrapper" class="bordered-area">
-            <div id="add-in-flight" class="column-emoji-controls">
-                <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕</button>
+        <div id="img-controls">
+            <button id="clear-image" onclick="clearImage()" disabled></button>
+            <div class="now-kiss">
+                <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
+                <div id="extract-lang-dropdown"></div>
             </div>
-            <div id="in-flight"></div>
-            <div id="in-flight-controls" class="column-emoji-controls">
-                <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
-                <button id="discard-in-flight" class="emoji-button large-emoji" onclick="clearInFlight()">🚮</button>
-            </div>
+            <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
+            <input type="file" id="top-upload" name="top-upload" accept="image/*">
         </div>
     </div>
-    <div id="right-col">
-        <div id="result-wrapper">
-            <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
-                <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
-                <input id="filter-input" class="search-input" type="text" placeholder="#" aria-label="PLACEHOLDER">
-            </div>
-            <div id="descriptions" class="bordered-area"></div>
-            <div id="import-export-btns">
-                <button id="import-btn" onclick="openImport()">Import PLACEHOLDER</button>
-                <button id="export-btn" onclick="exportArchive()">Export PLACEHOLDER</button>
-            </div>
-            <div id="links">
-                <button id="help-button" onclick="openHelp()"></button>
-                <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg" alt="Mastodon"></a>
-                <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg" alt="Alt-Text.org"></a>
-                <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo" src="images/github.svg" alt="GitHub"></a>
-            </div>
+    <div id="in-flight-wrapper" class="bordered-area">
+        <div id="add-in-flight" class="column-emoji-controls">
+            <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕</button>
+        </div>
+        <div id="in-flight"></div>
+        <div id="in-flight-controls" class="column-emoji-controls">
+            <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
+            <button id="discard-in-flight" class="emoji-button large-emoji" onclick="clearInFlight()">🚮</button>
         </div>
     </div>
+    <div id="descriptions" class="bordered-area search-width"></div>
 </div>
+<div id="overlay" class="openable" onclick="hideEscapable()"></div>
 <div class="prompt-wrapper openable">
     <div id="import-prompt" class="prompt">
         <div id="import-choices">
             <div>
                 <label id="import-archive-lbl" for="import-archive-btn" class="file-input-lbl"></label>
-                <input type="file" id="import-archive-btn" name="import-archive-btn" accept="application/json" onchange="importArchive()">
+                <input type="file" id="import-archive-btn" name="import-archive-btn" accept="application/json"
+                       onchange="importArchive()">
             </div>
             <button id="open-masto-import"></button>
         </div>

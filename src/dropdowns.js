@@ -17,7 +17,7 @@ function addDropdown(
     openDropdownBtn.id = buttonId
     openDropdownBtn.classList.add("drop-btn")
     openDropdownBtn.innerHTML =
-        `<img src="images/dropdown.svg" class="inline-icon rotated" aria-hidden="true" alt="">`
+        `<img src="images/dropdown.svg" width="10" height="6" class="inline-icon rotated" aria-hidden="true" alt="">`
     const displayVal = document.createElement("span");
     displayVal.id = buttonLabelId
     displayVal.innerText = buttonDefault
@@ -108,9 +108,11 @@ function makeDropdownOption(dropdown, value, display, onClick) {
 }
 
 const toEscape = []
-function showEscapable(elem) {
-    const overlay = document.getElementById("overlay");
-    overlay.classList.add("open");
+function showEscapable(elem, skipOverlay) {
+    if (!skipOverlay) {
+        const overlay = document.getElementById("overlay");
+        overlay.classList.add("open");
+    }
     elem.classList.add("open");
     toEscape.push(elem)
 }

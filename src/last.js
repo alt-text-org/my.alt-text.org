@@ -50,16 +50,16 @@
     })();
 
     (() => {
-        const importBtn = document.getElementById("import-btn")
-        const exportBtn = document.getElementById("export-btn")
-        const importArchiveBtn = document.getElementById("import-archive-btn")
-        const importArchiveLbl = document.getElementById("import-archive-lbl")
-        const openMastoImport = document.getElementById("open-masto-import")
-        const importMastoBtn = document.getElementById("import-masto-btn")
-        const importMastoLbl = document.getElementById("import-masto-lbl")
-
-        importBtn.innerHTML = registerLocalizedElement(importBtn, "innerHTML", "importBtn")
-        exportBtn.innerHTML = registerLocalizedElement(exportBtn, "innerHTML", "exportBtn")
+        // const importBtn = document.getElementById("import-btn")
+        // const exportBtn = document.getElementById("export-btn")
+        // const importArchiveBtn = document.getElementById("import-archive-btn")
+        // const importArchiveLbl = document.getElementById("import-archive-lbl")
+        // const openMastoImport = document.getElementById("open-masto-import")
+        // const importMastoBtn = document.getElementById("import-masto-btn")
+        // const importMastoLbl = document.getElementById("import-masto-lbl")
+        //
+        // importBtn.innerHTML = registerLocalizedElement(importBtn, "innerHTML", "importBtn")
+        // exportBtn.innerHTML = registerLocalizedElement(exportBtn, "innerHTML", "exportBtn")
 // importArchiveLbl.innerText = registerLocalizedElement(importArchiveLbl, "innerHTML", "importArchiveBtn")
 // importMastoLbl.innerText = registerLocalizedElement(importMastoLbl, "innerHTML", "importMastoBtn")
 
@@ -87,5 +87,7 @@
         filterInput.placeholder = registerLocalizedElement(filterInput, "placeholder", "searchPrompt")
         closeImgBtn.innerHTML = registerLocalizedElement(closeImgBtn, "innerHTML", 'closeImage')
     })();
+
+    document.getElementById("main").style.display = "flex"
 });
 

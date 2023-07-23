@@ -1,17 +1,20 @@
 body {
-    margin: 10px auto;
-    padding: 0 20px 20px 20px;
+    margin: 0 auto;
+    height: 98vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #cef0f5;
     font-family: "Atkinson Hyperlegible", sans-serif;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 button {
     border-radius: 15px;
-    padding: 5px 10px;
+    padding: 10px;
     font-size: 1.3em;
     font-weight: 900;
     background: #73c4e6;
@@ -35,54 +38,56 @@ input {
     border: none;
 }
 
-#controls {
-    padding: 7px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-
-    flex-wrap: wrap;
-    gap: 8px;
+canvas {
+    width: 100%;
+    height: 100%;
+    resize: block;
 }
 
 input[type=file] {
     display: none;
-
-}
-
-.file-input-lbl {
-    border-radius: 15px;
-    padding: 5px 10px;
-    font-size: 1.3em;
-    font-weight: 900;
-    background: #73c4e6;
-    border: none;
-    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
-}
-
-#open-file-lbl:hover {
-    background: #57a4c3;
-    cursor: pointer;
-}
-
-#left-col {
-    height: 95vh;
-    width: 60vw;
-    flex-grow: 2;
-}
-
-#right-col {
-    width: 30vw;
-    height: 95vh;
-    margin: 0;
-    flex-grow: 1;
 }
 
 #main {
     margin: 0 auto;
-    width: 95vw;
-    height: 100%;
+    width: 98vw;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: center;
+    gap: 12px;
+}
+
+#top-controls {
+    padding: 7px 0;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#left-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#work-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}
+
+#descriptions {
+    height: 100%;
+    flex-grow: 1;
 }
 
 #cvs-wrapper {
@@ -97,9 +102,25 @@ input[type=file] {
     text-align: center;
 }
 
-canvas {
+#img-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.file-input-lbl {
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 1.3em;
+    font-weight: 900;
+    background: #73c4e6;
+    border: none;
+    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
+}
+
+#filter-wrapper {
     width: 100%;
-    height: 100%;
 }
 
 #result-wrapper {
@@ -130,6 +151,18 @@ textarea {
     border-top-right-radius: 15px;
 }
 
+.search-width {
+    width: 45vw;
+}
+
+.search-toggles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
 .search-wrapper {
     display: flex;
     flex-direction: row;
@@ -155,20 +188,16 @@ textarea {
 }
 
 #upload-wrapper {
-    width: 50vw;
-    height: 40vh;
-    margin: 3vh auto;
     display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
+    place-content: center;
     padding: 40px 40px 15px;
     text-align: center;
     font-size: 1.3em;
     font-weight: 900;
-    background-color: #f8f2e8;
+    background-color: rgb(248, 242, 232);
     border-radius: 40px;
+    margin: 10px 20vw;
 }
 
 .upload-area {
@@ -243,7 +272,6 @@ textarea {
 }
 
 #links {
-    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -253,9 +281,9 @@ textarea {
 }
 
 .link-logo {
-    height: 64px;
+    height: 48px;
     width: auto;
-    margin: 5px;
+    margin: 3px;
     cursor: pointer;
 }
 
@@ -274,7 +302,6 @@ textarea {
     font-family: Arial, sans-serif;
     font-size: 2rem;
     border: none;
-    background-color: transparent;
     box-shadow: 1px 1px 1px 1px #11131a;
     padding: 3px 8px;
     margin: 3px;
@@ -354,7 +381,7 @@ a, a:visited {
 }
 
 #help-button {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-right: 20px;
 }
 
@@ -388,7 +415,6 @@ a, a:visited {
     
     #links {
         position: initial;
-        padding: 2rem 0 0.5rem 0;
         justify-content: center;
     }
 
