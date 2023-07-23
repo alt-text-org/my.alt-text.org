@@ -190,3 +190,7 @@ function closeHelp() {
     document.body.removeChild(document.querySelector(".splash-backdrop"))
     document.body.removeChild(document.querySelector(".splash-wrapper"))
 }
+
+function focusClick(id) {
+    document.getElementById(id).click();
+}

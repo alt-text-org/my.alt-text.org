@@ -10,10 +10,6 @@
     gap: 3px;
 }
 
-.drop-btn:hover {
-    background-color: #EDEDED;
-}
-
 .dropdown-content {
     position: absolute;
     top: 0;

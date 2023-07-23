@@ -25,17 +25,18 @@ document.onpaste = function (event) {
 
 (() => {
     const upload = document.getElementById('upload');
+    const centralUpload = document.getElementById('central-upload')
     const topUpload = document.getElementById('top-upload')
 
-    upload.addEventListener('dragenter', () => {
+    centralUpload.addEventListener('dragenter', () => {
         upload.parentNode.className = 'area dragging';
     }, false);
 
-    upload.addEventListener('dragleave', () => {
+    centralUpload.addEventListener('dragleave', () => {
         upload.parentNode.className = 'area';
     }, false);
 
-    upload.addEventListener('dragdrop', () => {
+    centralUpload.addEventListener('dragdrop', () => {
         const file = upload.files[0]
         loadFile(file)
     }, false);
@@ -49,9 +50,10 @@ document.onpaste = function (event) {
         const file = topUpload.files[0]
         await loadFile(file)
     }, false);
-})()
+})();
 
 async function loadFile(file) {
+    console.log("HrmHrm")
     const objUrl = URL.createObjectURL(file);
     if (MyAltTextOrg.c.discardCropsOnNewImg) {
         MyAltTextOrg.canvas.clear()
@@ -59,8 +61,10 @@ async function loadFile(file) {
 
     fabric.Image.fromURL(objUrl, async img => {
         const extractBtn = document.getElementById("extract-btn")
+        const closeImgBtn = document.getElementById("clear-image")
         const uploadWrapper = document.getElementById("upload-wrapper")
         const canvasWrapper = document.getElementById("cvs-wrapper")
+
 
         uploadWrapper.style.display = "none"
         canvasWrapper.style.display = "flex"
@@ -91,6 +95,7 @@ async function loadFile(file) {
 function clearImage() {
     const uploadWrapper = document.getElementById("upload-wrapper")
     const extractBtn = document.getElementById("extract-btn")
+    const closeImgBtn = document.getElementById("clear-image")
     const canvasWrapper = document.getElementById("cvs-wrapper")
 
     MyAltTextOrg.canvas.clear()
