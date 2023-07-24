@@ -1,5 +1,3 @@
-
-
 async function cropExtractAndAddInFlight() {
     const extractBtn = document.getElementById("extract-btn")
 
@@ -23,10 +21,8 @@ function showSplash() {
     const dialog = document.querySelector("dialog.splash")
 
     dialog?.showModal()
-    dialog?.addEventListener("click", function onclick(e) {
-        if (e.target.className === "splash") {
-            dialog.close()
-        }
+    dialog?.addEventListener("click", function onclick() {
+        dialog.close()
     })
 }
 

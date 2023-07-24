@@ -1,4 +1,6 @@
 (async () => {
+    const CURRENT_SPLASH = 1;
+
     await initOcr()
     // await initStoredImage()
 
@@ -7,8 +9,12 @@
     initializeSearch()
     updateDescriptionDisplay()
     hashIndexDescriptions()
-    showSplash()
 
+    const splashSeen = parseInt(window.localStorage.getItem("user.splash_seen") || "0")
+    if (splashSeen < CURRENT_SPLASH) {
+        showSplash()
+        window.localStorage.setItem("user.splash_seen", `${CURRENT_SPLASH}`)
+    }
 })().then(() => {
     (() => {
         addDropdown(
