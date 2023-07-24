@@ -25,7 +25,7 @@
     justify-content: flex-start;
     align-items: stretch;
     flex-wrap: nowrap;
-    border: solid 3px black;
+    border: solid 3px var(--border);
     border-radius: 0 15px 15px 15px;
     overflow-y: scroll;
     z-index: 1001;
@@ -51,13 +51,12 @@
     flex-wrap: wrap;
     border-radius: 0;
     border: none;
-    color: black;
-    background-color: white;
+    color: var(--text);
+    background-color: var(--editable);
 }
 
 .dropdown-option:hover {
-    background-color: #050d2c;
-    color: white;
+    background-color: var(--engaged);
 }
 
 #overlay {
@@ -67,8 +66,8 @@
     width: 100%;
     height: 100%;
     z-index: 1000;
-    background-color: #6882e8;
-    opacity: 0.4;
+    background-color: var(--shadow);
+    opacity: 0.3;
 }
 
 .openable {
@@ -83,7 +82,7 @@
     padding: 30px 10px;
     text-align: center;
     font-size: 1.3rem;
-    background-color: #e1e0e0;
+    background-color: var(--readable);
 }
 
 .dropdown-footer {
@@ -91,8 +90,8 @@
     display: block;
     padding: 10px 0;
     text-align: center;
-    color: black;
-    background-color: white;
+    color: var(--text);
+    background-color: var(--editable);
     border-top: solid 2px black;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;

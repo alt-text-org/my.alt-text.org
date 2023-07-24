@@ -47,16 +47,11 @@
     align-content: center;
 }
 
-.name-input {
-    text-align: center;
-    padding: 3px;
-    margin-bottom: 5px;
-}
-
 .in-flight-text {
     min-width: 200px;
     max-width: calc(100% - 18px);
-    resize: none;
+    resize: horizontal;
+    margin: 5px;
 }
 
 .in-flight-item-controls {
@@ -75,7 +70,7 @@
 
 .char-counter {
     min-width: 2.7rem;
-    color: #FFFFFF;
+    color: var(--editable);
     font-size: 1.2em;
     text-align: right;
 }

@@ -54,16 +54,17 @@
                 <div id="page-lang-name"></div>
                 <div id="page-lang-dropdown"></div>
             </div>
+            <div id="links">
+                <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
+                                                                    alt="Alt-Text.org"></a>
+                <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo"
+                                                                                               src="images/github.svg"
+                                                                                               alt="GitHub"></a>
+                <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg"
+                                                                                   alt="Mastodon"></a>
+            </div>
         </div>
-        <div id="links">
-            <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg"
-                                                                               alt="Mastodon"></a>
-            <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
-                                                                alt="Alt-Text.org"></a>
-            <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo"
-                                                                                           src="images/github.svg"
-                                                                                           alt="GitHub"></a>
-        </div>
+
         <div class="search-toggles search-width">
             <button onclick="toggleSearchResults()" aria-label="Toggle search results">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
@@ -71,7 +72,7 @@
                      aria-hidden="true">
             </button>
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
-                <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
+                <img src="images/magnifying.svg" class="inline-icon text-color-svg" alt="" aria-hidden="true">
                 <input id="filter-input" class="search-input" type="text" aria-label="Archive search"
                        placeholder="Search Your Archive" onload="">
             </div>
@@ -115,7 +116,13 @@
                 </div>
             </div>
         </div>
-        <div id="descriptions" class="bordered-area search-width"></div>
+        <div id="description-wrapper" class="bordered-area search-width">
+            <div id="not-found-display">
+                <img src="images/nothing-found.svg" alt="Nothing found" class="text-color-svg" width="90" height="110">
+                <div id="not-found-text">No Descriptions Found</div>
+            </div>
+            <div id="descriptions"></div>
+        </div>
     </div>
 </div>
 <div id="overlay" class="openable" onclick="hideEscapable()"></div>

@@ -67,9 +67,9 @@ function updateDescriptionDisplay() {
 
 function hideResultDisplay() {
     const status = document.getElementById("search-dropdown-indicator")
-    let descriptions = document.getElementById("descriptions");
+    const descriptionWrapper = document.getElementById("description-wrapper");
     status.classList.add("rotated")
-    descriptions.style.display = "none"
+    descriptionWrapper.style.display = "none"
 }
 
 function initializeSearch() {
@@ -179,15 +179,19 @@ function removeDescription(descId) {
 }
 
 function renderDescriptions() {
+    const descriptionWrapper = document.getElementById("description-wrapper");
     const descriptionsEle = document.getElementById("descriptions")
     const descriptionStateImg = document.getElementById("search-dropdown-indicator")
+    const notFound = document.getElementById("not-found-display");
     descriptionStateImg.classList.remove("rotated")
 
     if (MyAltTextOrg.desc.displayDescriptions.length === 0) {
         descriptionsEle.innerHTML = ""
-        descriptionsEle.classList.add("nothing-found")
+        notFound.style.display = "flex"
+        descriptionWrapper.classList.add("disabled")
     } else {
-        descriptionsEle.classList.remove("nothing-found")
+        descriptionWrapper.classList.remove("disabled")
+        notFound.style.display = "none"
         const scrollPx = descriptionsEle.scrollHeight
         descriptionsEle.innerHTML = ""
 
@@ -199,18 +203,16 @@ function renderDescriptions() {
 
         descriptionsEle.scrollHeight = scrollPx
     }
-    descriptionsEle.style.display = "flex"
+    descriptionWrapper.style.display = "flex"
 }
 
 function makeDescriptionEle(description) {
     const name = document.createElement("input")
-    name.classList.add("description-name")
+    name.classList.add("name-input")
     name.placeholder = getLocalized("untitledName")
     name.type = "text"
+    name.readOnly = true
     name.value = description.name
-    name.onchange = () => {
-        updateDescription(description.id, description)
-    }
 
     const wrapper = document.createElement("div")
     wrapper.classList.add("description-wrapper")

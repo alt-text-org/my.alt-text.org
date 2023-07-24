@@ -17,7 +17,7 @@ function addDropdown(
     openDropdownBtn.id = buttonId
     openDropdownBtn.classList.add("drop-btn")
     openDropdownBtn.innerHTML =
-        `<img src="images/dropdown.svg" width="10" height="6" class="dropdown-img rotated" aria-hidden="true" alt="">`
+        `<img src="images/dropdown.svg" width="10" height="6" class="dropdown-img rotated text-color-svg" aria-hidden="true" alt="">`
     const displayVal = document.createElement("span");
     displayVal.id = buttonLabelId
     displayVal.innerText = buttonDefault
