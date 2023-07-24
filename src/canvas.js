@@ -74,7 +74,7 @@ async function loadFile(file) {
         const uploadWrapper = document.getElementById("upload-wrapper")
         const canvasWrapper = document.getElementById("cvs-wrapper")
         uploadWrapper.style.display = "none"
-        canvasWrapper.style.display = "flex"
+        canvasWrapper.style.display = "block"
 
         MyAltTextOrg.canvas.setBackgroundImage(img, null, {
             top: MyAltTextOrg.const.CVS_PADDING,

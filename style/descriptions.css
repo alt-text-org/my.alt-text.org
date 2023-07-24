@@ -29,7 +29,7 @@
 
 .nothing-found {
     background-color: #b1b1d0;
-    background-image: url("/images");
+    font-family: sans-serif;
     content: "🫥";
 }
 

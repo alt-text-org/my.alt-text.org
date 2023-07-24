@@ -48,13 +48,13 @@ input[type=file] {
     height: 100vh;
     display: none;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: stretch;
     align-items: stretch;
     align-content: center;
 }
 
 #top-controls {
-    padding: 7px 0;
+    padding-top: 7px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,7 +95,6 @@ input[type=file] {
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
-    gap: 15px;
 }
 
 #cvs-wrapper {
