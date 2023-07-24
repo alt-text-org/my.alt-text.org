@@ -66,7 +66,7 @@
         </div>
         <div class="search-toggles search-width">
             <button onclick="toggleSearchResults()" aria-label="PLACEHOLDER">
-                <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28" class="expand-btn rotated" alt=""
+                <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28" class="dropdown-img rotated" alt=""
                      aria-hidden="true">
             </button>
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
@@ -74,7 +74,7 @@
                 <input id="filter-input" class="search-input" type="text" aria-label="PLACEHOLDER"
                        placeholder="PLACEHOLDER" onload="">
             </div>
-            <button class="emoji-button" onclick="toggleImageFilter(this)" aria-label="PLACEHOLDER">🌠</button>
+            <button id="image-filter-toggle" class="emoji-button" onclick="toggleImageFilter()" aria-label="PLACEHOLDER" disabled>🌠</button>
         </div>
     </div>
     <div id="main-area">

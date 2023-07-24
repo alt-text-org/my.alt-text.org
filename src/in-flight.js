@@ -103,7 +103,7 @@ function buildInFlightItem(idx, chunk) {
     textArea.rows = 4
     textArea.cols = 1
     textArea.value = chunk.text
-    textArea.onchange = () => inFlight[idx].text = textArea.value
+    textArea.onchange = () => MyAltTextOrg.inFlight[idx].text = textArea.value
     charCounter.innerText = `${textLen(textArea.value)}`
     textArea.oninput = () => charCounter.innerText = `${textLen(textArea.value)}`
     outer.appendChild(textArea)

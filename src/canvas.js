@@ -95,6 +95,7 @@ async function loadFile(file) {
         // cropRect.on('scaling', handleCropScaling)
 
         MyAltTextOrg.canvas.renderAll()
+        setImageFilter(true)
         updateDescriptionDisplay()
 
         closeImgBtn.disabled = false
@@ -131,6 +132,7 @@ function srcToFile(src, fileName, mimeType) {
 }
 
 function clearImage() {
+    const toggleBtn = document.getElementById("image-filter-toggle")
     const uploadWrapper = document.getElementById("upload-wrapper")
     const extractBtn = document.getElementById("extract-btn")
     const closeImgBtn = document.getElementById("clear-image")
@@ -142,6 +144,7 @@ function clearImage() {
     MyAltTextOrg.currImage = null
     closeImgBtn.disabled = true
     extractBtn.disabled = true
+    toggleBtn.disabled = true
     updateDescriptionDisplay()
 }
 

@@ -10,6 +10,11 @@
     gap: 3px;
 }
 
+.dropdown-img {
+    width: 20px;
+    height: 20px;
+}
+
 .dropdown-content {
     position: absolute;
     top: 0;

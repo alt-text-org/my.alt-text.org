@@ -14,14 +14,8 @@ Alpha Follow On
 
 - Initial accessibility work
 - Import/Export of local and Mastodon archives
-- Hide archive unless it's active
 - Aux image download/copy prompt
 - Reactive styling for mobile
-- Make search a dropdown, opened on image upload/search usage. 
-- Allow editing of work items in larger textbox where search is now
-- Resizeable work areas
-- Search for image without loading
-- Move to hyperlegible
 
 Beta
 ----

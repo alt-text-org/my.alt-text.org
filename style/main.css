@@ -38,12 +38,6 @@ input {
     border: none;
 }
 
-canvas {
-    width: 100%;
-    height: 100%;
-    resize: block;
-}
-
 input[type=file] {
     display: none;
 }
@@ -101,6 +95,7 @@ input[type=file] {
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
+    gap: 15px;
 }
 
 #cvs-wrapper {
@@ -343,12 +338,28 @@ textarea {
     opacity: 80%;
 }
 
+.emoji-button:disabled:hover {
+    opacity: 100%;
+}
+
 .large-emoji {
     font-size: 3rem;
 }
 
+.expand-btn {
+    width: 15px;
+    height: auto;
+}
+
 .splash::backdrop {
     /* TODO: Use an `rgba()` background instead of setting opacity; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 1.5s;
+    z-index: 1001;
     background: #101633;
     opacity: 0.5;
 }

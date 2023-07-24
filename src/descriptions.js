@@ -9,6 +9,7 @@ MyAltTextOrg.desc.nameNextSearchIdx = 0
 MyAltTextOrg.desc.displayDescriptions = []
 
 MyAltTextOrg.desc.resultIsDown = false
+MyAltTextOrg.desc.imageFilter = false
 
 MyAltTextOrg.desc.resultFilter = document.getElementById("filter-input")
 MyAltTextOrg.desc.resultFilter.oninput = () => updateDescriptionDisplay()
@@ -19,14 +20,26 @@ function toggleSearchResults(btn) {
         const main = document.getElementById("main-area")
         updateDescriptionDisplay()
         main.scrollHeight = 0
-
     } else {
         hideResultDisplay()
     }
 }
 
-function toggleImageFilter(btn) {
+function toggleImageFilter() {
+    setImageFilter(!MyAltTextOrg.desc.imageFilter)
+}
 
+function setImageFilter(bool) {
+    const toggleBtn = document.getElementById("image-filter-toggle")
+    toggleBtn.disabled = false
+    MyAltTextOrg.desc.imageFilter = bool
+    if (MyAltTextOrg.desc.imageFilter) {
+        toggleBtn.classList.remove("depressed")
+    } else {
+        toggleBtn.classList.add("depressed")
+    }
+
+    updateDescriptionDisplay()
 }
 
 function updateDescriptionDisplay() {
@@ -35,10 +48,14 @@ function updateDescriptionDisplay() {
         return
     }
 
-    if (MyAltTextOrg.currImage && MyAltTextOrg.desc.resultFilter.value) {
+    if ((MyAltTextOrg.currImage && MyAltTextOrg.desc.imageFilter) && MyAltTextOrg.desc.resultFilter.value) {
         MyAltTextOrg.desc.displayDescriptions = searchArchive(MyAltTextOrg.desc.resultFilter.value, MyAltTextOrg.currImage.hash)
     } else if (MyAltTextOrg.currImage) {
-        MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100, MyAltTextOrg.currImage.hash)
+        MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100,
+            MyAltTextOrg.desc.imageFilter
+                ? MyAltTextOrg.currImage.hash
+                : null
+        )
     } else if (MyAltTextOrg.desc.resultFilter.value) {
         MyAltTextOrg.desc.displayDescriptions = searchArchive(MyAltTextOrg.desc.resultFilter.value)
     } else {
