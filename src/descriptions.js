@@ -16,7 +16,10 @@ MyAltTextOrg.desc.resultFilter.oninput = () => updateDescriptionDisplay()
 function toggleSearchResults(btn) {
     MyAltTextOrg.desc.resultIsDown = !MyAltTextOrg.desc.resultIsDown
     if (MyAltTextOrg.desc.resultIsDown) {
+        const main = document.getElementById("main-area")
         updateDescriptionDisplay()
+        main.scrollHeight = 0
+
     } else {
         hideResultDisplay()
     }
@@ -167,6 +170,7 @@ function renderDescriptions() {
         descriptionsEle.innerHTML = ""
         descriptionsEle.classList.add("nothing-found")
     } else {
+        descriptionsEle.classList.remove("nothing-found")
         const scrollPx = descriptionsEle.scrollHeight
         descriptionsEle.innerHTML = ""
 

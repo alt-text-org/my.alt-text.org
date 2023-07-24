@@ -10,11 +10,10 @@
 }
 
 #descriptions {
-    margin: 15px auto;
     height: 100%;
     display: none;
     flex-direction: column;
-    gap: 10px;
+    flex-grow: 1;
     overflow-y: scroll;
 }
 

@@ -74,8 +74,11 @@ input[type=file] {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: 10px;
+    align-items: stretch;
+    flex-basis: 91vh;
+    max-height: 90vh
 }
-
 
 #left-controls {
     display: flex;
@@ -90,11 +93,14 @@ input[type=file] {
     justify-content: center;
     align-items: stretch;
     flex-wrap: nowrap;
+    flex-grow: 1;
 }
 
-#descriptions {
-    height: 100%;
+#img-area {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    justify-content: center;
 }
 
 #cvs-wrapper {
@@ -114,7 +120,9 @@ input[type=file] {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin-top: 30px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .file-input-lbl {
@@ -166,6 +174,7 @@ textarea {
 .search-width {
     width: 45vw;
     min-width: 45vw;
+    max-width: 45vw;
 }
 
 .search-toggles {
@@ -210,11 +219,13 @@ textarea {
     font-weight: 900;
     background-color: rgb(248, 242, 232);
     border-radius: 40px;
-    margin: 10px 20vw;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .upload-area {
-    width: calc(50vw - 5vh);
+    width: 90%;
+    margin: 0 auto;
     height: 25vh;
     border: 4px dashed #000;
     border-radius: 40px;
@@ -222,7 +233,6 @@ textarea {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 64px 64px;
-    margin-bottom: 15px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -406,12 +416,39 @@ a, a:visited {
     margin-right: 20px;
 }
 
-@media screen and (max-width: 399px) {
-    body {
+
+@media screen and (max-width: 900px) {
+    #main {
+        flex-direction: column;
+        width: 98vw;
+    }
+
+    #top-controls {
         display: flex;
         flex-direction: column;
+
+    }
+
+    #main-area {
+        height: auto;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column-reverse;
         align-content: center;
-        justify-content: start;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #descriptions {
+        min-height: 70vh;
+        width: 90vw;
+    }
+
+    .search-width {
+        width: 100%;
+        min-width: 0;
+        max-width: 80vw;
     }
 
     button {
@@ -420,86 +457,5 @@ a, a:visited {
 
     .file-input-lbl {
         font-size: 2em;
-    }
-
-    #main {
-        flex-direction: column;
-        width: 90vw;
-    }
-
-    #controls {
-        flex-direction: column;
-        align-items: flex-start;
-
-        gap: 30px;
-    }
-    
-    #links {
-        position: initial;
-        justify-content: center;
-    }
-
-    #left-col {
-        flex-grow: initial;
-        padding: initial;
-    }
-
-    #right-col {
-        width: 90vw;
-        height: 90vh;
-        margin: 0;
-        flex-grow: 1;
-    }
-
-    #upload-wrapper {
-        width: 70vw;
-        height: 30vh;
-    }
-
-    .upload-area {
-        width: calc(70vw - 5vh);
-        height: 25vh;
-    }
-
-    #result {
-        height: 40vh;
-        font-size: 1.2em;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    body {
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        justify-content: start;
-    }
-
-    button {
-        font-size: 1.2em;
-    }
-
-    #right-col {
-        width: 90vw;
-        margin-right: 0;
-        margin-left: 10px;
-    }
-    
-    #re
-
-    #upload-wrapper {
-        width: 70vw;
-        height: 30vh;
-        font-size: 1em;
-    }
-
-    .upload-area {
-        width: calc(70vw - 5vh);
-        height: 25vh;
-    }
-
-    #result {
-        height: 40vh;
-        font-size: 1.2em;
     }
 }
