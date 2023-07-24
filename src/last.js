@@ -1,5 +1,6 @@
 (async () => {
     await initOcr()
+    // await initStoredImage()
 
     let userLang = window.navigator.language.split('-')[0];
     updatePageLanguage(MyAltTextOrg.i18n.pageText[userLang] ? userLang : MyAltTextOrg.const.DEFAULT_PAGE_LANG)
@@ -7,6 +8,7 @@
     updateDescriptionDisplay()
     hashIndexDescriptions()
     showSplash()
+
 })().then(() => {
     (() => {
         addDropdown(
@@ -91,3 +93,10 @@
     document.getElementById("main").style.display = "flex"
 });
 
+(() => {
+    const filterInput = document.getElementById("filter-input")
+    filterInput.addEventListener("focus", () => {
+        MyAltTextOrg.desc.resultIsDown = true
+        updateDescriptionDisplay()
+    })
+})();

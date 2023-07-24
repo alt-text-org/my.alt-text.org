@@ -57,7 +57,6 @@ input[type=file] {
     justify-content: space-between;
     align-items: stretch;
     align-content: center;
-    gap: 12px;
 }
 
 #top-controls {
@@ -70,6 +69,14 @@ input[type=file] {
     gap: 8px;
 }
 
+#main-area {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+
 #left-controls {
     display: flex;
     flex-direction: row;
@@ -80,7 +87,7 @@ input[type=file] {
 #work-area {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
+    justify-content: center;
     align-items: stretch;
     flex-wrap: nowrap;
 }
@@ -93,6 +100,7 @@ input[type=file] {
 #cvs-wrapper {
     width: 60vw;
     height: 50vh;
+    margin: 0 auto;
     padding: 1rem 0;
     display: none;
     flex-direction: column;
@@ -142,7 +150,6 @@ input[type=file] {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border-radius: 15px;
-    resize: vertical;
 }
 
 textarea {
@@ -158,6 +165,7 @@ textarea {
 
 .search-width {
     width: 45vw;
+    min-width: 45vw;
 }
 
 .search-toggles {
@@ -224,12 +232,21 @@ textarea {
     text-align: center;
 }
 
+.upload-area:hover {
+    cursor: pointer;
+}
+
+*.dragging {
+    cursor: grabbing;
+}
+
 .upload-area:hover,
 .upload-area.dragging,
 .upload-area.uploading {
     filter: alpha(opacity=100);
     -moz-opacity: 1;
     opacity: 1;
+
 }
 
 .upload-area input {
@@ -386,7 +403,6 @@ a, a:visited {
 }
 
 #help-button {
-    font-size: 2.5rem;
     margin-right: 20px;
 }
 

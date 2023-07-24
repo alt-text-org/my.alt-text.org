@@ -36,9 +36,9 @@ document.onpaste = function (event) {
         upload.parentNode.className = 'area';
     }, false);
 
-    centralUpload.addEventListener('dragdrop', () => {
+    centralUpload.addEventListener('dragdrop', async () => {
         const file = upload.files[0]
-        loadFile(file)
+        await loadFile(file)
     }, false);
 
     upload.addEventListener('change', async () => {
@@ -52,33 +52,43 @@ document.onpaste = function (event) {
     }, false);
 })();
 
+async function loadDataUrl(dataUrl, name) {
+    const file = await srcToFile(
+        dataUrl,
+        name || "",
+        dataUrl.substring(dataUrl.indexOf(":") + 1, dataUrl.indexOf(";"))
+    )
+
+    await loadFile(file)
+}
+
 async function loadFile(file) {
-    console.log("HrmHrm")
-    const objUrl = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
     if (MyAltTextOrg.c.discardCropsOnNewImg) {
         MyAltTextOrg.canvas.clear()
     }
 
-    fabric.Image.fromURL(objUrl, async img => {
+    fabric.Image.fromURL(url, async img => {
         const extractBtn = document.getElementById("extract-btn")
         const closeImgBtn = document.getElementById("clear-image")
         const uploadWrapper = document.getElementById("upload-wrapper")
         const canvasWrapper = document.getElementById("cvs-wrapper")
-
-
         uploadWrapper.style.display = "none"
         canvasWrapper.style.display = "flex"
-
-        MyAltTextOrg.currImage = {
-            hash: await hashImage(file),
-            name: file.name,
-            scale: scaleCanvas(img)
-        }
 
         MyAltTextOrg.canvas.setBackgroundImage(img, null, {
             top: MyAltTextOrg.const.CVS_PADDING,
             left: MyAltTextOrg.const.CVS_PADDING
         })
+
+        let fullDataUrl = MyAltTextOrg.canvas.toDataURL();
+        MyAltTextOrg.currImage = {
+            hash: await hashImage(file),
+            name: file.name,
+            scale: scaleCanvas(img),
+            dataUrl: fullDataUrl
+        }
+        // saveImageTemp()
 
         //TODO: don't let crops outside canvas
         // cropRect.on('moving', handleCropMoving)
@@ -90,6 +100,34 @@ async function loadFile(file) {
         closeImgBtn.disabled = false
         extractBtn.disabled = false
     });
+}
+
+MyAltTextOrg.const.STORED_IMG = "curr_img"
+
+function saveImageTemp() {
+    if (MyAltTextOrg.currImage) {
+        try {
+            window.sessionStorage.setItem(MyAltTextOrg.const.STORED_IMG, JSON.stringify(MyAltTextOrg.currImage))
+        } catch (e) {
+            console.log("Couldn't save aside image in session storage")
+            console.log(e)
+        }
+    }
+}
+
+async function initStoredImage() {
+    const storedImg = window.sessionStorage.getItem(MyAltTextOrg.const.STORED_IMG)
+    if (storedImg) {
+        const parsed = JSON.parse(storedImg)
+        await loadDataUrl(parsed.dataUrl)
+    }
+}
+
+function srcToFile(src, fileName, mimeType) {
+    return (fetch(src)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], fileName, {type: mimeType}))
+    );
 }
 
 function clearImage() {

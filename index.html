@@ -65,8 +65,8 @@
                                                                                            alt="GitHub"></a>
         </div>
         <div class="search-toggles search-width">
-            <button onclick="toggleSearchResults(this)" aria-label="PLACEHOLDER">
-                <img src="images/dropdown.svg" height="14" width="28" class="expand-btn rotated" alt=""
+            <button onclick="toggleSearchResults()" aria-label="PLACEHOLDER">
+                <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28" class="expand-btn rotated" alt=""
                      aria-hidden="true">
             </button>
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
@@ -77,37 +77,41 @@
             <button class="emoji-button" onclick="toggleImageFilter(this)" aria-label="PLACEHOLDER">🌠</button>
         </div>
     </div>
-    <div id="img-area">
-        <div id="upload-wrapper">
-            <div class="upload-area" id="central-upload" onclick="focusClick('upload-label')">
-                <input type="file" id="upload" name="upload" accept="image/*"/>
+    <div id="main-area">
+        <div id="work-area">
+            <div id="img-area">
+                <div id="upload-wrapper">
+                    <div class="upload-area" id="central-upload" onclick="focusClick('upload-label')">
+                        <input type="file" id="upload" name="upload" accept="image/*"/>
+                    </div>
+                    <label id="upload-label" for="upload"></label>
+                </div>
+                <div id="cvs-wrapper">
+                    <canvas id="cvs" width="1" height="1"></canvas>
+                </div>
+                <div id="img-controls">
+                    <button id="clear-image" onclick="clearImage()" disabled></button>
+                    <div class="now-kiss">
+                        <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
+                        <div id="extract-lang-dropdown"></div>
+                    </div>
+                    <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
+                    <input type="file" id="top-upload" name="top-upload" accept="image/*">
+                </div>
             </div>
-            <label id="upload-label" for="upload"></label>
-        </div>
-        <div id="cvs-wrapper">
-            <canvas id="cvs" width="1" height="1"></canvas>
-        </div>
-        <div id="img-controls">
-            <button id="clear-image" onclick="clearImage()" disabled></button>
-            <div class="now-kiss">
-                <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
-                <div id="extract-lang-dropdown"></div>
+            <div id="in-flight-wrapper" class="bordered-area">
+                <div id="add-in-flight" class="column-emoji-controls">
+                    <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕</button>
+                </div>
+                <div id="in-flight"></div>
+                <div id="in-flight-controls" class="column-emoji-controls">
+                    <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
+                    <button id="discard-in-flight" class="emoji-button large-emoji" onclick="clearInFlight()">🚮</button>
+                </div>
             </div>
-            <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
-            <input type="file" id="top-upload" name="top-upload" accept="image/*">
         </div>
+        <div id="descriptions" class="bordered-area search-width"></div>
     </div>
-    <div id="in-flight-wrapper" class="bordered-area">
-        <div id="add-in-flight" class="column-emoji-controls">
-            <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕</button>
-        </div>
-        <div id="in-flight"></div>
-        <div id="in-flight-controls" class="column-emoji-controls">
-            <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
-            <button id="discard-in-flight" class="emoji-button large-emoji" onclick="clearInFlight()">🚮</button>
-        </div>
-    </div>
-    <div id="descriptions" class="bordered-area search-width"></div>
 </div>
 <div id="overlay" class="openable" onclick="hideEscapable()"></div>
 <div class="prompt-wrapper openable">

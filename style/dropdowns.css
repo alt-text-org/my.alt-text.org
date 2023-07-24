@@ -100,6 +100,7 @@
 #extract-lang-btn {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    padding: 11px 10px;
 }
 
 #page-lang-name {

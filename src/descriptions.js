@@ -8,11 +8,18 @@ MyAltTextOrg.desc.nameNextSearchIdx = 0
 
 MyAltTextOrg.desc.displayDescriptions = []
 
-const resultFilter = document.getElementById("filter-input")
-resultFilter.oninput = () => updateDescriptionDisplay()
+MyAltTextOrg.desc.resultIsDown = false
 
-function toggleSearchResults(img) {
+MyAltTextOrg.desc.resultFilter = document.getElementById("filter-input")
+MyAltTextOrg.desc.resultFilter.oninput = () => updateDescriptionDisplay()
 
+function toggleSearchResults(btn) {
+    MyAltTextOrg.desc.resultIsDown = !MyAltTextOrg.desc.resultIsDown
+    if (MyAltTextOrg.desc.resultIsDown) {
+        updateDescriptionDisplay()
+    } else {
+        hideResultDisplay()
+    }
 }
 
 function toggleImageFilter(btn) {
@@ -20,17 +27,29 @@ function toggleImageFilter(btn) {
 }
 
 function updateDescriptionDisplay() {
-    if (MyAltTextOrg.currImage && resultFilter.value) {
-        MyAltTextOrg.desc.displayDescriptions = searchArchive(resultFilter.value, MyAltTextOrg.currImage.hash)
+    if (!MyAltTextOrg.desc.resultIsDown) {
+        hideResultDisplay()
+        return
+    }
+
+    if (MyAltTextOrg.currImage && MyAltTextOrg.desc.resultFilter.value) {
+        MyAltTextOrg.desc.displayDescriptions = searchArchive(MyAltTextOrg.desc.resultFilter.value, MyAltTextOrg.currImage.hash)
     } else if (MyAltTextOrg.currImage) {
         MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100, MyAltTextOrg.currImage.hash)
-    } else if (resultFilter.value) {
-        MyAltTextOrg.desc.displayDescriptions = searchArchive(resultFilter.value)
+    } else if (MyAltTextOrg.desc.resultFilter.value) {
+        MyAltTextOrg.desc.displayDescriptions = searchArchive(MyAltTextOrg.desc.resultFilter.value)
     } else {
         MyAltTextOrg.desc.displayDescriptions = getRecentDescriptions(100)
     }
 
     renderDescriptions()
+}
+
+function hideResultDisplay() {
+    const status = document.getElementById("search-dropdown-indicator")
+    let descriptions = document.getElementById("descriptions");
+    status.classList.add("rotated")
+    descriptions.style.display = "none"
 }
 
 function initializeSearch() {
@@ -141,17 +160,25 @@ function removeDescription(descId) {
 
 function renderDescriptions() {
     const descriptionsEle = document.getElementById("descriptions")
+    const descriptionStateImg = document.getElementById("search-dropdown-indicator")
+    descriptionStateImg.classList.remove("rotated")
 
-    const scrollPx = descriptionsEle.scrollHeight
-    descriptionsEle.innerHTML = ""
+    if (MyAltTextOrg.desc.displayDescriptions.length === 0) {
+        descriptionsEle.innerHTML = ""
+        descriptionsEle.classList.add("nothing-found")
+    } else {
+        const scrollPx = descriptionsEle.scrollHeight
+        descriptionsEle.innerHTML = ""
 
-    MyAltTextOrg.desc.displayDescriptions.forEach(descId => {
-        let description = getDescription(descId);
-        let descEle = makeDescriptionEle(description)
-        descriptionsEle.appendChild(descEle)
-    })
+        MyAltTextOrg.desc.displayDescriptions.forEach(descId => {
+            let description = getDescription(descId);
+            let descEle = makeDescriptionEle(description)
+            descriptionsEle.appendChild(descEle)
+        })
 
-    descriptionsEle.scrollHeight = scrollPx
+        descriptionsEle.scrollHeight = scrollPx
+    }
+    descriptionsEle.style.display = "flex"
 }
 
 function makeDescriptionEle(description) {

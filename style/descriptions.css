@@ -28,6 +28,12 @@
     margin: 5px;
 }
 
+.nothing-found {
+    background-color: #b1b1d0;
+    background-image: url("/images");
+    content: "🫥";
+}
+
 .description-name {
     text-align: center;
     padding: 3px;
