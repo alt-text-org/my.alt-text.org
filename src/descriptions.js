@@ -259,13 +259,19 @@ function makeTextSection(description) {
         const copyBtn = document.createElement("button")
         copyBtn.classList.add("emoji-button")
         copyBtn.innerText = "📋"
+        copyBtn.title = "Copy Text"
         copyBtn.onclick = () => {
             if (copyAck) {
                 clearTimeout(copyAck)
             }
-            window.navigator.clipboard.writeText(part)
-            copyBtn.innerText = "✅"
-            copyAck = setTimeout(() => copyBtn.innerText = "📋", 2500)
+            window.navigator.clipboard.writeText(part).then(() => {
+                    copyBtn.innerText = "✅"
+                    copyAck = setTimeout(() => copyBtn.innerText = "📋", 2500)
+                }
+            ).catch(() => {
+                copyBtn.innerText = "❌"
+                copyAck = setTimeout(() => copyBtn.innerText = "📋", 2500)
+            })
         }
         controls.appendChild(copyBtn)
 
@@ -286,25 +292,28 @@ function makeFooter(description) {
     const editBtn = document.createElement('button')
     editBtn.classList.add("emoji-button")
     editBtn.innerText = "📝"
+    editBtn.title = "Edit"
     editBtn.onclick = () => editDescription(description.id)
     footer.appendChild(editBtn)
 
     const copyBtn = document.createElement("button")
     copyBtn.classList.add("emoji-button")
     copyBtn.innerText = "👯"
+    copyBtn.title = "Duplicate"
     copyBtn.onclick = () => duplicateDescription(description.id)
     footer.appendChild(copyBtn)
 
     const trashBtn = document.createElement("button")
     trashBtn.classList.add("emoji-button")
     trashBtn.innerText = "🚮"
+    trashBtn.title = "Delete"
     trashBtn.onclick = () => removeDescription(description.id)
     footer.appendChild(trashBtn)
 
     const maxLenEle = document.createElement("input")
     maxLenEle.classList.add("maxlen-field")
     maxLenEle.type = "text"
-    maxLenEle.placeholder = MyAltTextOrg.i18n.maxLenTxt
+    maxLenEle.placeholder = "Max Length"
     maxLenEle.oninput = () => maxLenEle.value = filterNonDigits(maxLenEle.value)
     maxLenEle.onchange = () => {
         description.maxLen = parseInt(maxLenEle.value)

@@ -26,7 +26,8 @@
     align-items: stretch;
     flex-wrap: nowrap;
     border: solid 3px black;
-    border-radius: 15px;
+    border-radius: 0 15px 15px 15px;
+    overflow-y: scroll;
     z-index: 1001;
 }
 
@@ -42,11 +43,11 @@
 
 .dropdown-option {
     width: 100%;
-    padding: 10px 0;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     border-radius: 0;
     border: none;
@@ -109,6 +110,8 @@
 }
 
 #page-lang-name {
+    display: none;
+
     padding: 10px;
     font-size: 1.3em;
     font-weight: 900;

@@ -49,7 +49,7 @@
 <div id="main">
     <div id="top-controls">
         <div id="left-controls">
-            <button id="help-button" onclick="openHelp()"></button>
+            <button id="help-button" onclick="openHelp()">Help</button>
             <div class="now-kiss">
                 <div id="page-lang-name"></div>
                 <div id="page-lang-dropdown"></div>
@@ -65,19 +65,20 @@
                                                                                            alt="GitHub"></a>
         </div>
         <div class="search-toggles search-width">
-            <button onclick="toggleSearchResults()" aria-label="PLACEHOLDER">
+            <button onclick="toggleSearchResults()" aria-label="Toggle search results">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
                      class="dropdown-img rotated" alt=""
                      aria-hidden="true">
             </button>
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
                 <img src="images/magnifying.svg" class="inline-icon" alt="" aria-hidden="true">
-                <input id="filter-input" class="search-input" type="text" aria-label="PLACEHOLDER"
-                       placeholder="PLACEHOLDER" onload="">
+                <input id="filter-input" class="search-input" type="text" aria-label="Archive search"
+                       placeholder="Search Your Archive" onload="">
             </div>
-            <button id="image-filter-toggle" class="emoji-button" onclick="toggleImageFilter()" aria-label="PLACEHOLDER"
-                    disabled>🌠
-            </button>
+            <button id="image-filter-toggle" class="emoji-button" onclick="toggleImageFilter()"
+                    aria-label="Toggle image filter"
+                    title="Toggle Image Filtering"
+                    disabled>🌠</button>
         </div>
     </div>
     <div id="main-area">
@@ -87,18 +88,18 @@
                     <div class="upload-area" id="central-upload" onclick="focusClick('upload-label')">
                         <input type="file" id="upload" name="upload" accept="image/*"/>
                     </div>
-                    <label id="upload-label" for="upload"></label>
+                    <label id="upload-label" for="upload">Open File or Paste Image</label>
                 </div>
                 <div id="cvs-wrapper">
                     <canvas id="cvs" width="1" height="1"></canvas>
                 </div>
                 <div id="img-controls">
-                    <button id="clear-image" onclick="clearImage()" disabled></button>
+                    <button id="clear-image" onclick="clearImage()" disabled>Close Image</button>
                     <div class="now-kiss">
-                        <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled></button>
+                        <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled>Extract</button>
                         <div id="extract-lang-dropdown"></div>
                     </div>
-                    <label id="open-file-lbl" class="file-input-lbl" for="top-upload"></label>
+                    <label id="open-file-lbl" class="file-input-lbl" for="top-upload">Open File</label>
                     <input type="file" id="top-upload" name="top-upload" accept="image/*">
                 </div>
             </div>
@@ -109,8 +110,8 @@
                 </div>
                 <div id="in-flight"></div>
                 <div id="in-flight-controls" class="column-emoji-controls">
-                    <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()">💾</button>
-                    <button id="discard-in-flight" class="emoji-button large-emoji" onclick="clearInFlight()">🚮</button>
+                    <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()"
+                    title="Save All">💾</button>
                 </div>
             </div>
         </div>

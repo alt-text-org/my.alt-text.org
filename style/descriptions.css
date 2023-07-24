@@ -84,13 +84,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     align-content: center;
 }
 
 .maxlen-field {
-    width: 4em;
+    width: 6em;
 }
 
 .aux-image-popup {
