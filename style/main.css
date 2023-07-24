@@ -1,15 +1,15 @@
+html {
+    height: 100%;
+}
+
 body {
-    margin: 0 auto;
-    height: 98vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     align-items: stretch;
     background-color: #cef0f5;
-    font-family: "Atkinson Hyperlegible", sans-serif;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    height: 100%;
+    margin: 0 auto;
+    min-height: 100%;
 }
 
 button {
@@ -347,40 +347,46 @@ textarea {
     font-size: 3rem;
 }
 
-.splash-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    transition: opacity 1.5s;
-    opacity: 0;
-    z-index: 1001;
+.splash::backdrop {
+    /* TODO: Use an `rgba()` background instead of setting opacity; */
     background: #101633;
+    opacity: 0.5;
 }
-
-.splash-wrapper {
+.splash {
+    background: transparent;
+    font-size: 1.2rem;
+    border: 0;
+    color: #1b1b2f;
+    max-height: none;
+    max-width: none;
     position: absolute;
     top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    margin: 20px 50px;
-    padding: 20px 50px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    transition: opacity 1.5s;
-    opacity: 0;
-    z-index: 1001;
+    bottom: auto;
+}
+.splash article {
     background: #b3bedf;
-    color: #1b1b2f;
-    overflow-y: scroll;
     border-radius: 50px;
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    margin: 20px 50px;
+    padding: 20px 50px;
+}
+.splash header {
+    text-align: center;
+}
+.splash h1 {
+    text-decoration: underline;
+}
+.splash footer {
+    text-align: center;
+}
+.splash form {
+    font-size: 3rem;
+}
+.splash button {
+    background-color: #09173d;
+    color: #cef0f5;
+    padding: 10px;
 }
 
 .rotated {
