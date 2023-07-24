@@ -38,6 +38,7 @@ function addDropdown(
         dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[1], kv[0], onSelection))
     })
 
+    let activeOptions = {}
     const search = document.createElement("input")
     search.classList.add("search-input")
     search.type = "text"
@@ -52,21 +53,45 @@ function addDropdown(
             }
         }
 
-        let prefix = search.value.toLowerCase()
+        let searchTerm = search.value.toLowerCase()
         let searchResult = Object.entries(options)
-            .filter(kv => kv[0].toLowerCase().indexOf(prefix) >= 0)
+            .filter(kv => kv[0].toLowerCase().indexOf(searchTerm) >= 0)
         searchResult.sort(compare)
 
         dropdownOptions.innerHTML = ""
+        activeOptions = {}
         if (searchResult.length) {
             searchResult.forEach(kv => {
-                dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[1], kv[0], onSelection))
+                let option = makeDropdownOption(dropdown, kv[1], kv[0], onSelection);
+                activeOptions[kv[0].toLowerCase()] = option
+                dropdownOptions.appendChild(option)
             })
         } else {
             const notFound = document.createElement("div")
             notFound.classList.add("not-found")
             notFound.innerText = getLocalized(i18nKeys.notFound)
             dropdownOptions.appendChild(notFound)
+        }
+    }
+    search.onkeyup = (e) => {
+        if (e.isComposing || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) {
+            return
+        }
+
+        if (e.keyCode === 13) {
+            let searchTerm = search.value.toLowerCase()
+            if (activeOptions[searchTerm]) {
+                activeOptions[searchTerm].click()
+                return
+            }
+
+            let searchResult = Object.entries(activeOptions)
+                .filter(kv => kv[0].toLowerCase().indexOf(searchTerm) >= 0)
+                .map(kv => kv[1])
+
+            if (searchResult.length === 1) {
+                searchResult[0].click()
+            }
         }
     }
 
