@@ -110,7 +110,6 @@ function addDots() {
                 wrapper.appendChild(input)
 
                 const lbl = document.createElement("label")
-                lbl.classList.add("dropdown-option")
                 lbl.htmlFor = inputName
                 lbl.innerHTML = "Open&nbsp;File"
                 wrapper.appendChild(lbl)
@@ -141,6 +140,7 @@ function addDots() {
             sortKey: "CCC",
             makeElement: () => {
                 const button = document.createElement("button")
+                button.classList.add("submenu-button")
                 button.innerHTML = `
                     <span>Page&nbsp;Language</span>
                     <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`
@@ -162,6 +162,7 @@ function addDots() {
             sortKey: "DDD",
             makeElement: () => {
                 const button = document.createElement("button")
+                button.classList.add("submenu-button")
                 button.innerHTML = `
                     <span>Text&nbsp;Extraction&nbsp;Language</span>
                     <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`

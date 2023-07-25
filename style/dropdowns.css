@@ -52,14 +52,40 @@
     border: none;
     color: var(--text);
     box-shadow: none;
-    font-size: 1.3em;
+    font-size: 1.2rem;
     font-weight: 900;
     font-family: "Atkinson Hyperlegible", sans-serif;
     background-color: var(--editable);
+    outline: none;
 }
 
 .dropdown-option:hover {
     background-color: var(--engaged);
+    border-radius: 0;
+}
+
+.submenu-button {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text);
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.submenu-button img {
+    height: 20px;
+    width: 20px;
+}
+
+.submenu-button:focus {
+    outline: none;
+    cursor: pointer;
 }
 
 .dots-btn-img {

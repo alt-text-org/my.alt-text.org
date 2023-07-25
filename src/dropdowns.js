@@ -83,8 +83,6 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
             optionEle.classList.remove("focused")
         })
 
-
-
         listenForKeys(focusable, [
             {
                 keyCode: 38, // Arrow up
@@ -112,16 +110,15 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
             invoke: () => {
                 let searchTerm = search.value.toLowerCase()
                 if (activeOptions[searchTerm]) {
-                    activeOptions[searchTerm].click()
+                    getFocusable(activeOptions[searchTerm].elem)?.click()
                     return
                 }
 
-                let searchResult = Object.entries(activeOptions)
-                    .filter(kv => kv[0].toLowerCase().indexOf(searchTerm) >= 0)
-                    .map(kv => kv[1])
+                let searchResult = activeOptions
+                    .filter(option => option.display.toLowerCase().indexOf(searchTerm) >= 0)
 
                 if (searchResult.length === 1) {
-                    searchResult[0].click()
+                    getFocusable(searchResult[0].elem)?.click()
                 }
             }
         }
