@@ -129,6 +129,12 @@ function addDots() {
             onclick: () => clearImage()
         },
         {
+            display: "Clear&nbsp;Work&nbsp;Area",
+            sortKey: "BBC",
+            closeMenu: true,
+            onclick: () => clearInFlight()
+        },
+        {
             display: "Page&nbsp;Language",
             closeMenu: false,
             sortKey: "CCC",
