@@ -1,4 +1,5 @@
 MyAltTextOrg.const.DEFAULT_PAGE_LANG = 'en'
+MyAltTextOrg.const.DEFAULT_PAGE_LANG_HUMAN = 'English'
 MyAltTextOrg.const.DEFAULT_ADDTL_IMAGE_TXT = "en"
 MyAltTextOrg.const.DEFAULT_EXTRACTION_LANG_ISO = "en"
 MyAltTextOrg.const.DEFAULT_EXTRACTION_LANG_HUMAN = "English"
@@ -13,6 +14,7 @@ MyAltTextOrg.i18n.pageText = {
         langButtonPrefixTxt: 'Page',
         langSearchPlaceholder: 'Language',
         pageLangSearchLbl: 'Page&nbsp;Language',
+        extractionLangSearchLbl: 'Text&nbsp;Extraction&nbsp;Language',
         extractBtnTxt: 'Extract',
         additionalImageTag: "Alt Text Continued",
         addTranslationTxt: "Add&nbsp;Translation",

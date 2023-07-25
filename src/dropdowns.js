@@ -1,52 +1,87 @@
 
 
-function addDropdown(
-    parentId,
+function buildDropdown(
     buttonId,
     buttonLabelId,
     buttonDefault,
+    openButtonClass,
+    dropdownClass,
     options,
     onSelection,
     footer,
     i18nKeys,
+    skipArrow,
 ) {
     const wrapper = document.createElement("div")
     wrapper.classList.add("dropdown")
 
     const openDropdownBtn = document.createElement("button")
     openDropdownBtn.id = buttonId
-    openDropdownBtn.classList.add("drop-btn")
-    openDropdownBtn.innerHTML =
-        `<img src="images/dropdown.svg" width="10" height="6" class="dropdown-img rotated text-color-svg" aria-hidden="true" alt="">`
+    if (openButtonClass) {
+        openDropdownBtn.classList.add("drop-btn", openButtonClass)
+    } else {
+        openDropdownBtn.classList.add("drop-btn")
+    }
+    if (!skipArrow) {
+        openDropdownBtn.innerHTML =
+            `<img src="images/dropdown.svg" width="10" height="6" class="dropdown-img rotated text-color-svg" aria-hidden="true" alt="">`
+    }
     const displayVal = document.createElement("span");
     displayVal.id = buttonLabelId
-    displayVal.innerText = buttonDefault
+    displayVal.innerHTML = buttonDefault
 
-    openDropdownBtn.appendChild(displayVal)
+    openDropdownBtn.prepend(displayVal)
     wrapper.appendChild(openDropdownBtn)
 
     const dropdown = document.createElement("div")
-    dropdown.classList.add("dropdown-content", "openable")
+    dropdown.classList.add("dropdown-content", "openable", dropdownClass)
 
     const searchWrapper = document.createElement("div")
     searchWrapper.classList.add("search-wrapper", "rounded-top")
-    searchWrapper.innerHTML = `<img src="images/dropdown.svg" class="inline-icon" aria-hidden="true" alt="">`
 
+    const search = document.createElement("input")
     const dropdownOptions = document.createElement("div")
     dropdownOptions.classList.add("dropdown-options")
-    Object.entries(options).forEach(kv => {
-        dropdownOptions.appendChild(makeDropdownOption(dropdown, kv[1], kv[0], onSelection))
+    Object.entries(options).forEach(([display, val]) => {
+        dropdownOptions.appendChild(makeDropdownOption(dropdown, val, display, onSelection))
     })
 
+    search.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        if (e.keyCode === 40) { // Arrow down
+            const firstOption = dropdownOptions.firstChild
+            if (firstOption) {
+                firstOption.focus()
+            }
+        }
+    })
+
+    if (footer) {
+        footer.addEventListener("keyup", (e) => {
+            if (e.isComposing) {
+                return
+            }
+
+            if (e.keyCode === 38) { // Arrow up
+                const lastOption = dropdownOptions.lastChild
+                if (lastOption) {
+                    lastOption.focus()
+                }
+            }
+        })
+    }
+
     let activeOptions = {}
-    const search = document.createElement("input")
     search.classList.add("search-input")
     search.type = "text"
     search.oninput = () => {
-        function compare(a, b) {
-            if (a[1] < b[1]) {
+        function compareStr(a, b) {
+            if (a < b) {
                 return -1;
-            } else if (a[1] > b[1]) {
+            } else if (a > b) {
                 return 1;
             } else {
                 return 0;
@@ -55,21 +90,33 @@ function addDropdown(
 
         let searchTerm = search.value.toLowerCase()
         let searchResult = Object.entries(options)
-            .filter(kv => kv[0].toLowerCase().indexOf(searchTerm) >= 0)
-        searchResult.sort(compare)
+            .filter(([display, _]) => display.toLowerCase().indexOf(searchTerm) >= 0)
+
+        if (searchResult.length > 0) {
+            if (typeof searchResult[0] === 'string') {
+                searchResult.sort((a, b) => {
+                    return compareStr(a[0], b[0]);
+                })
+            } else {
+                searchResult.sort(([_, objA], [__, objB]) => {
+                    return compareStr(objA.sortKey || objA.display, objB.sortKey || objB.display);
+                })
+            }
+        }
+
 
         dropdownOptions.innerHTML = ""
         activeOptions = {}
         if (searchResult.length) {
-            searchResult.forEach(kv => {
-                let option = makeDropdownOption(dropdown, kv[1], kv[0], onSelection);
-                activeOptions[kv[0].toLowerCase()] = option
+            searchResult.forEach(([display, value]) => {
+                let option = makeDropdownOption(dropdown, value, display, onSelection);
+                activeOptions[display.toLowerCase()] = option
                 dropdownOptions.appendChild(option)
             })
         } else {
             const notFound = document.createElement("div")
             notFound.classList.add("not-found")
-            notFound.innerText = getLocalized(i18nKeys.notFound)
+            notFound.innerHTML = getLocalized(i18nKeys.notFound)
             dropdownOptions.appendChild(notFound)
         }
     }
@@ -95,8 +142,9 @@ function addDropdown(
         }
     }
 
+    searchWrapper.innerHTML = `<img src="images/magnifying.svg" class="inline-icon" aria-hidden="true" alt="">`
     searchWrapper.appendChild(search)
-    search.placeholder = registerLocalizedElement(search, "placeholder", i18nKeys.searchPlaceholder)
+    search.placeholder = "Search Options"//registerLocalizedElement(search, "placeholder", i18nKeys.searchPlaceholder)
     search.ariaLabel = registerLocalizedElement(search, "ariaLabel", i18nKeys.searchLabel)
 
     dropdown.appendChild(searchWrapper)
@@ -114,20 +162,87 @@ function addDropdown(
         showEscapable(dropdown)
         search.focus()
     }
+    openDropdownBtn.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        if (e.keyCode === 39) { // Right arrow
+            openDropdownBtn.click()
+        }
+    })
+
+    dropdown.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        if (e.keyCode === 37) { // Left arrow
+            hideEscapable(dropdown)
+            openDropdownBtn.focus()
+        }
+    })
+
+
     wrapper.appendChild(dropdown)
 
-    const parent = document.getElementById(parentId)
-    parent.appendChild(wrapper)
+    return wrapper
 }
 
-function makeDropdownOption(dropdown, value, display, onClick) {
+function makeDropdownOption(val, display, onClick, search, footer) {
+
+    let ele
+    if (typeof val === "string") {
+        ele = makeBasicDropdownOption(display);
+    } else {
+        if (val.makeElement) {
+            ele = val.makeElement(display)
+        } else {
+            ele = makeBasicDropdownOption(val.display);
+        }
+    }
+
+    ele.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        if (e.keyCode === 38) { // Arrow up
+            if (ele.previousElementSibling) {
+                ele.previousElementSibling.focus()
+            } else {
+                search.focus()
+            }
+        } else if (e.keyCode === 40) { // Arrow down
+            if (ele.nextElementSibling) {
+                ele.nextElementSibling.focus()
+            } else if (footer) {
+                footer.focus()
+            }
+        }
+    })
+
+    if (typeof val === "string") {
+        ele.onclick = () => {
+            hideEscapable()
+            onClick(display, val)
+        }
+    } else if (val.onclick) {
+        ele.onclick = () => {
+            if (val.closeMenu) {
+                hideEscapable()
+            }
+            val.onclick()
+        }
+    } else {
+
+    }
+}
+
+function makeBasicDropdownOption(display) {
     const option = document.createElement("button")
     option.classList.add("dropdown-option")
-    option.innerText = display
-    option.onclick = () => {
-        hideEscapable()
-        onClick(display, value)
-    }
+    option.innerHTML = display
 
     return option
 }
@@ -142,13 +257,20 @@ function showEscapable(elem, skipOverlay) {
     toEscape.push(elem)
 }
 
-function hideEscapable() {
+function hideEscapable(elem) {
     const overlay = document.getElementById("overlay");
-    overlay.classList.remove("open");
-    toEscape.forEach(elem => {
+    if (elem) {
         elem.classList.remove("open")
-    })
-    toEscape.length = 0
+    } else {
+        overlay.classList.remove("open");
+        toEscape.forEach(elem => {
+            if (elem) {
+                elem.classList.remove("open")
+            }
+        })
+        toEscape.length = 0
+    }
+
 }
 
 function makePageLangFooter() {

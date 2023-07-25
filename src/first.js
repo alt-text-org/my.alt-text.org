@@ -1,9 +1,10 @@
 MyAltTextOrg = {
     c: {}, // processed configuration
     f: {}, // functions
+    cmd: {},
     const: {},
-    dicts: {},
     crops: {},
+    dicts: {},
 
     desc: {},
     i18n: {},

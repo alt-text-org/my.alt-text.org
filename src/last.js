@@ -9,6 +9,7 @@
     initializeSearch()
     updateDescriptionDisplay()
     hashIndexDescriptions()
+    addDots()
 
     const splashSeen = parseInt(window.localStorage.getItem("user.splash_seen") || "0")
     if (splashSeen < CURRENT_SPLASH) {
@@ -16,47 +17,6 @@
         window.localStorage.setItem("user.splash_seen", `${CURRENT_SPLASH}`)
     }
 })().then(() => {
-    (() => {
-        // addDropdown(
-        //     "page-lang-dropdown",
-        //     "page-lang-btn",
-        //     "page-lang-lbl",
-        //     MyAltTextOrg.i18n.current.displayName,
-        //     MyAltTextOrg.i18n.pageOptions,
-        //     (display, isoLang) => {
-        //         const label = document.getElementById("page-lang-lbl")
-        //         label.innerText = display
-        //         updatePageLanguage(isoLang)
-        //     },
-        //     makePageLangFooter(),
-        //     {
-        //         searchPlaceholder: "langSearchPlaceholder",
-        //         searchLabel: "pageLangSearchLbl",
-        //         notFound: "noLangsFound"
-        //     }
-        // )
-
-
-        addDropdown(
-            "extract-lang-dropdown",
-            "extract-lang-btn",
-            "extract-lang-lbl",
-            MyAltTextOrg.const.DEFAULT_EXTRACTION_LANG_HUMAN,
-            MyAltTextOrg.tesseract.humanToTesseractLang,
-            async (display, tessLang) => {
-                const label = document.getElementById("extract-lang-lbl")
-                label.innerText = display
-                await setExtractionLang(tessLang)
-            },
-            null,
-            {
-                searchPlaceholder: "langSearchPlaceholder",
-                searchLabel: "pageLangSearchLbl",
-                notFound: "noLangsFound"
-            }
-        )
-    })();
-
     (() => {
         // const importBtn = document.getElementById("import-btn")
         // const exportBtn = document.getElementById("export-btn")

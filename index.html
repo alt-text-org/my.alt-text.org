@@ -14,10 +14,10 @@
           content="Our logo, on a green background, an eye with an A in front of it, seeming like a beam from the eye">
 
     <link rel="stylesheet" href="style/fonts.css">
-    <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/descriptions.css">
     <link rel="stylesheet" href="style/dropdowns.css">
     <link rel="stylesheet" href="style/in-flight.css">
+    <link rel="stylesheet" href="style/main.css">
 
     <script src="src/first.js"></script>
     <script src="src/i18n-data.js"></script>
@@ -48,23 +48,7 @@
 <body>
 <div id="main">
     <div id="top-controls">
-        <div id="left-controls">
-            <button id="help-button" onclick="openHelp()">Help</button>
-            <div class="now-kiss">
-                <div id="page-lang-name"></div>
-                <div id="page-lang-dropdown"></div>
-            </div>
-            <div id="links">
-                <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
-                                                                    alt="Alt-Text.org"></a>
-                <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo"
-                                                                                               src="images/github.svg"
-                                                                                               alt="GitHub"></a>
-                <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg"
-                                                                                   alt="Mastodon"></a>
-            </div>
-        </div>
-
+        <div id="dots-btn-wrapper" aria-label="General Menu" title="General Menu"></div>
         <div class="search-toggles search-width">
             <button onclick="toggleSearchResults()" aria-label="Toggle search results">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
@@ -79,7 +63,8 @@
             <button id="image-filter-toggle" class="emoji-button" onclick="toggleImageFilter()"
                     aria-label="Toggle image filter"
                     title="Toggle Image Filtering"
-                    disabled>🌠</button>
+                    disabled>🌠
+            </button>
         </div>
     </div>
     <div id="main-area">
@@ -94,15 +79,7 @@
                 <div id="cvs-wrapper">
                     <canvas id="cvs" width="1" height="1"></canvas>
                 </div>
-                <div id="img-controls">
-                    <button id="clear-image" onclick="clearImage()" disabled>Close Image</button>
-                    <div class="now-kiss">
-                        <button id="extract-btn" onclick="cropExtractAndAddInFlight()" disabled>Extract</button>
-                        <div id="extract-lang-dropdown"></div>
-                    </div>
-                    <label id="open-file-lbl" class="file-input-lbl" for="top-upload">Open File</label>
-                    <input type="file" id="top-upload" name="top-upload" accept="image/*">
-                </div>
+                <button id="extract-btn" onclick="cropExtractAndAddInFlight()">Extract Text</button>
             </div>
             <div id="in-flight-wrapper" class="bordered-area">
                 <div id="add-in-flight" class="column-emoji-controls">
@@ -112,7 +89,8 @@
                 <div id="in-flight"></div>
                 <div id="in-flight-controls" class="column-emoji-controls">
                     <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()"
-                    title="Save All">💾</button>
+                            title="Save All">💾
+                    </button>
                 </div>
             </div>
         </div>

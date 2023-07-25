@@ -26,7 +26,6 @@ document.onpaste = function (event) {
 (() => {
     const upload = document.getElementById('upload');
     const centralUpload = document.getElementById('central-upload')
-    const topUpload = document.getElementById('top-upload')
 
     centralUpload.addEventListener('dragenter', () => {
         upload.parentNode.className = 'area dragging';
@@ -43,11 +42,6 @@ document.onpaste = function (event) {
 
     upload.addEventListener('change', async () => {
         const file = upload.files[0]
-        await loadFile(file)
-    }, false);
-
-    topUpload.addEventListener('change', async () => {
-        const file = topUpload.files[0]
         await loadFile(file)
     }, false);
 })();
@@ -70,11 +64,10 @@ async function loadFile(file) {
 
     fabric.Image.fromURL(url, async img => {
         const extractBtn = document.getElementById("extract-btn")
-        const closeImgBtn = document.getElementById("clear-image")
         const uploadWrapper = document.getElementById("upload-wrapper")
         const canvasWrapper = document.getElementById("cvs-wrapper")
         uploadWrapper.style.display = "none"
-        canvasWrapper.style.display = "block"
+        canvasWrapper.style.display = "flex"
 
         MyAltTextOrg.canvas.setBackgroundImage(img, null, {
             top: MyAltTextOrg.const.CVS_PADDING,
@@ -98,8 +91,7 @@ async function loadFile(file) {
         setImageFilter(true)
         updateDescriptionDisplay()
 
-        closeImgBtn.disabled = false
-        extractBtn.disabled = false
+        extractBtn.style.display = "block"
     });
 }
 
@@ -143,7 +135,7 @@ function clearImage() {
     canvasWrapper.style.display = "none"
     MyAltTextOrg.currImage = null
     closeImgBtn.disabled = true
-    extractBtn.disabled = true
+    extractBtn.style.display = "none"
     toggleBtn.disabled = true
     updateDescriptionDisplay()
 }
@@ -248,7 +240,7 @@ function isOverActiveObject(pointer) {
 
 function renderRect(pointer) {
     let currRect = MyAltTextOrg.crops.active.currRect
-    currRectStart = MyAltTextOrg.crops.active.currRectStart
+    let currRectStart = MyAltTextOrg.crops.active.currRectStart
     currRect.scale(1)
     currRect.left = Math.min(pointer.x, currRectStart.x) * MyAltTextOrg.currImage.scale
     currRect.top = Math.min(pointer.y, currRectStart.y) * MyAltTextOrg.currImage.scale

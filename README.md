@@ -35,6 +35,7 @@ Beta
   - Editable if just search/replace
 - Expand editor
 - Configuration exposed
+- Multiple open images
 
 Release
 -------

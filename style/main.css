@@ -40,10 +40,10 @@ button {
     color: var(--text);
     background: var(--live);
     border: none;
-    box-shadow: 0 3px 0 0 rgba(0,0,0, 10%);
+    box-shadow: 0 3px 0 0 rgba(var(--shadow), 10%);
 }
 
-button:hover {
+button:hover, button:focus {
     background: var(--engaged);
     cursor: pointer;
 }
@@ -115,7 +115,7 @@ textarea {
 #work-area {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: stretch;
     flex-wrap: nowrap;
     flex-grow: 1;
@@ -126,19 +126,20 @@ textarea {
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+    margin: 10px 0;
 }
 
 #cvs-wrapper {
-    width: 60vw;
-    height: 50vh;
-    margin: 0 auto;
-    padding: 1rem 0;
+    height: 100%;
+    width: 100%;
+    /*margin: 0 auto;*/
+    /*padding: 1rem 0;*/
     display: none;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    text-align: center;
 }
 
 #img-controls {
@@ -148,6 +149,11 @@ textarea {
     margin-top: 10px;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+#extract-btn {
+    display: none;
+    margin: 0 10vw;
 }
 
 .file-input-lbl {
@@ -352,13 +358,18 @@ textarea:read-write {
     }
 }
 
-#links {
+.links {
+    width: 100%;
+    padding: 10px 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
-    align-content: center;
-    justify-content: center;
+    flex-wrap: nowrap;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: var(--readable);
 }
 
 .link-logo {
@@ -490,8 +501,7 @@ textarea:read-write {
 
     #top-controls {
         display: flex;
-        flex-direction: column;
-
+        flex-direction: row;
     }
 
     #main-area {
@@ -499,14 +509,19 @@ textarea:read-write {
         overflow-y: scroll;
         display: flex;
         flex-direction: column-reverse;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
+        justify-content: stretch;
+        align-items: stretch;
         gap: 10px;
+
+    }
+
+    #description-wrapper {
+        justify-content: stretch;
     }
 
     #descriptions {
-        min-height: 70vh;
+        min-height: 20vh;
+        margin: 0 auto;
         width: 90vw;
     }
 
