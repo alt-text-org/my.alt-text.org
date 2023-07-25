@@ -87,10 +87,11 @@
 
 .aux-image-button {
     border: none;
-    background-color: transparent;
+    background-color: var(--live);
     box-shadow: 1px 1px 1px 1px var(--shadow);
     padding: 3px;
     margin: 3px;
+    border-radius: 15px;
 }
 
 .description-footer {
@@ -132,6 +133,7 @@
     height: 30px;
     margin-bottom: -5px;
     padding: 6px;
+    border-radius: 10px;
 }
 
 .popup-close-x {

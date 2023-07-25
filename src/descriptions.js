@@ -248,18 +248,27 @@ function makeTextSection(description) {
         if (idx > 0) {
             const auxImage = getAuxCanvas(description.lang, idx + 1, textParts.length)
             const imgButton = document.createElement("button")
-            imgButton.classList.add("page-button", "aux-image-button")
-            imgButton.innerHTML = `<img src="${auxImage.toDataURL()}" class="aux-image" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
-            imgButton.onclick = () => {
-                //TODO: Popup copy/download
-            }
-            controls.appendChild(imgButton)
+            imgButton.classList.add("aux-image-button")
+            let dataUrl = auxImage.toDataURL();
+            imgButton.innerHTML = `<img src="${dataUrl}" class="aux-image" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
+
+            const imageTransmission = buildSimpleDropdownMenu(
+                imgButton,
+                {
+                    "Copy Image": "copy",
+                    "Download Image": "download"
+                },
+                null,
+                deliverAuxImage(dataUrl, `addtl-alt-text-${idx + 1}-of-${textParts.length}.png`)
+            )
+
+            controls.appendChild(imageTransmission)
             textPartWrapper.classList.add("addtl-text-part-wrapper")
         }
 
         let copyAck = null
         const copyBtn = document.createElement("button")
-        copyBtn.classList.add("emoji-button")
+        copyBtn.classList.add("page-button", "emoji-button")
         copyBtn.innerText = "📋"
         copyBtn.title = "Copy Text"
         copyBtn.onclick = () => {
@@ -337,6 +346,26 @@ function filterNonDigits(str) {
 function focusFilter() {
     const filterInput = document.getElementById("filter-input")
     filterInput.focus()
+}
+
+function deliverAuxImage(dataUrl, name) {
+    return async (method) => {
+        if (method === "copy") {
+            const blob = await (await fetch(dataUrl)).blob();
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    'image/png': blob
+                })
+            ]);
+        } else if (method === "download") {
+            const a = document.createElement("a")
+            a.href = dataUrl
+            a.download = name
+            a.click()
+        } else {
+            console.log(`Unexpected aux delivery method: ${method}`)
+        }
+    }
 }
 
 function splitText(text, maxLen) {
