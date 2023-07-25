@@ -100,7 +100,7 @@
     height: 100%;
     z-index: 1000;
     background-color: var(--shadow);
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .openable {

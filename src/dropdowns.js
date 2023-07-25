@@ -26,7 +26,7 @@ function buildComplexDropdownMenu(openMenuButton, options, footer, dropdownClass
     options.forEach(option => {
         standardized.push({
             display: option.display,
-            sortKey: option.sortKey,
+            sortKey: option.sortKey || option.display,
             closeMenu: option.closeMenu,
             makeElement: option.makeElement || (() => {
                 const optionEle = document.createElement("button")
@@ -110,7 +110,11 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
             invoke: () => {
                 let searchTerm = search.value.toLowerCase()
                 if (activeOptions[searchTerm]) {
-                    getFocusable(activeOptions[searchTerm].elem)?.click()
+                    activeOptions[searchTerm].elem.classList.add("blink-option")
+                    setTimeout(() => {
+                        activeOptions[searchTerm].elem.classList.remove("blink-option")
+                        getFocusable(activeOptions[searchTerm].elem)?.click()
+                    },200)
                     return
                 }
 
@@ -118,7 +122,11 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
                     .filter(option => option.display.toLowerCase().indexOf(searchTerm) >= 0)
 
                 if (searchResult.length === 1) {
-                    getFocusable(searchResult[0].elem)?.click()
+                    searchResult[0].elem.classList.add("blink-option")
+                    setTimeout(() => {
+                        searchResult[0].elem.classList.remove("blink-option")
+                        getFocusable(searchResult[0].elem)?.click()
+                    },200)
                 }
             }
         }
@@ -177,9 +185,11 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
         }
     ])
 
-    openMenuButton.addEventListener("click", () => {
-        showEscapable(dropdown)
+    openMenuButton.addEventListener("click", (e) => {
+        search.value = ""
+        showEscapable(dropdown, true)
         search.focus()
+        e.stopPropagation()
     })
 
     wrapper.appendChild(dropdown)
@@ -247,6 +257,7 @@ function showEscapable(elem, skipOverlay) {
         const overlay = document.getElementById("overlay");
         overlay.classList.add("open");
     }
+
     elem.classList.add("open");
     toEscape.push(elem)
 }

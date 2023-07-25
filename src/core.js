@@ -34,7 +34,6 @@ function listenForKeys(elem, keys) {
     })
 
     elem.addEventListener("keyup", (e) => {
-        console.log(`${elem.tagName}:{${elem.classList}}: ${e.keyCode}`)
         if (e.isComposing) {
             return
         }
@@ -65,18 +64,11 @@ function compareStr(a, b) {
     }
 }
 
-function addExecCommand(display, onclick, makeElem, keyCombo) {
-    if (MyAltTextOrg.cmd[display]) {
-        console.log(`Got conflicting commands for ${display}`)
-    }
-
-    MyAltTextOrg.cmd[display] = {
-        display,
-        onclick,
-        makeElem,
-        keyCombo,
-        sortKey: display
-    }
+function addKeyboardCommand(key, invoke) {
+    MyAltTextOrg.cmd.push({
+        key,
+        invoke
+    })
 }
 
 function showHelp() {
@@ -86,6 +78,13 @@ function showHelp() {
     help?.addEventListener("click", () => {
         help.close()
     })
+}
+
+function showExecMenu(overlay, button) {
+    return () => {
+        showEscapable(overlay, true)
+        button.click()
+    }
 }
 
 function focusClick(id) {
@@ -98,12 +97,17 @@ function addDots() {
             display: "Open&nbsp;File",
             sortKey: "AAA",
             closeMenu: true,
+            keyCmd: {
+                alt: true,
+                keyCode: 79 // O
+            },
             makeElement: () => {
                 const wrapper = document.createElement("div")
                 wrapper.classList.add("file-uploader", "dropdown-option")
 
                 const inputName = "dots-open-file";
                 const input = document.createElement("input")
+                input.id = inputName
                 input.type = "file"
                 input.accept = "image/*"
                 input.name = inputName
@@ -114,6 +118,7 @@ function addDots() {
                 lbl.innerHTML = "Open&nbsp;File"
                 wrapper.appendChild(lbl)
 
+                lbl.addEventListener("click", () => input.click())
                 input.addEventListener("change", async () => {
                     const file = input.files[0]
                     await loadFile(file)
@@ -126,18 +131,27 @@ function addDots() {
             display: "Close&nbsp;File",
             sortKey: "BBB",
             closeMenu: true,
-            onclick: () => clearImage()
+            keyCmd: {
+                altKey: true,
+                keyCode: 81 // Q
+            },
+            onclick: clearImage
         },
         {
             display: "Clear&nbsp;Work&nbsp;Area",
             sortKey: "BBC",
             closeMenu: true,
+            keyCmd: {
+                altKey: true,
+                keyCode: 87 // W
+            },
             onclick: () => clearInFlight()
         },
         {
             display: "Page&nbsp;Language",
             closeMenu: false,
             sortKey: "CCC",
+
             makeElement: () => {
                 const button = document.createElement("button")
                 button.classList.add("submenu-button")
@@ -182,13 +196,17 @@ function addDots() {
             display: "Help",
             closeMenu: true,
             sortKey: "EEE",
-            onclick: () => showHelp(),
+            keyCmd: {
+                altKey: true,
+                keyCode: 72 // W
+            },
+            onclick: showHelp,
         },
         {
             display: "Announcements",
             closeMenu: true,
             sortKey: "FFF",
-            onclick: () => showSplash()
+            onclick: showSplash
         }
     ]
 
@@ -210,5 +228,20 @@ function addDots() {
 
     const dots = buildComplexDropdownMenu(button, options, footer)
     document.getElementById("dots-btn-placeholder").appendChild(dots)
+
+    MyAltTextOrg.exec.push(...options)
+    options.forEach(option => {
+        if (!option.keyCmd) {
+            return
+        }
+
+        let cmd = option.onclick
+        if (!cmd) {
+            let elem = option.makeElement()
+            cmd = () => elem.click()
+        }
+
+        addKeyboardCommand(option.keyCmd, cmd)
+    })
 }
 

@@ -17,65 +17,72 @@
         window.localStorage.setItem("user.splash_seen", `${CURRENT_SPLASH}`)
     }
 })().then(() => {
-    (() => {
-        // const importBtn = document.getElementById("import-btn")
-        // const exportBtn = document.getElementById("export-btn")
-        // const importArchiveBtn = document.getElementById("import-archive-btn")
-        // const importArchiveLbl = document.getElementById("import-archive-lbl")
-        // const openMastoImport = document.getElementById("open-masto-import")
-        // const importMastoBtn = document.getElementById("import-masto-btn")
-        // const importMastoLbl = document.getElementById("import-masto-lbl")
-        //
-        // importBtn.innerHTML = registerLocalizedElement(importBtn, "innerHTML", "importBtn")
-        // exportBtn.innerHTML = registerLocalizedElement(exportBtn, "innerHTML", "exportBtn")
-// importArchiveLbl.innerText = registerLocalizedElement(importArchiveLbl, "innerHTML", "importArchiveBtn")
-// importMastoLbl.innerText = registerLocalizedElement(importMastoLbl, "innerHTML", "importMastoBtn")
+    const filterInput = document.getElementById("filter-input")
+    filterInput.addEventListener("focus", () => {
+        MyAltTextOrg.desc.resultIsDown = true
+        updateDescriptionDisplay()
+    })
 
-// importArchiveBtn.addEventListener('change', async () => {
-//     const file = importArchiveBtn.files[0]
-//     await importArchive(file)
-// }, false);
-    })();
-
-    // (() => {
-    //     // Static elements
-    //     const extractBtn = document.getElementById("extract-btn")
-    //     const uploadLbl = document.getElementById("upload-label")
-    //     const filterInput = document.getElementById("filter-input")
-    //     const topUploadLbl = document.getElementById('open-file-lbl')
-    //     const closeImgBtn = document.getElementById('clear-image')
-    //     const pageLangName = document.getElementById("page-lang-name")
-    //     const helpBtn = document.getElementById("help-button")
-    //
-    //     helpBtn.innerHTML = registerLocalizedElement(helpBtn, "innerHTML", "help")
-    //     pageLangName.innerHTML = registerLocalizedElement(pageLangName, "innerHTML", "langButtonPrefixTxt")
-    //     extractBtn.innerHTML = registerLocalizedElement(extractBtn, "innerHTML", "extractBtnTxt")
-    //     uploadLbl.innerHTML = registerLocalizedElement(uploadLbl, "innerHTML", "centralUploadInstr")
-    //     topUploadLbl.innerHTML = registerLocalizedElement(topUploadLbl, "innerHTML", "topUploadLbl")
-    //     filterInput.placeholder = registerLocalizedElement(filterInput, "placeholder", "searchPrompt")
-    //     closeImgBtn.innerHTML = registerLocalizedElement(closeImgBtn, "innerHTML", 'closeImage')
-    // })();
-
-    (() => {
-        const filterInput = document.getElementById("filter-input")
-        filterInput.addEventListener("focus", () => {
-            MyAltTextOrg.desc.resultIsDown = true
-            updateDescriptionDisplay()
+    document.querySelectorAll("input[type=file]").forEach(input => {
+        let label = input.parentElement.querySelector("label")
+        input.addEventListener("focus", () => {
+            label.classList.add("focused")
         })
-    })();
-
-    (() =>{
-        document.querySelectorAll("input[type=file]").forEach(input => {
-            let label = input.parentElement.querySelector("label")
-            input.addEventListener("focus", () => {
-                label.classList.add("focused")
-            })
-            input.addEventListener("blur", () => {
-                label.classList.remove("focused")
-            })
+        input.addEventListener("blur", () => {
+            label.classList.remove("focused")
         })
+    })
 
-    })();
+
+    MyAltTextOrg.exec.push(...[
+        {
+            display: "Extract Text",
+            closeMenu: true,
+            onclick: cropExtractAndAddInFlight,
+        }
+    ])
+    MyAltTextOrg.exec.forEach(option => option.sortKey = null)
+
+    const execButton = document.createElement("button")
+    const execWrapper = document.getElementById("exec-wrapper")
+    const execMenu = buildComplexDropdownMenu(execButton, MyAltTextOrg.exec);
+    execMenu.id = "exec"
+    execWrapper.appendChild(execMenu)
+    execWrapper.addEventListener("click", () => {
+        hideEscapable(execWrapper)
+    })
+
+    addKeyboardCommand({
+        altKey: true,
+        keyCode: 82 // R
+    }, showExecMenu(execWrapper, execButton))
+
+    addKeyboardCommand({
+        altKey: true,
+        keyCode: 84 // T
+    }, cropExtractAndAddInFlight)
+
+    addKeyboardCommand({
+        keyCode: 27 // Escape
+    }, hideEscapable)
+
+    document.body.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        for (let command of MyAltTextOrg.cmd) {
+            if (
+                command.key.keyCode === e.keyCode
+                && !command.key.altKey === !e.altKey
+                && !command.key.ctrlKey === !e.ctrlKey
+                && !command.key.metaKey === !e.metaKey
+                && !command.key.shiftKey === !e.shiftKey
+            ) {
+                command.invoke()
+            }
+        }
+    })
 
 
     document.getElementById("main").style.display = "flex"

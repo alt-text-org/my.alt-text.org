@@ -171,6 +171,35 @@ textarea {
     margin: 0 10vw;
 }
 
+#exec-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1000;
+    background-color: rgba(var(--shadow), 0.5);
+
+}
+
+#exec {
+    position: relative;
+    width: 60vw;
+    z-index: 1001;
+    margin-top: 10vh;
+}
+
+#exec .dropdown-content {
+    position: relative;
+}
+
+#exec > button {
+    opacity: 0;
+}
+
 .file-input-lbl {
     border-radius: 15px;
     padding: 10px;
@@ -373,6 +402,22 @@ textarea:read-write {
     }
 }
 
+.blink-option {
+    animation: blinkingBackground 200ms normal;
+}
+
+@keyframes blinkingBackground {
+    0% {
+        background-color: var(--engaged);
+    }
+    50% {
+        background-color: var(--readable);
+    }
+    100% {
+        background-color: var(--engaged);
+    }
+}
+
 .links {
     width: 100%;
     padding: 10px 0;
@@ -441,6 +486,7 @@ textarea:read-write {
     background: var(--shadow);
     opacity: 0.5;
 }
+
 .splash {
     background: transparent;
     font-size: 1.2rem;
@@ -452,6 +498,7 @@ textarea:read-write {
     top: 0;
     bottom: auto;
 }
+
 .splash article {
     background: var(--background);
     border-radius: 50px;
@@ -461,18 +508,23 @@ textarea:read-write {
     box-shadow: 10px 10px 10px 10px var(--shadow);
     border: solid 3px var(--border);
 }
+
 .splash header {
     text-align: center;
 }
+
 .splash h1 {
     text-decoration: underline;
 }
+
 .splash footer {
     text-align: center;
 }
+
 .splash form {
     font-size: 3rem;
 }
+
 .splash button {
     background-color: var(--live);
     color: var(--text);
@@ -499,7 +551,7 @@ textarea:read-write {
     padding-bottom: 10px;
 }
 
-#import-export-btns > button{
+#import-export-btns > button {
     padding: 10px;
 }
 
