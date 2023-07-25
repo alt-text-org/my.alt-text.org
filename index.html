@@ -48,9 +48,9 @@
 <body>
 <div id="main">
     <div id="top-controls">
-        <div id="dots-btn-wrapper" aria-label="General Menu" title="General Menu"></div>
+        <div id="dots-btn-placeholder"></div>
         <div class="search-toggles search-width">
-            <button onclick="toggleSearchResults()" aria-label="Toggle search results">
+            <button onclick="toggleSearchResults()" aria-label="Toggle search results" class="page-button">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
                      class="dropdown-img rotated" alt=""
                      aria-hidden="true">
@@ -60,7 +60,7 @@
                 <input id="filter-input" class="search-input" type="text" aria-label="Archive search"
                        placeholder="Search Your Archive" onload="">
             </div>
-            <button id="image-filter-toggle" class="emoji-button" onclick="toggleImageFilter()"
+            <button id="image-filter-toggle" class="page-button emoji-button" onclick="toggleImageFilter()"
                     aria-label="Toggle image filter"
                     title="Toggle Image Filtering"
                     disabled>🌠
@@ -79,16 +79,16 @@
                 <div id="cvs-wrapper">
                     <canvas id="cvs" width="1" height="1"></canvas>
                 </div>
-                <button id="extract-btn" onclick="cropExtractAndAddInFlight()">Extract Text</button>
+                <button id="extract-btn" class="page-button" onclick="cropExtractAndAddInFlight()">Extract Text</button>
             </div>
             <div id="in-flight-wrapper" class="bordered-area">
                 <div id="add-in-flight" class="column-emoji-controls">
-                    <button id="add-in-flight-btn" class="emoji-button large-emoji" onclick="addBlankInFlight()">➕
+                    <button id="add-in-flight-btn" class="page-button emoji-button large-emoji" onclick="addBlankInFlight()">➕
                     </button>
                 </div>
                 <div id="in-flight"></div>
                 <div id="in-flight-controls" class="column-emoji-controls">
-                    <button id="save-in-flight" class="emoji-button large-emoji" onclick="saveAllInFlight()"
+                    <button id="save-in-flight" class="page-button emoji-button large-emoji" onclick="saveAllInFlight()"
                             title="Save All">💾
                     </button>
                 </div>
@@ -186,7 +186,7 @@
         </p>
         <footer>
             <form method="dialog">
-                <button type="submit">Close</button>
+                <button class="page-button" type="submit">Close</button>
             </form>
         </footer>
     </article>
@@ -268,7 +268,7 @@
         </p>
         <footer>
             <form method="dialog">
-                <button type="submit">Close</button>
+                <button class="page-button" type="submit">Close</button>
             </form>
         </footer>
     </article>

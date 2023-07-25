@@ -248,7 +248,7 @@ function makeTextSection(description) {
         if (idx > 0) {
             const auxImage = getAuxCanvas(description.lang, idx + 1, textParts.length)
             const imgButton = document.createElement("button")
-            imgButton.classList.add("aux-image-button")
+            imgButton.classList.add("page-button", "aux-image-button")
             imgButton.innerHTML = `<img src="${auxImage.toDataURL()}" class="aux-image" alt="Additional alt text image ${idx + 1} of ${textParts.length}">`
             imgButton.onclick = () => {
                 //TODO: Popup copy/download
@@ -292,21 +292,21 @@ function makeFooter(description) {
     footer.classList.add("description-footer")
 
     const editBtn = document.createElement('button')
-    editBtn.classList.add("emoji-button")
+    editBtn.classList.add("page-button", "emoji-button")
     editBtn.innerText = "📝"
     editBtn.title = "Edit"
     editBtn.onclick = () => editDescription(description.id)
     footer.appendChild(editBtn)
 
     const copyBtn = document.createElement("button")
-    copyBtn.classList.add("emoji-button")
+    copyBtn.classList.add("page-button", "emoji-button")
     copyBtn.innerText = "👯"
     copyBtn.title = "Duplicate"
     copyBtn.onclick = () => duplicateDescription(description.id)
     footer.appendChild(copyBtn)
 
     const trashBtn = document.createElement("button")
-    trashBtn.classList.add("emoji-button")
+    trashBtn.classList.add("page-button", "emoji-button")
     trashBtn.innerText = "🚮"
     trashBtn.title = "Delete"
     trashBtn.onclick = () => removeDescription(description.id)

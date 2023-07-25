@@ -26,6 +26,44 @@ function showSplash() {
     })
 }
 
+function listenForKeys(elem, keys) {
+    const keyMap = {}
+    keys.forEach(key => {
+        keyMap[key.keyCode] = keyMap[key.keyCode] || []
+        keyMap[key.keyCode].push(key)
+    })
+
+    elem.addEventListener("keyup", (e) => {
+        if (e.isComposing) {
+            return
+        }
+
+        const commandsForKey = keyMap[e.keyCode]
+        if (commandsForKey) {
+            for (let command of commandsForKey) {
+                if (
+                    !command.altKey === !e.altKey
+                    && !command.ctrlKey === !e.ctrlKey
+                    && !command.metaKey === !e.metaKey
+                    && !command.shiftKey === !e.shiftKey
+                ) {
+                    command.invoke()
+                }
+            }
+        }
+    })
+}
+
+function compareStr(a, b) {
+    if (a < b) {
+        return -1;
+    } else if (a > b) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 function addExecCommand(display, onclick, makeElem, keyCombo) {
     if (MyAltTextOrg.cmd[display]) {
         console.log(`Got conflicting commands for ${display}`)
@@ -54,8 +92,8 @@ function focusClick(id) {
 }
 
 function addDots() {
-    const options = {
-        "Open&nbsp;File": {
+    const options = [
+        {
             display: "Open&nbsp;File",
             sortKey: "AAA",
             closeMenu: true,
@@ -84,79 +122,67 @@ function addDots() {
                 return wrapper
             }
         },
-        "Close&nbsp;File": {
+        {
             display: "Close&nbsp;File",
             sortKey: "BBB",
             closeMenu: true,
             onclick: () => clearImage()
         },
-        "Page&nbsp;Language": {
-            display: "Page&nbsp;Language", closeMenu: false, idx: 2, makeElement: () => {
-                let dropdown = buildDropdown(
-                    "page-lang-btn",
-                    "page-lang-lbl",
-                    "Page&nbspLanguage",
-                    "dropdown-option",
-                    "right-side-dropdown",
-                    MyAltTextOrg.i18n.pageOptions,
-                    (display, isoLang) => {
-                        const label = document.getElementById("page-lang-lbl")
-                        label.innerText = display
-                        updatePageLanguage(isoLang)
-                    },
-                    makePageLangFooter(),
-                    {
-                        searchPlaceholder: "langSearchPlaceholder",
-                        searchLabel: "pageLangSearchLbl",
-                        notFound: "noLangsFound"
-                    }
-                );
-                dropdown.classList.add("dropdown-option")
-                return dropdown
-            }
-        }
-        ,
-        "Text&nbsp;Extraction&nbsp;Language": {
-            display: "Text&nbsp;Extraction&nbsp;Language",
+        {
+            display: "Page&nbsp;Language",
             closeMenu: false,
             sortKey: "CCC",
             makeElement: () => {
-                let dropdown = buildDropdown(
-                    "extract-lang-btn",
-                    "extract-lang-lbl",
-                    "Text&nbsp;Extraction&nbsp;Language",
-                    "dropdown-option",
-                    "right-side-dropdown",
-                    MyAltTextOrg.tesseract.humanToTesseractLang,
-                    async (display, tessLang) => {
-                        const label = document.getElementById("extract-lang-lbl")
-                        label.innerText = display
-                        await setExtractionLang(tessLang)
-                    },
-                    null,
-                    {
-                        searchPlaceholder: "langSearchPlaceholder",
-                        searchLabel: "extractionLangSearchLbl",
-                        notFound: "noLangsFound"
-                    }
-                );
+                const button = document.createElement("button")
+                button.innerHTML = `
+                    <span>Page&nbsp;Language</span>
+                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`
+
+                let dropdown = buildSimpleDropdownMenu(
+                    button,
+                    MyAltTextOrg.i18n.pageOptions,
+                    makePageLangFooter(),
+                    updatePageLanguage,
+                    "side-dropdown"
+                )
                 dropdown.classList.add("dropdown-option")
                 return dropdown
             }
         },
-        "Help": {
+        {
+            display: "Text&nbsp;Extraction&nbsp;Language",
+            closeMenu: false,
+            sortKey: "DDD",
+            makeElement: () => {
+                const button = document.createElement("button")
+                button.innerHTML = `
+                    <span>Text&nbsp;Extraction&nbsp;Language</span>
+                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`
+
+                let dropdown = buildSimpleDropdownMenu(
+                    button,
+                    MyAltTextOrg.tesseract.humanToTesseractLang,
+                    null,
+                    setExtractionLang,
+                    "side-dropdown"
+                )
+                dropdown.classList.add("dropdown-option")
+                return dropdown
+            }
+        },
+        {
             display: "Help",
             closeMenu: true,
-            sortKey: "DDD",
+            sortKey: "EEE",
             onclick: () => showHelp(),
         },
-        "Announcements": {
+        {
             display: "Announcements",
             closeMenu: true,
-            sortKey: "EEE",
+            sortKey: "FFF",
             onclick: () => showSplash()
         }
-    }
+    ]
 
     const footer = document.createElement("div")
     footer.classList.add("links")
@@ -169,20 +195,12 @@ function addDots() {
                 <a href="https://social.alt-text.org/@hannah" target="_blank"><img class="link-logo" src="images/masto.svg"
                                                                                    alt="Mastodon"></a>`
 
-    const dotsButton = buildDropdown(
-        "dots-btn",
-        "dots-lbl",
-        `<img id="dots-btn-img" src="images/dots.svg" alt="" aria-hidden="true" width="32" height="32">`,
-        "",
-        "below-dropdown",
-        options,
-        () => {
-        },
-        footer,
-        {},
-        true
-    )
+    let button = document.createElement("button")
+    button.classList.add("page-button", "dots-btn")
+    button.ariaLabel = "General Menu"
+    button.innerHTML = `<img id="dots-btn-img" src="images/dots.svg" alt="" aria-hidden="true" width="32" height="32">`
 
-    document.getElementById("dots-btn-wrapper").appendChild(dotsButton)
+    const dots = buildComplexDropdownMenu(button, options, footer)
+    document.getElementById("dots-btn-placeholder").appendChild(dots)
 }
 

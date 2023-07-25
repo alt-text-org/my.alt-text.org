@@ -2,14 +2,6 @@
     position: relative;
 }
 
-.drop-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    gap: 3px;
-}
-
 .dropdown-img {
     width: 20px;
     height: 20px;
@@ -29,6 +21,12 @@
     border-radius: 15px;
     overflow-y: scroll;
     z-index: 1001;
+}
+
+.side-dropdown {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 3px);
 }
 
 .dropdown-options {
@@ -88,6 +86,7 @@
 }
 
 .not-found {
+    display: none;
     padding: 30px 10px;
     text-align: center;
     font-size: 1.3rem;
@@ -100,8 +99,8 @@
     padding: 10px 0;
     text-align: center;
     color: var(--text);
-    background-color: var(--editable);
-    border-top: solid 2px black;
+    background-color: var(--readable);
+    border-top: solid 2px var(--border);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }

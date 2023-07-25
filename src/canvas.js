@@ -127,14 +127,12 @@ function clearImage() {
     const toggleBtn = document.getElementById("image-filter-toggle")
     const uploadWrapper = document.getElementById("upload-wrapper")
     const extractBtn = document.getElementById("extract-btn")
-    const closeImgBtn = document.getElementById("clear-image")
     const canvasWrapper = document.getElementById("cvs-wrapper")
 
     MyAltTextOrg.canvas.clear()
     uploadWrapper.style.display = "flex"
     canvasWrapper.style.display = "none"
     MyAltTextOrg.currImage = null
-    closeImgBtn.disabled = true
     extractBtn.style.display = "none"
     toggleBtn.disabled = true
     updateDescriptionDisplay()

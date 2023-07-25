@@ -112,22 +112,25 @@ function buildInFlightItem(idx, chunk) {
     controls.classList.add("in-flight-item-controls")
 
     const trashBtn = document.createElement("button")
-    trashBtn.classList.add("emoji-button")
+    trashBtn.classList.add("page-button", "emoji-button")
     trashBtn.innerText = "🚮"
+    trashBtn.title = "Delete"
     trashBtn.ariaLabel = getLocalized("deleteChunk")
     trashBtn.onclick = () => removeInFlight(idx)
     controls.appendChild(trashBtn)
 
     const copyBtn = document.createElement("button")
-    copyBtn.classList.add("emoji-button")
+    copyBtn.classList.add("page-button", "emoji-button")
     copyBtn.innerText = "👯"
+    copyBtn.title = "Duplicate"
     copyBtn.ariaLabel = getLocalized("copyChunk")
     copyBtn.onclick = () => duplicateChunk(idx)
     controls.appendChild(copyBtn)
 
     const saveBtn = document.createElement("button")
-    saveBtn.classList.add("emoji-button")
+    saveBtn.classList.add("page-button", "emoji-button")
     saveBtn.innerText = "💾"
+    saveBtn.title = "Save"
     saveBtn.ariaLabel = getLocalized("saveChunk")
     saveBtn.onclick = () => saveInFlight(idx)
     controls.appendChild(saveBtn)
