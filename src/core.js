@@ -34,6 +34,7 @@ function listenForKeys(elem, keys) {
     })
 
     elem.addEventListener("keyup", (e) => {
+        console.log(`${elem.tagName}:{${elem.classList}}: ${e.keyCode}`)
         if (e.isComposing) {
             return
         }

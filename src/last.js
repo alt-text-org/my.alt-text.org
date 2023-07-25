@@ -56,13 +56,28 @@
     //     closeImgBtn.innerHTML = registerLocalizedElement(closeImgBtn, "innerHTML", 'closeImage')
     // })();
 
+    (() => {
+        const filterInput = document.getElementById("filter-input")
+        filterInput.addEventListener("focus", () => {
+            MyAltTextOrg.desc.resultIsDown = true
+            updateDescriptionDisplay()
+        })
+    })();
+
+    (() =>{
+        document.querySelectorAll("input[type=file]").forEach(input => {
+            let label = input.parentElement.querySelector("label")
+            input.addEventListener("focus", () => {
+                label.classList.add("focused")
+            })
+            input.addEventListener("blur", () => {
+                label.classList.remove("focused")
+            })
+        })
+
+    })();
+
+
     document.getElementById("main").style.display = "flex"
 });
 
-(() => {
-    const filterInput = document.getElementById("filter-input")
-    filterInput.addEventListener("focus", () => {
-        MyAltTextOrg.desc.resultIsDown = true
-        updateDescriptionDisplay()
-    })
-})();

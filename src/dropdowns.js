@@ -45,6 +45,8 @@ function buildComplexDropdownMenu(openMenuButton, options, footer, dropdownClass
 }
 
 function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
+    const activeOptions = []
+
     options.sort((a, b) => compareStr(a.sortKey, b.sortKey))
 
     const wrapper = document.createElement("div")
@@ -73,8 +75,17 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
         let optionEle = option.makeElement();
         option.elem = optionEle
         option.searchable = option.display.toLowerCase().replaceAll(/\s/g, ' ')
+        let focusable = getFocusable(optionEle);
+        focusable.addEventListener("focus", () => {
+            optionEle.classList.add("focused")
+        })
+        focusable.addEventListener("blur", () => {
+            optionEle.classList.remove("focused")
+        })
 
-        listenForKeys(optionEle, [
+
+
+        listenForKeys(focusable, [
             {
                 keyCode: 38, // Arrow up
                 invoke: () => crawlUp(optionEle, search)
@@ -121,19 +132,21 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
     notFound.innerText = "No menu items found"
     dropdownOptions.appendChild(notFound)
 
-    search.addEventListener("input", () => {
+    search.addEventListener("input", (e) => {
+        activeOptions.length = 0
+        console.log(`Search input: ${e.keyCode}`)
+
         const searchTerm = search.value.toLowerCase()
-        let foundOne = false
         options.forEach(option => {
             if (option.searchable.indexOf(searchTerm) >= 0) {
+                activeOptions.push(option)
                 option.elem.style.display = "flex"
-                foundOne = true
             } else {
                 option.elem.style.display = "none"
             }
         })
 
-        if (foundOne) {
+        if (activeOptions.length > 0) {
             notFound.style.display = "none"
         } else {
             notFound.style.display = "block"
@@ -182,13 +195,11 @@ function crawlDown(elem, footer) {
 }
 
 function crawlDownFrom(elem) {
+    console.log(`Crawling down: ${elem.tagName}:{${elem.classList}}`)
+
     while (elem) {
-        if (elem.style.display !== "none") {
-            if (elem.tagName === "button") {
-                elem.focus()
-            } else {
-                elem.querySelector("button")?.focus()
-            }
+        if (elem.style.display !== "none" && !elem.classList.contains("not-found")) {
+            getFocusable(elem)?.focus()
             return
         }
         elem = elem.nextElementSibling
@@ -201,21 +212,36 @@ function crawlUp(elem, search) {
 }
 
 function crawlUpFrom(elem, search) {
-    while (prev) {
-        if (prev.style.display !== "none") {
-            if (prev.tagName === "button") {
-                prev.focus()
-            } else { // It's a wrapper
-                prev.querySelector("button")?.focus()
-            }
+    while (elem) {
+        if (elem.style.display !== "none") {
+            getFocusable(elem)?.focus()
             return
         }
-        prev = prev.previousElementSibling
+        elem = elem.previousElementSibling
     }
 
     search.focus()
 }
 
+function getFocusable(elem) {
+    let focusedElement = elem
+    if (elem.tagName === "DIV") {
+        const innerButton = elem.querySelector("button")
+        const innerInput = elem.querySelector("input")
+        const innerLink = elem.querySelector("a")
+        if (innerButton) {
+            focusedElement = innerButton
+        } else if (innerInput) {
+            focusedElement = innerInput
+        } else if (innerLink) {
+            focusedElement = innerLink
+        } else {
+            console.log(`Couldn't find focusable item in:\n${elem.outerHTML}`)
+        }
+    }
+
+    return focusedElement
+}
 
 const toEscape = []
 
