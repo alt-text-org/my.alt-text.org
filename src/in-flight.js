@@ -96,7 +96,7 @@ function buildInFlightItem(idx, chunk) {
     nameInput.type = "text"
     nameInput.placeholder = getLocalized("untitledName")
     nameInput.ariaLabel = getLocalized("nameLabel")
-    nameInput.onchange = () => inFlight[idx].name = nameInput.value
+    nameInput.onchange = () => MyAltTextOrg.inFlight[idx].name = nameInput.value
     outer.appendChild(nameInput)
 
     const charCounter = document.createElement("div")
@@ -131,6 +131,17 @@ function buildInFlightItem(idx, chunk) {
     copyBtn.ariaLabel = getLocalized("copyChunk")
     copyBtn.onclick = () => duplicateChunk(idx)
     controls.appendChild(copyBtn)
+
+    const cutButton = document.createElement("button")
+    cutButton.classList.add("page-button", "emoji-button")
+    cutButton.innerText = "✂️"
+    cutButton.title = "Cut"
+    cutButton.ariaLabel = "Cut text"
+    cutButton.onclick = async () => {
+        await navigator.clipboard.writeText(textArea.value)
+        removeInFlight(idx)
+    }
+    controls.appendChild(cutButton)
 
     const saveBtn = document.createElement("button")
     saveBtn.classList.add("page-button", "emoji-button")
