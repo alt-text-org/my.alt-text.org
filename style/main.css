@@ -39,7 +39,7 @@ body {
     color: var(--text);
     background: var(--live);
     border: none;
-    box-shadow: 0 3px 0 0 rgba(var(--shadow), 10%);
+    box-shadow: 1px 1px 1px 1px var(--shadow);
     cursor: pointer;
 }
 
