@@ -101,6 +101,7 @@ function searchArchive(search, imgHash) {
 }
 
 function addDescription(chunk) {
+    let ctime = Date.now();
     const desc = {
         id: chunk.id || null,
         name: chunk.name || "",
@@ -108,7 +109,9 @@ function addDescription(chunk) {
         imgHash: chunk.imgHash,
         text: chunk.text,
         maxLen: chunk.maxLen || 0,
-        mtime: Date.now()
+        ctime: ctime,
+        mtime: ctime,
+        atime: ctime
     }
     const descId = saveDescription(desc)
     indexForSearch(descId, chunk.name, chunk.text)
@@ -136,6 +139,7 @@ function updateDescription(descId, desc) {
 
 function editDescription(descId) {
     const desc = getDescription(descId)
+
     addInFlight(desc.text, desc.id, desc.name, desc.imgHash, desc.lang, desc.maxLen)
 }
 

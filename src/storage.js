@@ -18,6 +18,10 @@ function loadDescriptions() {
 
 function saveDescription(desc) {
     desc.id = desc.id || makeId()
+    let now = Date.now();
+    desc.atime = now
+    desc.mtime = now
+
     MyAltTextOrg.storage.userDescriptions[desc.id] = desc
     saveDescriptions()
 

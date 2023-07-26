@@ -23,7 +23,7 @@
         updateDescriptionDisplay()
     })
 
-    document.querySelectorAll("input[type=file]").forEach(input => {
+    document.querySelectorAll("input[type=file]:not(#upload)").forEach(input => {
         input.labels.forEach(label => {
             input.addEventListener("focus", () => {
                 label.classList.add("focused")

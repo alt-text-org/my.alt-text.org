@@ -150,19 +150,24 @@ MyAltTextOrg.tesseract.iso639_2ToTesseract = {
     'bg': 'bul',
     'ca': 'cat',
     'cs': 'ces',
-    'zh': 'chi_sim',
     'cy': 'cym',
     'da': 'dan',
     'de': 'deu',
+    'de-AT': 'deu',
+    'de-CH': 'deu',
     'dz': 'dzo',
     'el': 'ell',
     'en': 'eng',
     'eo': 'epo',
+    'es': 'spa',
+    'es-MX': 'spa',
     'et': 'est',
     'eu': 'eus',
     'fa': 'fas',
+    'fa-AF': 'fas',
     'fi': 'fin',
     'fr': 'fra',
+    'fr-CA': 'fra',
     'ga': 'gle',
     'gl': 'glg',
     'gu': 'guj',
@@ -196,6 +201,7 @@ MyAltTextOrg.tesseract.iso639_2ToTesseract = {
     'my': 'mya',
     'ne': 'nep',
     'nl': 'nld',
+    'nl-BE': 'nld',
     'no': 'nor',
     'or': 'ori',
     'pa': 'pan',
@@ -208,7 +214,6 @@ MyAltTextOrg.tesseract.iso639_2ToTesseract = {
     'si': 'sin',
     'sk': 'slk',
     'sl': 'slv',
-    'es': 'spa',
     'sq': 'sqi',
     'sr': 'srp',
     'sw': 'swa',
@@ -226,7 +231,15 @@ MyAltTextOrg.tesseract.iso639_2ToTesseract = {
     'uz': 'uzb',
     'vi': 'vie',
     'yi': 'yid',
+    'zh-Hans': 'chi_sim',
+    "zh-Hant": 'chi_tra'
 }
+
+Object.entries(MyAltTextOrg.i18n.localizedLanguageNames).forEach(([isoLang, localName]) => {
+    if (MyAltTextOrg.tesseract.iso639_2ToTesseract[isoLang]) {
+        MyAltTextOrg.tesseract.humanToTesseractLang[localName] = MyAltTextOrg.tesseract.iso639_2ToTesseract[isoLang]
+    }
+})
 
 MyAltTextOrg.tesseract.tesseractToIso639_2 = {}
 for (let [iso, tess] of Object.entries(MyAltTextOrg.tesseract.iso639_2ToTesseract)) {
@@ -237,3 +250,4 @@ MyAltTextOrg.tesseract.isoTesseractLang = window.navigator.language || MyAltText
 MyAltTextOrg.tesseract.isoLang = MyAltTextOrg.tesseract.iso639_2ToTesseract[MyAltTextOrg.tesseract.isoTesseractLang]
     ? MyAltTextOrg.tesseract.isoTesseractLang
     : MyAltTextOrg.const.DEFAULT_EXTRACTION_LANG_ISO
+
