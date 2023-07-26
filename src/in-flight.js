@@ -25,7 +25,7 @@ function addInFlight(text, id, name, imgHash, lang, maxLen) {
         lang: ifLang,
         maxLen: maxLen
     })
-    renderInFlight()
+    renderInFlight(id)
 }
 
 function duplicateChunk(idx) {
@@ -68,7 +68,7 @@ function clearInFlight() {
     renderInFlight()
 }
 
-function renderInFlight() {
+function renderInFlight(id) {
     const inFlightEle = document.getElementById('in-flight')
 
     inFlightEle.innerHTML = ""
@@ -76,6 +76,11 @@ function renderInFlight() {
         if (chunk) {
             const elem = buildInFlightItem(idx, chunk)
             inFlightEle.appendChild(elem)
+            if (id === chunk.id) {
+                let text = elem.querySelector(".in-flight-text");
+                text.selectionEnd = 0
+                text.focus()
+            }
         }
     })
 }
