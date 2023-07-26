@@ -92,6 +92,7 @@ function focusClick(id) {
 }
 
 function addDots() {
+    let openLangMenu = null
     const options = [
         {
             display: "Open&nbsp;File",
@@ -166,6 +167,13 @@ function addDots() {
                     updatePageLanguage,
                     "side-dropdown"
                 )
+                dropdown.firstChild.addEventListener("click", () => {
+                    if (openLangMenu) {
+                        hideEscapable(openLangMenu)
+                    }
+                    openLangMenu = dropdown.querySelector(".dropdown-content")
+                })
+
                 dropdown.classList.add("dropdown-option")
                 return dropdown
             }
@@ -188,6 +196,13 @@ function addDots() {
                     setExtractionLang,
                     "side-dropdown"
                 )
+                dropdown.firstChild.addEventListener("click", () => {
+                    if (openLangMenu) {
+                        hideEscapable(openLangMenu)
+                    }
+                    openLangMenu = dropdown.querySelector(".dropdown-content")
+                })
+
                 dropdown.classList.add("dropdown-option")
                 return dropdown
             }

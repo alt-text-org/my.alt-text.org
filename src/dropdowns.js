@@ -53,10 +53,10 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
     wrapper.classList.add("dropdown")
     wrapper.appendChild(openMenuButton)
 
-    const dropdown = document.createElement("div")
-    dropdown.classList.add("dropdown-content", "openable")
+    const dropdownContent = document.createElement("div")
+    dropdownContent.classList.add("dropdown-content", "openable")
     if (dropdownClass) {
-        dropdown.classList.add(dropdownClass)
+        dropdownContent.classList.add(dropdownClass)
     }
 
     const searchWrapper = document.createElement("div")
@@ -158,14 +158,14 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
         }
     })
 
-    dropdown.appendChild(search)
-    dropdown.appendChild(dropdownOptions)
+    dropdownContent.appendChild(search)
+    dropdownContent.appendChild(dropdownOptions)
     if (footer) {
-        dropdown.appendChild(footer)
+        dropdownContent.appendChild(footer)
     } else {
         const padFooter = document.createElement("div")
         padFooter.classList.add("dropdown-footer")
-        dropdown.appendChild(padFooter)
+        dropdownContent.appendChild(padFooter)
     }
 
     listenForKeys(openMenuButton, [
@@ -175,11 +175,11 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
         }
     ])
 
-    listenForKeys(dropdown, [
+    listenForKeys(dropdownContent, [
         {
             keyCode: 37, // Left arrow
             invoke: () => {
-                hideEscapable(dropdown)
+                hideEscapable(dropdownContent)
                 openMenuButton.focus()
             }
         }
@@ -187,12 +187,12 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
 
     openMenuButton.addEventListener("click", (e) => {
         search.value = ""
-        showEscapable(dropdown, true)
+        showEscapable(dropdownContent, true)
         search.focus()
         e.stopPropagation()
     })
 
-    wrapper.appendChild(dropdown)
+    wrapper.appendChild(dropdownContent)
     return wrapper
 }
 
