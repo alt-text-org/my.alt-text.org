@@ -34,9 +34,9 @@ function setImageFilter(bool) {
     toggleBtn.disabled = false
     MyAltTextOrg.desc.imageFilter = bool
     if (MyAltTextOrg.desc.imageFilter) {
-        toggleBtn.classList.remove("depressed")
-    } else {
         toggleBtn.classList.add("depressed")
+    } else {
+        toggleBtn.classList.remove("depressed")
     }
 
     updateDescriptionDisplay()
