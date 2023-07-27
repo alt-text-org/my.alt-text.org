@@ -43,7 +43,7 @@ body {
     cursor: pointer;
 }
 
-.page-button:hover:not(.loading), .page-button:focus:not(.loading) {
+.page-button:hover:not(.loading), .page-button:focus:not(.loading):not(.depressed) {
     background: var(--engaged);
     cursor: pointer;
 }
@@ -560,6 +560,10 @@ textarea:read-write {
     margin-right: 20px;
 }
 
+.depressed {
+    box-shadow: inset 3px 3px 10px var(--shadow);
+    font-size: 1.8rem;
+    padding: 5px 10px;}
 
 @media screen and (max-width: 900px) {
     #main {
