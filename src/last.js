@@ -10,7 +10,8 @@
     updateDescriptionDisplay()
     hashIndexDescriptions()
     addDots()
-
+    addButtons()
+    
     const splashSeen = parseInt(window.localStorage.getItem("user.splash_seen") || "0")
     if (splashSeen < CURRENT_SPLASH) {
         showSplash()
