@@ -261,13 +261,21 @@ function addDots() {
 }
 
 function addButtons () {
-	let addBtn = document.createElement("button");
-	addBtn.classList.add("page-button", "emoji-button", "large-emoji");
-	addBtn.ariaLabel = getLocalized("addInFlightBtnTxt");
-	addBtn.textContent = "+";
-	addBtn.addEventListener("click", addBlankInFlight);
-	
-	const addInFlightContainer = document.getElementById("add-in-flight");
-	addInFlightContainer.appendChild(addBtn);
+    let addBtn = document.createElement("button");
+    addBtn.classList.add("page-button", "emoji-button", "large-emoji");
+    addBtn.ariaLabel = getLocalized("addInFlightBtnTxt");
+    addBtn.textContent = "+";
+    addBtn.addEventListener("click", addBlankInFlight);
+
+    let saveBtn = document.createElement("button");
+    saveBtn.classList.add("page-button", "emoji-button", "large-emoji");
+    saveBtn.ariaLabel = getLocalized("saveInFlightBtnTxt");
+    saveBtn.textContent = "💾";
+    saveBtn.addEventListener("click", saveAllInFlight);
+
+    const addInFlightContainer = document.getElementById("add-in-flight");
+    const inFlightControlsContainer = document.getElementById("in-flight-controls");
+    addInFlightContainer.appendChild(addBtn);
+    inFlightControlsContainer.appendChild(saveBtn);
 }
 

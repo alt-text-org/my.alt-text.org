@@ -18,6 +18,7 @@ MyAltTextOrg.i18n.pageText = {
         extractBtnTxt: 'Extract',
         additionalImageTag: "Alt Text Continued",
         addInFlightBtnTxt: "Add Chunk",
+        saveInFlightBtnTxt: "Save All",
         addTranslationTxt: "Add&nbsp;Translation",
         searchPrompt: "Search Your Archive",
         maxLenTxt: "Max Length",
