@@ -115,7 +115,7 @@ function updatePaletteEditor() {
     })
 
     const defaultButton = document.createElement("button")
-    defaultButton.classList.add("dropdown-option", "read-only")
+    defaultButton.classList.add("dropdown-option", "read-only", "dropdown-footer")
     defaultButton.innerHTML = "Default"
     defaultButton.addEventListener("click", (e) => {
         e.stopPropagation()

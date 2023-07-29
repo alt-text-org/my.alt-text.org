@@ -80,7 +80,7 @@ body {
     cursor: auto;
 }
 
-.bordered-area .page-button {
+.bordered-area .page-button:not(.emoji-button) {
     width: 100%;
 }
 
@@ -93,7 +93,7 @@ label {
     color: var(--text);
 }
 
-label:hover {
+label:hover:not(#upload-label) {
     background: var(--engaged);
 }
 
@@ -104,6 +104,10 @@ input {
 
 a, a:visited {
     color: var(--text);
+}
+
+a:focus, a:hover {
+    filter: drop-shadow(2px 4px 4px var(--shadow));
 }
 
 textarea {
@@ -453,8 +457,14 @@ input[type=color] {
 }
 
 #upload-label {
+    margin-top: 5px;
     color: var(--live);
 }
+
+#upload-label:hover {
+    cursor: pointer;
+}
+
 
 .loading {
     /*min-height: 100%;*/

@@ -59,7 +59,7 @@
     outline: none;
 }
 
-.dropdown-option:hover {
+.dropdown-option:hover, .dropdown-option:focus {
     background-color: var(--engaged);
     border-radius: 0;
 }

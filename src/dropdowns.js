@@ -90,7 +90,7 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
             },
             {
                 keyCode: 40, // Arrow down
-                invoke: () => crawlDown(optionEle)
+                invoke: () => crawlDown(optionEle, getFocusable(footer))
             },
         ])
 
@@ -131,6 +131,12 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
             }
         }
     ])
+    if (footer) {
+        listenForKeys(footer, [{
+            keyCode: 38, // Arrow up
+            invoke: () => crawlUp(dropdownOptions.lastChild)
+        }])
+    }
 
     const notFound = document.createElement("div")
     notFound.classList.add("not-found")
@@ -201,7 +207,7 @@ function crawlDown(elem, footer) {
     crawlDownFrom(next, footer)
 }
 
-function crawlDownFrom(elem) {
+function crawlDownFrom(elem, footer) {
     console.log(`Crawling down: ${elem.tagName}:{${elem.classList}}`)
 
     while (elem) {
@@ -210,6 +216,10 @@ function crawlDownFrom(elem) {
             return
         }
         elem = elem.nextElementSibling
+    }
+
+    if (footer) {
+        footer.focus()
     }
 }
 
