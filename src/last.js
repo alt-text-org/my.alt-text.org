@@ -111,6 +111,16 @@
         e.target.style.height = `calc(${e.target.origHeight} + ${e.target.sizeDelta}px})`
     })
 
+    listenForKeys(document, [{
+        keyCode: 8, // Backspace
+        invoke: () => {
+            let activeObject = MyAltTextOrg.canvas.getActiveObject();
+            if (activeObject) {
+                MyAltTextOrg.canvas.remove(activeObject)
+            }
+        }
+    }])
+
     document.getElementById("main").style.display = "flex"
 });
 
