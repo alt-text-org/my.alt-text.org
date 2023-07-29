@@ -191,14 +191,18 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
         }
     ])
 
+    wrapper.appendChild(dropdownContent)
     openMenuButton.addEventListener("click", (e) => {
+        dropdownContent.querySelectorAll(".dropdown-option:not(.not-found)").forEach(option => {
+            option.style.display = "flex"
+        })
+
         search.value = ""
         showEscapable(dropdownContent)
         search.focus()
         e.stopPropagation()
     })
 
-    wrapper.appendChild(dropdownContent)
     return wrapper
 }
 
