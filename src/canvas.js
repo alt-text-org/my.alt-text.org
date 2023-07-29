@@ -188,6 +188,7 @@ function handleMouseMove(e) {
 }
 
 function handleMouseUp(e) {
+    MyAltTextOrg.canvas.discardActiveObject(null);
     MyAltTextOrg.crops.active.currRect = null
     MyAltTextOrg.crops.active.currRectStart = null
 }
