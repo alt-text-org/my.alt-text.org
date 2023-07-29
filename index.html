@@ -83,25 +83,21 @@
             </div>
             <div id="in-flight-wrapper" class="bordered-area">
                 <div id="add-in-flight" class="column-emoji-controls">
-                    <button id="add-in-flight-btn" class="page-button emoji-button large-emoji" onclick="addBlankInFlight()">➕
-                    </button>
                 </div>
                 <div id="in-flight"></div>
                 <div id="in-flight-controls" class="column-emoji-controls">
-                    <button id="save-in-flight" class="page-button emoji-button large-emoji" onclick="saveAllInFlight()"
-                            title="Save All">💾
-                    </button>
                 </div>
             </div>
         </div>
         <div id="description-wrapper" class="bordered-area search-width">
             <div id="not-found-display">
-                <img src="images/nothing-found.svg" alt="Nothing found" class="text-color-svg" width="90" height="110">
+                <img src="images/nothing-found.svg" alt="Nothing found" class="text-color-svg" width="90" height="110" aria-hidden="true">
                 <div id="not-found-text">No Descriptions Found</div>
             </div>
             <div id="descriptions"></div>
         </div>
     </div>
+    </main>
 </div>
 <div id="exec-wrapper" class="openable"></div>
 <div id="overlay" class="openable" onclick="hideEscapable()"></div>
