@@ -187,7 +187,7 @@ function buildDropdownMenu(openMenuButton, options, footer, dropdownClass) {
 
     openMenuButton.addEventListener("click", (e) => {
         search.value = ""
-        showEscapable(dropdownContent, true)
+        showEscapable(dropdownContent)
         search.focus()
         e.stopPropagation()
     })

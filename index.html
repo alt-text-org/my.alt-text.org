@@ -41,22 +41,23 @@
     <script src="src/filter-lib.js" defer></script>
     <script src="src/dropdowns.js" defer></script>
     <script src="src/import-export.js" defer></script>
+    <script src="src/palette.js" defer></script>
     <script src="src/core.js" defer></script>
 
     <script src="src/last.js" defer></script>
 </head>
 <body>
-<div id="main">
+<main id="main">
     <div id="top-controls">
         <div id="dots-btn-placeholder"></div>
         <div class="search-toggles search-width">
             <button onclick="toggleSearchResults()" aria-label="Toggle search results" class="page-button">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
-                     class="dropdown-img rotated" alt=""
+                     class="dropdown-img rotated text-svg" alt=""
                      aria-hidden="true">
             </button>
             <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
-                <img src="images/magnifying.svg" class="inline-icon text-color-svg" alt="" aria-hidden="true">
+                <img src="images/magnifying.svg" class="inline-icon text-svg" alt="" aria-hidden="true">
                 <input id="filter-input" class="search-input" type="text" aria-label="Archive search"
                        placeholder="Search Your Archive" onload="">
             </div>
@@ -72,6 +73,7 @@
             <div id="img-area">
                 <div id="upload-wrapper">
                     <div class="upload-area" id="central-upload" onclick="focusClick('upload-label')">
+                        <img src="images/upload.svg" class="live-svg" alt="" aria-hidden="true" width="64" height="64">
                         <input type="file" id="upload" name="upload" accept="image/*"/>
                     </div>
                     <label id="upload-label" for="upload">Open File or Paste Image</label>
@@ -91,14 +93,15 @@
         </div>
         <div id="description-wrapper" class="bordered-area search-width">
             <div id="not-found-display">
-                <img src="images/nothing-found.svg" alt="Nothing found" class="text-color-svg" width="90" height="110" aria-hidden="true">
+                <img src="images/nothing-found.svg" alt="Nothing found" class="text-svg" width="90" height="110"
+                     aria-hidden="true">
                 <div id="not-found-text">No Descriptions Found</div>
             </div>
             <div id="descriptions"></div>
         </div>
+        <div id="palette-wrapper"></div>
     </div>
-    </main>
-</div>
+</main>
 <div id="exec-wrapper" class="openable"></div>
 <div id="overlay" class="openable" onclick="hideEscapable()"></div>
 <div class="prompt-wrapper openable">
@@ -124,7 +127,8 @@
             <h3>This is a tool to make alt text easier.</h3>
         </header>
         <p>
-            I write a lot of alt text, and it's always struck me how useless the user interface offered by every social
+            I write a lot of alt text, and it's always struck me how useless the user interface offered by every
+            social
             media site is. I wanted to build the composer I wished they had. This is a start, with these features:
         </p>
         <ul>
@@ -142,16 +146,20 @@
         </ul>
         <p>
             What it is not, is accessible. Yet. I am an inexperienced frontend developer, and the ingredients of a
-            modern website have inaccessibility baked in. I tried to find help pre-alpha, but had no luck, and decided
+            modern website have inaccessibility baked in. I tried to find help pre-alpha, but had no luck, and
+            decided
             that
-            a limited release was the most likely path to folks gaining interest in the project. An alpha release means
+            a limited release was the most likely path to folks gaining interest in the project. An alpha release
+            means
             it
-            works for the author(s), a beta has to work for everyone that wants in, and we won't go live until it's as
+            works for the author(s), a beta has to work for everyone that wants in, and we won't go live until it's
+            as
             open
             as possible.
         </p>
         <p>
-            This is an alpha release, things are going to break. I hope those that are able will play with it and give
+            This is an alpha release, things are going to break. I hope those that are able will play with it and
+            give
             me
             feedback on <a href="https://github.com/alt-text-org/my.alt-text.org">GitHub</a> or
             <a href="https://social.alt-text.org/@hannah">Mastodon</a>
@@ -192,15 +200,18 @@
 
         <h2>The Work Area</h2>
         <p>
-            The work area is below the image, and it's where you'll write descriptions. When you first open the page, no
+            The work area is below the image, and it's where you'll write descriptions. When you first open the
+            page, no
             snippets will be there, you'll have to either use OCR on the image to extract text, or you can hit the
             ➕button on the left side to create a blank description. If it's too small, you can make it bigger by
             dragging the bottom right corner of the text area.
         </p>
         <p>
             You might have a bunch of snippets, especially if you're using OCR. Once you're happy with the
-            description(s) you've made, you can either click the 💾 on the snippet to save just one, or the one to the
-            right will save all the current in-progress descriptions. If you don't want a snippet, you can hit 🚮 on it
+            description(s) you've made, you can either click the 💾 on the snippet to save just one, or the one to
+            the
+            right will save all the current in-progress descriptions. If you don't want a snippet, you can hit 🚮 on
+            it
             to delete it.
         </p>
         <p>
@@ -209,22 +220,27 @@
 
         <h2>The Archive</h2>
         <p>
-            The archive has two main parts, the search bar and the results. When you first open the page, the results
+            The archive has two main parts, the search bar and the results. When you first open the page, the
+            results
             will be closed. You can enter search terms to find and display, but keep in mind the search operates on
             whole words.
         </p>
         <p>
-            When you upload an image, the archive is filtered down to descriptions written for that image. If you'd like
+            When you upload an image, the archive is filtered down to descriptions written for that image. If you'd
+            like
             to toggle that, you can hit the 🌠 button.
         </p>
         <p>
             If you'd like to edit an item in your archive, click its 📝 button, and it will appear in the work area.
-            Make any changes and then hit 💾 to save them to your archive. If you want to discard the changes but keep
+            Make any changes and then hit 💾 to save them to your archive. If you want to discard the changes but
+            keep
             the old version, you can just hit 🚮 in the work area.
         </p>
         <p>
-            Set Max Length on a description to get a view of it split on whitespace. If the description is too long to
-            be attached to a single image, you can click 🌠 next to each section to get an "Alt Text Continued" image.
+            Set Max Length on a description to get a view of it split on whitespace. If the description is too long
+            to
+            be attached to a single image, you can click 🌠 next to each section to get an "Alt Text Continued"
+            image.
             That image will be localized if possible.
         </p>
         <footer>

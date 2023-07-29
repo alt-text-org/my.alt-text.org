@@ -11,7 +11,8 @@
     hashIndexDescriptions()
     addDots()
     addButtons()
-    
+    initPalette()
+
     const splashSeen = parseInt(window.localStorage.getItem("user.splash_seen") || "0")
     if (splashSeen < CURRENT_SPLASH) {
         showSplash()
@@ -51,7 +52,7 @@
     execMenu.id = "exec"
     execWrapper.appendChild(execMenu)
     execWrapper.addEventListener("click", () => {
-        hideEscapable(execWrapper)
+        hideEscapable()
     })
 
     addKeyboardCommand({
@@ -86,7 +87,31 @@
         }
     })
 
+    document.body.addEventListener("wheel", (e) => {
+        if (!e.target || !e.altKey) {
+            return
+        }
+
+        let computedStyle = window.getComputedStyle(e.target);
+        const fontSize = computedStyle.getPropertyValue("font-size")
+        if (!e.target.sizeDelta) {
+            e.target.sizeDelta = 0
+            e.target.origWidth = computedStyle.getPropertyValue("width")
+            e.target.origHeight = computedStyle.getPropertyValue("height")
+        }
+
+        //TODO: Do we need to account for delta mode here?
+        const fontDelta = e.deltaY * 0.1;
+        e.target.sizeDelta += e.deltaY * 3;
+
+        const [_, numStr, unit] = fontSize.match(/([\d.]+)([a-z]+)?/)
+        const newNum = parseFloat(numStr) + fontDelta
+        e.target.style.fontSize = `${newNum}${unit}`
+        e.target.style.width = `calc(${e.target.origWidth} + ${e.target.sizeDelta}px})`
+        e.target.style.height = `calc(${e.target.origHeight} + ${e.target.sizeDelta}px})`
+    })
 
     document.getElementById("main").style.display = "flex"
 });
+
 

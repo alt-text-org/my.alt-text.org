@@ -146,7 +146,13 @@ function addDots() {
                 altKey: true,
                 keyCode: 87 // W
             },
-            onclick: () => clearInFlight()
+            onclick: clearInFlight
+        },
+        {
+          display: "Set&nbsp;Site&nbsp;Colors",
+          sortKey: "BBD",
+          closeMenu: true,
+          onclick: showPaletteChooser
         },
         {
             display: "Page&nbsp;Language",
@@ -158,7 +164,7 @@ function addDots() {
                 button.classList.add("submenu-button")
                 button.innerHTML = `
                     <span>Page&nbsp;Language</span>
-                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`
+                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated text-svg" aria-hidden="true" alt="">`
 
                 let dropdown = buildSimpleDropdownMenu(
                     button,
@@ -187,7 +193,7 @@ function addDots() {
                 button.classList.add("submenu-button")
                 button.innerHTML = `
                     <span>Text&nbsp;Extraction&nbsp;Language</span>
-                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated" aria-hidden="true" alt="">`
+                    <img src="images/dropdown.svg" class="inline-icon dropdown-img rotated text-svg" aria-hidden="true" alt="">`
 
                 let dropdown = buildSimpleDropdownMenu(
                     button,
@@ -239,7 +245,7 @@ function addDots() {
     let button = document.createElement("button")
     button.classList.add("page-button", "dots-btn")
     button.ariaLabel = "General Menu"
-    button.innerHTML = `<img id="dots-btn-img" src="images/dots.svg" alt="" aria-hidden="true" width="32" height="32">`
+    button.innerHTML = `<img id="dots-btn-img" src="images/dots.svg" class="text-svg" alt="" aria-hidden="true" width="32" height="32">`
 
     const dots = buildComplexDropdownMenu(button, options, footer)
     document.getElementById("dots-btn-placeholder").appendChild(dots)

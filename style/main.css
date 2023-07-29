@@ -2,19 +2,43 @@
     --background: #8fa3f1;
     --live: #c8dbff;
     --engaged: #5f78f3;
-    --activated: #a1b4ec;
     --disabled: #858bad;
     --border: #42345e;
     --item: #42477e;
     --editable: #D6D7EA;
     --readable: #afafd3;
     --shadow: #6376c8;
-    --text: #140f07;
+    --text: #1f1917;
 }
 
-/* Computed from the --text value above at https://codepen.io/sosuke/pen/Pjoqqp */
-.text-color-svg {
-    filter: invert(5%) sepia(48%) saturate(534%) hue-rotate(358deg) brightness(94%) contrast(98%);
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #8fa3f1;
+        --live: #c8dbff;
+        --engaged: #5f78f3;
+        --disabled: #858bad;
+        --border: #42345e;
+        --item: #42477e;
+        --editable: #D6D7EA;
+        --readable: #afafd3;
+        --shadow: #6376c8;
+        --text: #140f07;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #010929;
+        --live: #499fb0;
+        --engaged: #6951cd;
+        --disabled: #858bad;
+        --border: #42345e;
+        --item: #773585;
+        --editable: #101127;
+        --readable: #3a166b;
+        --shadow: #465593;
+        --text: #cfc7bf;
+    }
 }
 
 html {
@@ -24,6 +48,7 @@ html {
 body {
     align-items: stretch;
     background-color: var(--background);
+    color: var(--text);
     box-sizing: border-box;
     font-family: "Atkinson Hyperlegible", sans-serif;
     height: 100%;
@@ -38,7 +63,7 @@ body {
     font-weight: 900;
     color: var(--text);
     background: var(--live);
-    border: none;
+    border: solid 2px var(--border);
     box-shadow: 1px 1px 1px 1px var(--shadow);
     cursor: pointer;
 }
@@ -50,8 +75,13 @@ body {
 
 .page-button:disabled, .page-button:disabled:hover {
     background: var(--disabled);
+    border: dashed 2px rgba(var(--border), 0.6);
     opacity: 0.6;
     cursor: auto;
+}
+
+.bordered-area .page-button {
+    width: 100%;
 }
 
 .focused {
@@ -60,6 +90,7 @@ body {
 
 label {
     background-color: transparent;
+    color: var(--text);
 }
 
 label:hover {
@@ -68,10 +99,35 @@ label:hover {
 
 input {
     border: none;
+    color: var(--text);
 }
 
 a, a:visited {
     color: var(--text);
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    color: var(--text);
+}
+
+input:read-only {
+    background: var(--readable);
+}
+
+textarea:read-only {
+    background: var(--readable);
+}
+
+input:read-write {
+    background: var(--editable);
+}
+
+textarea:read-write {
+    background: var(--editable);
 }
 
 input[type=file] {
@@ -80,11 +136,9 @@ input[type=file] {
     /*opacity: 0;*/
 }
 
-textarea {
-    width: 100%;
-    height: 100%;
-    font-size: 1.2rem;
-    font-family: "Atkinson Hyperlegible", sans-serif;
+input[type=color] {
+    border-radius: 5px;
+    background-color: var(--border);
 }
 
 #main {
@@ -181,9 +235,8 @@ textarea {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    z-index: 1000;
+    z-index: 1001;
     background-color: rgba(var(--shadow), 0.5);
-
 }
 
 #exec {
@@ -236,20 +289,28 @@ textarea {
     border-radius: 15px;
 }
 
-input:read-only {
-    background: var(--readable);
+#palette-wrapper .bordered-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
 }
 
-textarea:read-only {
-    background: var(--readable);
+#palette-wrapper .bordered-area input[type=text] {
+    border: solid 2px var(--border);
+    border-radius: 5px;
 }
 
-input:read-write {
-    background: var(--editable);
-}
 
-textarea:read-write {
-    background: var(--editable);
+#palette-chooser-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .name-input {
@@ -262,6 +323,25 @@ textarea:read-write {
 
 .disabled {
     background-color: var(--disabled);
+}
+
+#palette-wrapper {
+    padding: 0 5px;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    background-color: var(--editable);
+    border-radius: 15px;
+}
+
+.palette-entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 5px;
+    flex-wrap: nowrap;
 }
 
 .rounded-top {
@@ -323,22 +403,23 @@ textarea:read-write {
     margin: 0 auto;
 }
 
+#upload-wrapper:hover {
+    border: solid 2px var(--border);
+}
+
 .upload-area {
-    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     margin: 0 auto;
     height: 25vh;
-    border: 4px dashed #000;
+    border: 4px dashed var(--live);
     border-radius: 40px;
-    background-image: url("../images/upload.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 64px 64px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    opacity: 0.5;
     text-align: center;
 }
 
@@ -369,6 +450,10 @@ textarea:read-write {
 
 .upload-area input:focus {
     outline: none;
+}
+
+#upload-label {
+    color: var(--live);
 }
 
 .loading {
@@ -419,6 +504,17 @@ textarea:read-write {
     }
 }
 
+@media (prefers-reduced-motion) {
+    .loading {
+        background: rgba(var(--engaged), 0.7);
+        animation: none;
+    }
+
+    .blink-option {
+        animation: none;
+    }
+}
+
 .links {
     width: 100%;
     padding: 10px 0;
@@ -450,6 +546,10 @@ textarea:read-write {
     padding: 0 5px;
 }
 
+.read-only {
+    background-color: var(--readable);
+}
+
 .emoji-button {
     font-family: Arial, sans-serif;
     font-size: 2rem;
@@ -465,6 +565,11 @@ textarea:read-write {
 
 .emoji-button:disabled:hover {
     opacity: 100%;
+}
+
+.spread-option {
+    justify-content: space-between;
+    padding: 5px 5px;
 }
 
 .large-emoji {
@@ -492,7 +597,7 @@ textarea:read-write {
     background: transparent;
     font-size: 1.2rem;
     border: 0;
-    color: #1b1b2f;
+    color: var(--text);
     max-height: none;
     max-width: none;
     position: absolute;
@@ -563,7 +668,8 @@ textarea:read-write {
 .depressed {
     box-shadow: inset 3px 3px 10px var(--shadow);
     font-size: 1.8rem;
-    padding: 5px 10px;}
+    padding: 5px 10px;
+}
 
 @media screen and (max-width: 900px) {
     #main {

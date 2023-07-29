@@ -6,6 +6,7 @@ MyAltTextOrg = {
     const: {},
     crops: {},
     dicts: {},
+    palette: {},
 
     desc: {},
     i18n: {},
