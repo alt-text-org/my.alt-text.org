@@ -222,7 +222,9 @@ function setLivePalette(name) {
         savedPalette = copyPalette(MyAltTextOrg.palette.saved[name]);
     }
 
+
     applyPalette(savedPalette)
+    MyAltTextOrg.palette.live = savedPalette
     return savedPalette
 }
 
