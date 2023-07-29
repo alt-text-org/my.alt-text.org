@@ -150,67 +150,64 @@ document.addEventListener("mousemove", setPrimaryButtonState);
 document.addEventListener("mouseup", setPrimaryButtonState);
 
 
-// canvas.on('mouse:move', handleMouseMove)
-// canvas.on('mouse:up', handleMouseUp)
-// canvas.on('mouse:down', handleMouseDown)
-// canvas.on('mouse:over', handleMouseOver)
-// canvas.on('mouse:out', handleMouseOut)
-
 MyAltTextOrg.crops.active = {
     currRect: null,
     currRectStart: null,
     lastPoint: null,
     justEntered: false
 }
+MyAltTextOrg.canvas.on('mouse:move', handleMouseMove)
+MyAltTextOrg.canvas.on('mouse:up', handleMouseUp)
+MyAltTextOrg.canvas.on('mouse:down', handleMouseDown)
+MyAltTextOrg.canvas.on('mouse:over', handleMouseOver)
+MyAltTextOrg.canvas.on('mouse:out', handleMouseOut)
+
+function scalePointer(pointer) {
+    return {
+        x: pointer.x / MyAltTextOrg.currImage.scale,
+        y: pointer.y / MyAltTextOrg.currImage.scale
+    }
+}
 
 function handleMouseDown(e) {
-    console.log(`Down: ${JSON.stringify(e.pointer)}`)
     if (e.button !== 1 || isOverActiveObject(e.pointer) || MyAltTextOrg.crops.active.currRect) {
         return
     }
 
-    addRect(e.pointer)
+    addRect(scalePointer(e.pointer))
 }
 
 function handleMouseMove(e) {
-    // console.log(`Move: ${JSON.stringify(e.pointer)}`)
-    if (e.pointer) {
-        MyAltTextOrg.crops.active.lastPoint = e.pointer
-    }
-
-    if (!primaryMouseButtonDown || !MyAltTextOrg.crops.active.currRect) {
+    if (!primaryMouseButtonDown || !MyAltTextOrg.crops.active.currRect || MyAltTextOrg.canvas.getActiveObject()) {
         return
     }
 
-    renderRect(e.pointer)
+    let scaled = scalePointer(e.pointer);
+    MyAltTextOrg.crops.active.lastPoint = scaled
+    renderRect(scaled)
 }
 
 function handleMouseUp(e) {
-    console.log(`Up: ${JSON.stringify(e.pointer)}`)
-
     MyAltTextOrg.crops.active.currRect = null
     MyAltTextOrg.crops.active.currRectStart = null
 }
 
 function handleMouseOver(e) {
-    console.log(`Over`)
     MyAltTextOrg.crops.active.justEntered = true
 }
 
 function handleMouseOut(e) {
-    console.log(`Out: ${JSON.stringify(MyAltTextOrg.crops.active.lastPoint)}`)
-
     if (primaryMouseButtonDown && MyAltTextOrg.crops.active.currRect) {
         renderRect(MyAltTextOrg.crops.active.lastPoint)
     }
 }
 
-function addRect(pointer) {
+function addRect(pointer, width, height) {
     const cropRect = new fabric.Rect({
-        left: pointer.x * MyAltTextOrg.currImage.scale,
-        top: pointer.y * MyAltTextOrg.currImage.scale,
-        width: 1,
-        height: 1,
+        left: pointer.x,
+        top: pointer.y,
+        width: width || 1,
+        height: height || 1,
         fill: 'transparent',
         stroke: '#FF0000',
         strokeWidth: 3 / MyAltTextOrg.currImage.scale,
@@ -240,10 +237,10 @@ function renderRect(pointer) {
     let currRect = MyAltTextOrg.crops.active.currRect
     let currRectStart = MyAltTextOrg.crops.active.currRectStart
     currRect.scale(1)
-    currRect.left = Math.min(pointer.x, currRectStart.x) * MyAltTextOrg.currImage.scale
-    currRect.top = Math.min(pointer.y, currRectStart.y) * MyAltTextOrg.currImage.scale
-    currRect.width = (Math.max(pointer.x, currRectStart.x) - currRect.left) * MyAltTextOrg.currImage.scale
-    currRect.height = (Math.max(pointer.y, currRectStart.y) - currRect.top) * MyAltTextOrg.currImage.scale
+    currRect.left = Math.min(pointer.x, currRectStart.x)
+    currRect.top = Math.min(pointer.y, currRectStart.y)
+    currRect.width = Math.max(pointer.x, currRectStart.x) - currRect.left
+    currRect.height = Math.max(pointer.y, currRectStart.y) - currRect.top
     MyAltTextOrg.canvas.renderAll()
 }
 
