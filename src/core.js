@@ -266,7 +266,7 @@ function addDots() {
     })
 }
 
-function addButtons () {
+function addWorkAreaButtons () {
     let addBtn = document.createElement("button");
     addBtn.classList.add("page-button", "emoji-button", "large-emoji");
     addBtn.ariaLabel = getLocalized("addInFlightBtnTxt");

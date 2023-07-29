@@ -10,7 +10,7 @@
     updateDescriptionDisplay()
     hashIndexDescriptions()
     addDots()
-    addButtons()
+    addWorkAreaButtons()
     initPalette()
 
     const splashSeen = parseInt(window.localStorage.getItem("user.splash_seen") || "0")
