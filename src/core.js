@@ -119,7 +119,6 @@ function addDots() {
                 lbl.innerHTML = "Open&nbsp;File"
                 wrapper.appendChild(lbl)
 
-                lbl.addEventListener("click", () => input.click())
                 input.addEventListener("change", async () => {
                     const file = input.files[0]
                     await loadFile(file)

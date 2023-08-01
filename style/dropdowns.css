@@ -59,6 +59,17 @@
     outline: none;
 }
 
+.dropdown-option.file-uploader {
+    padding: 0;
+}
+
+.dropdown-option.file-uploader label {
+    display: block;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
 .dropdown-option:hover, .dropdown-option:focus {
     background-color: var(--engaged);
     border-radius: 0;
