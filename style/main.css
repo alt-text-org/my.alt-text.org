@@ -394,6 +394,7 @@ input[type=color] {
 }
 
 #upload-wrapper {
+    border: solid 2px transparent;
     display: flex;
     flex-flow: column wrap;
     place-content: center;
@@ -408,7 +409,7 @@ input[type=color] {
 }
 
 #upload-wrapper:hover {
-    border: solid 2px var(--border);
+    border-color: var(--border);
 }
 
 .upload-area {
