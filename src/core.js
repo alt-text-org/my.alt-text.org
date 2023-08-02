@@ -110,7 +110,7 @@ function addDots() {
                 const input = document.createElement("input")
                 input.id = inputName
                 input.type = "file"
-                input.accept = "image/*"
+                input.accept = "image/*,.json"
                 input.name = inputName
                 wrapper.appendChild(input)
 
@@ -122,7 +122,12 @@ function addDots() {
                 lbl.addEventListener("click", () => input.click())
                 input.addEventListener("change", async () => {
                     const file = input.files[0]
-                    await loadFile(file)
+
+                    if (file.type === "application/json") {
+                        await importMastodonJson(file)
+                    } else {
+                        await loadFile(file)
+                    }
                 })
 
                 return wrapper
