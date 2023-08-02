@@ -30,29 +30,49 @@ function importMastodonTgz() {
 }
 
 function importMastodonJson(jsonFile, sampleUrl, reportPct) {
-    const host = new URL(sampleUrl).host
     readJsonFile(jsonFile).then(async mastoArchive => {
         const items = mastoArchive.orderedItems
         let noAlt = 0
-        let toFetch = []
-        for (let [note] of items) {
-            if (note.object && note.object.attachment) {
-                for (let attach of note.object.attachment) {
-                    if (attach.type === "Document"
-                        && attach.mediaType.startsWith("image/")
-                        && attach.url
-                    ) {
-                        if (attach.name) {
+        const toFetch = []
+
+        items
+            // NOTE: This could be replaced with a single `item?.object?.attachment?.length` check
+            // depending on browser compatibility requirements.
+            .filter(item => item.object && item.object.attachment && item.object.attachment.length)
+            .map(item => item.object.attachment)
+            .forEach((attachments) => {
+                attachments
+                    .filter(a => a.url && a.type === "Document" && a.mediaType.startsWith("image/"))
+                    .forEach((attachment) => {
+                        if (attachment.name) {
                             toFetch.push({
-                                alt: attach.name,
-                                url: `${host}${attach.url}`
+                                alt: attachment.name,
+                                url: attachment.url,
                             })
                         } else {
                             noAlt++
                         }
-                    }
-                }
-            }
+                    })
+
+            })
+
+        if (toFetch.length > 0) {
+            // NOTE: Replace with a dialog element potentially.
+            const defaultAnswer = ""
+            const answer = prompt("Please fill in your mastodon server media url", defaultAnswer)
+            const url = new URL(answer)
+            // TODO: This needs checking for traling slashes etc.
+            const host = url.href
+
+            toFetch.forEach(async (item) => {
+                // TODO: Not sure how feeding each into `loadFile()` should work in terms of
+                // generating multiple image area previews. Also, since these are CORS enabled
+                // per the Mastodon spec, we should be able to render onto canvas direct?
+                item.url = `${host}${item.url}`
+
+                // TODO: More details need filing in.
+                addInFlight(item.alt)
+            })
         }
     }).catch((e) => {
         console.log(e)
