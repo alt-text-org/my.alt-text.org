@@ -65,8 +65,13 @@ function importMastodonJson(jsonFile, sampleUrl, reportPct) {
             const host = url.href
 
             toFetch.forEach(async (item) => {
-                // TODO: addInFlight
+                // TODO: Not sure how feeding each into `loadFile()` should work in terms of
+                // generating multiple image area previews. Also, since these are CORS enabled
+                // per the Mastodon spec, we should be able to render onto canvas direct?
                 item.url = `${host}${item.url}`
+
+                // TODO: More details need filing in.
+                addInFlight(item.alt)
             })
         }
     }).catch((e) => {
