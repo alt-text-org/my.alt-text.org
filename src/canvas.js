@@ -23,28 +23,40 @@ document.onpaste = function (event) {
     }
 };
 
-(() => {
+// Don't need an IIFE to create a closure in this case.
+{
     const upload = document.getElementById('upload');
     const centralUpload = document.getElementById('central-upload')
 
-    centralUpload.addEventListener('dragenter', () => {
+    centralUpload.addEventListener('dragenter', (e) => {
+        e.stopPropagation()
         upload.parentNode.className = 'area dragging';
     }, false);
 
-    centralUpload.addEventListener('dragleave', () => {
+    centralUpload.addEventListener('dragleave', (e) => {
+        e.stopPropagation()
         upload.parentNode.className = 'area';
     }, false);
 
-    centralUpload.addEventListener('dragdrop', async () => {
-        const file = upload.files[0]
+    centralUpload.addEventListener('dragover', (e) => {
+        e.preventDefault()
+        upload.parentNode.classList.add('over')
+    }, false);
+
+    centralUpload.addEventListener('drop', async (e) => {
+        e.preventDefault()
+
+        const [file] = e.dataTransfer.files
+
         await loadFile(file)
     }, false);
 
     upload.addEventListener('change', async () => {
         const file = upload.files[0]
+
         await loadFile(file)
     }, false);
-})();
+}
 
 async function loadDataUrl(dataUrl, name) {
     const file = await srcToFile(
