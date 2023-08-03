@@ -9,7 +9,8 @@ import {
     addWorkAreaButtons,
     cropExtractAndAddInFlight,
     addKeyboardCommand,
-    showExecMenu
+    showExecMenu,
+    showSplash
 } from "./core.js"
 import { buildComplexDropdownMenu, hideEscapable } from "./dropdowns.js"
 import { initPalette } from "./palette.js"
