@@ -1,7 +1,10 @@
+import { MyAltTextOrg } from "./first.js"
+import { getLocalized } from "./i18n.js"
+import { textLen, addDescription } from "./descriptions.js"
 
 MyAltTextOrg.inFlight = []
 
-function addBlankInFlight() {
+export function addBlankInFlight() {
     let name = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name || "" : ""
     let imgHash = MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash || null : null
     MyAltTextOrg.inFlight.push({
@@ -13,13 +16,13 @@ function addBlankInFlight() {
     renderInFlight()
 }
 
-function addInFlight(text, id, name, imgHash, lang, maxLen) {
+export function addInFlight(text, id, name, imgHash, lang, maxLen) {
     let ifName = name || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.name : "")
     let ifHash = imgHash || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.hash : null)
     let ifLang = lang || (MyAltTextOrg.currImage ? MyAltTextOrg.currImage.lang : MyAltTextOrg.i18n.isoCode)
     MyAltTextOrg.inFlight.push({
         id,
-        text, 
+        text,
         name: ifName,
         imgHash: ifHash,
         lang: ifLang,
@@ -49,7 +52,7 @@ function saveInFlight(idx) {
     }
 }
 
-function saveAllInFlight() {
+export function saveAllInFlight() {
     for (let chunk of MyAltTextOrg.inFlight) {
         if (chunk) {
             addDescription(chunk)
@@ -63,7 +66,7 @@ function removeInFlight(idx) {
     renderInFlight()
 }
 
-function clearInFlight() {
+export function clearInFlight() {
     MyAltTextOrg.inFlight.length = 0
     renderInFlight()
 }

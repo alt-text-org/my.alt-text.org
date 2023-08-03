@@ -1,3 +1,6 @@
+import { MyAltTextOrg } from "./first.js"
+import { buildComplexDropdownMenu, hideEscapable } from "./dropdowns.js"
+
 /*
 MyAltTextOrg.palette.keys = CSS keys alongside descriptions
 MyAltTextOrg.palette.live = The current color scheme
@@ -64,7 +67,7 @@ MyAltTextOrg.palette.saved = {
     },
 }
 
-function initPalette() {
+export function initPalette() {
     const paletteNamesStr = window.localStorage.getItem("conf.palettes")
     if (paletteNamesStr) {
         const paletteNames = JSON.parse(paletteNamesStr)
@@ -257,7 +260,7 @@ function copyPalette(palette) {
     return newPalette
 }
 
-function showPaletteChooser() {
+export function showPaletteChooser() {
     MyAltTextOrg.palette.last = copyPalette(MyAltTextOrg.palette.live)
     document.getElementById("palette-wrapper").style.display = "flex"
 }

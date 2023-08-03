@@ -1,3 +1,8 @@
+import { MyAltTextOrg } from "./first.js"
+import { getAllDescriptions, saveDescription, getRecentDescriptions, getDescription } from "./storage.js"
+import { getLocalized } from "./i18n.js"
+import { addInFlight } from "./in-flight.js"
+
 MyAltTextOrg.desc.textIndex = new FlexSearch.Index({});
 MyAltTextOrg.desc.textSearchIndices = []
 MyAltTextOrg.desc.textNextSearchIdx = 0
@@ -14,7 +19,7 @@ MyAltTextOrg.desc.imageFilter = false
 MyAltTextOrg.desc.resultFilter = document.getElementById("filter-input")
 MyAltTextOrg.desc.resultFilter.oninput = () => updateDescriptionDisplay()
 
-function toggleSearchResults(btn) {
+export function toggleSearchResults(btn) {
     MyAltTextOrg.desc.resultIsDown = !MyAltTextOrg.desc.resultIsDown
     if (MyAltTextOrg.desc.resultIsDown) {
         const main = document.getElementById("main-area")
@@ -25,11 +30,11 @@ function toggleSearchResults(btn) {
     }
 }
 
-function toggleImageFilter() {
+export function toggleImageFilter() {
     setImageFilter(!MyAltTextOrg.desc.imageFilter)
 }
 
-function setImageFilter(bool) {
+export function setImageFilter(bool) {
     const toggleBtn = document.getElementById("image-filter-toggle")
     toggleBtn.disabled = false
     MyAltTextOrg.desc.imageFilter = bool
@@ -42,7 +47,7 @@ function setImageFilter(bool) {
     updateDescriptionDisplay()
 }
 
-function updateDescriptionDisplay() {
+export function updateDescriptionDisplay() {
     if (!MyAltTextOrg.desc.resultIsDown) {
         hideResultDisplay()
         return
@@ -72,7 +77,7 @@ function hideResultDisplay() {
     descriptionWrapper.style.display = "none"
 }
 
-function initializeSearch() {
+export function initializeSearch() {
     let descriptions = getAllDescriptions();
     Object.values(descriptions).forEach(desc => indexForSearch(desc.id, desc.name, desc.text))
 }
@@ -100,7 +105,7 @@ function searchArchive(search, imgHash) {
     return Object.keys(foundIds).filter(id => hashDescs ? hashDescs[id] : true)
 }
 
-function addDescription(chunk) {
+export function addDescription(chunk) {
     let ctime = Date.now();
     const desc = {
         id: chunk.id || null,
@@ -157,7 +162,7 @@ function duplicateDescription(id) {
     updateDescriptionDisplay()
 }
 
-function textLen(text) {
+export function textLen(text) {
     //TODO: Handle sites that treat unicode as multiple chars
     return text.length
 }
@@ -347,7 +352,7 @@ function filterNonDigits(str) {
     return str.replaceAll(/[^0-9]/g, '')
 }
 
-function focusFilter() {
+export function focusFilter() {
     const filterInput = document.getElementById("filter-input")
     filterInput.focus()
 }

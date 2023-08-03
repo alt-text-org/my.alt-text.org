@@ -1,3 +1,5 @@
+import { MyAltTextOrg } from "./first.js"
+
 MyAltTextOrg.filterLibrary = {
     dictionary_filter: {
         name: 'Filter To Dictionary',
