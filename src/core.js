@@ -30,7 +30,7 @@ export async function cropExtractAndAddInFlight() {
     extractBtn.classList.remove("loading")
 }
 
-function showSplash() {
+export function showSplash() {
     const dialog = document.querySelector("dialog.splash")
 
     dialog?.showModal()
