@@ -1,3 +1,5 @@
+import { MyAltTextOrg } from "./first.js"
+
 MyAltTextOrg.const.DEFAULT_PAGE_LANG = 'en'
 MyAltTextOrg.const.DEFAULT_PAGE_LANG_HUMAN = 'English'
 MyAltTextOrg.const.DEFAULT_ADDTL_IMAGE_TXT = "en"

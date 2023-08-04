@@ -1,4 +1,21 @@
-(async () => {
+import { MyAltTextOrg } from "./first.js"
+import { initOcr } from "./tesseract.js"
+import { updatePageLanguage } from "./i18n.js"
+import { initializeSearch, updateDescriptionDisplay } from "./descriptions.js"
+import { hashIndexDescriptions } from "./storage.js"
+import {
+    addDots,
+    listenForKeys,
+    addWorkAreaButtons,
+    cropExtractAndAddInFlight,
+    addKeyboardCommand,
+    showExecMenu,
+    showSplash
+} from "./core.js"
+import { buildComplexDropdownMenu, hideEscapable } from "./dropdowns.js"
+import { initPalette } from "./palette.js"
+
+;(async () => {
     const CURRENT_SPLASH = 1;
 
     await initOcr()

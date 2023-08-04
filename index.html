@@ -19,49 +19,33 @@
     <link rel="stylesheet" href="style/in-flight.css">
     <link rel="stylesheet" href="style/main.css">
 
-    <script src="src/first.js"></script>
-    <script src="src/i18n-data.js"></script>
-    <script src="src/i18n.js"></script>
-    <script src="src/configs.js"></script>
-    <script src="src/tesseract.js"></script>
-
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js' defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js" defer></script>
     <script src="https://unpkg.com/canvas-txt" defer></script>
+
     <script src="lib/fabric.min.js" defer></script>
     <script src="lib/flexsearch.min.js" defer></script>
     <script src="lib/findBoundaries.js" defer></script>
     <script src="lib/unicode-break.js" defer></script>
     <script src="lib/gen/WordBreakProperty.js" defer></script>
 
-    <script src="src/storage.js" defer></script>
-    <script src="src/canvas.js" defer></script>
-    <script src="src/images.js" defer></script>
-    <script src="src/descriptions.js" defer></script>
-    <script src="src/in-flight.js" defer></script>
-    <script src="src/filter-lib.js" defer></script>
-    <script src="src/dropdowns.js" defer></script>
-    <script src="src/import-export.js" defer></script>
-    <script src="src/palette.js" defer></script>
-    <script src="src/core.js" defer></script>
-
-    <script src="src/last.js" defer></script>
+    <script src="src/main.js" type="module"></script>
 </head>
 <body>
 <main id="main">
     <div id="top-controls">
         <div id="dots-btn-placeholder"></div>
         <div class="search-toggles search-width">
-            <button onclick="toggleSearchResults()" aria-label="Toggle search results" class="page-button">
+            <button id="toggle-search-results" aria-label="Toggle search results" class="page-button">
                 <img src="images/dropdown.svg" id="search-dropdown-indicator" height="14" width="28"
                      class="dropdown-img rotated text-svg" alt=""
                      aria-hidden="true">
             </button>
-            <div id="filter-wrapper" class="search-wrapper" onclick="focusFilter()">
+            <div id="filter-wrapper" class="search-wrapper">
                 <img src="images/magnifying.svg" class="inline-icon text-svg" alt="" aria-hidden="true">
                 <input id="filter-input" class="search-input" type="text" aria-label="Archive search"
                        placeholder="Search Your Archive" onload="">
             </div>
-            <button id="image-filter-toggle" class="page-button emoji-button" onclick="toggleImageFilter()"
+            <button id="image-filter-toggle" class="page-button emoji-button"
                     aria-label="Toggle image filter"
                     title="Toggle Image Filtering"
                     disabled>🌠
@@ -72,7 +56,7 @@
         <div id="work-area">
             <div id="img-area">
                 <div id="upload-wrapper">
-                    <div class="upload-area" id="central-upload" onclick="focusClick('upload-label')">
+                    <div class="upload-area" id="central-upload">
                         <img src="images/upload.svg" class="live-svg" alt="" aria-hidden="true" width="64" height="64">
                         <input type="file" id="upload" name="upload" accept="image/*"/>
                     </div>
@@ -81,7 +65,7 @@
                 <div id="cvs-wrapper">
                     <canvas id="cvs" width="1" height="1" tabindex="0"></canvas>
                 </div>
-                <button id="extract-btn" class="page-button" onclick="cropExtractAndAddInFlight()">Extract Text</button>
+                <button id="extract-btn" class="page-button">Extract Text</button>
             </div>
             <div id="in-flight-wrapper" class="bordered-area">
                 <div id="add-in-flight" class="column-emoji-controls">
@@ -103,14 +87,13 @@
     </div>
 </main>
 <div id="exec-wrapper" class="openable"></div>
-<div id="overlay" class="openable" onclick="hideEscapable()"></div>
+<div id="overlay" class="openable"></div>
 <div class="prompt-wrapper openable">
     <div id="import-prompt" class="prompt">
         <div id="import-choices">
             <div>
                 <label id="import-archive-lbl" for="import-archive-btn" class="file-input-lbl"></label>
-                <input type="file" id="import-archive-btn" name="import-archive-btn" accept="application/json"
-                       onchange="importArchive()">
+                <input type="file" id="import-archive-btn" name="import-archive-btn" accept="application/json">
             </div>
             <button id="open-masto-import"></button>
         </div>
@@ -250,5 +233,20 @@
         </footer>
     </article>
 </dialog>
+<script type="module">
+    import { toggleSearchResults, focusFilter, toggleImageFilter } from "./src/descriptions.js"
+    import { focusClick, cropExtractAndAddInFlight } from "./src/core.js"
+    import { hideEscapable } from "./src/dropdowns.js"
+    import { importArchive } from "./src/import-export.js"
+
+    document.getElementById("toggle-search-results").onclick = () => toggleSearchResults()
+    document.getElementById("filter-wrapper").onclick = () => focusFilter()
+    document.getElementById("image-filter-toggle").onclick = () => toggleImageFilter()
+    document.getElementById("central-upload").onclick = () => focusClick("upload-label")
+    document.getElementById("extract-btn").onclick = () => cropExtractAndAddInFlight()
+
+    document.getElementById("overlay").onclick = () => hideEscapable()
+    document.getElementById("import-archive-btn").onchange = () => importArchive()
+</script>
 </body>
 </html>

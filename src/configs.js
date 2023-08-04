@@ -1,3 +1,6 @@
+import { MyAltTextOrg } from "./first.js"
+import { getLocalized } from "./i18n.js"
+
 MyAltTextOrg.const.OCR_FILTER_KEY = 'configs.ocr_filters';
 MyAltTextOrg.ocrFilters = loadSettings(MyAltTextOrg.const.OCR_FILTER_KEY, {
         remove_newlines: {

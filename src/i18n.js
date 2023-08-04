@@ -1,3 +1,4 @@
+import { MyAltTextOrg, makeId } from "./first.js"
 
 MyAltTextOrg.i18n.localizableElements = {}
 
@@ -10,7 +11,7 @@ function onElementRemoved(element, callback) {
     }).observe(element.parentElement, {childList: true});
 }
 
-function registerLocalizedElement(elem, elemKey, i18nKey) {
+export function registerLocalizedElement(elem, elemKey, i18nKey) {
     let localizationId = makeId()
     elem.localizationId = localizationId
     MyAltTextOrg.i18n.localizableElements[localizationId] = {elem, elemKey, i18nKey}
@@ -23,7 +24,7 @@ function registerLocalizedElement(elem, elemKey, i18nKey) {
     return getLocalized(i18nKey)
 }
 
-function getLocalized(key) {
+export function getLocalized(key) {
     return MyAltTextOrg.i18n.current[key]
         || MyAltTextOrg.i18n.pageText[MyAltTextOrg.const.DEFAULT_PAGE_LANG][key]
 }
@@ -32,7 +33,7 @@ function initPageLanguage(isoLang) {
     MyAltTextOrg.i18n.current = MyAltTextOrg.i18n.pageText[isoLang] || MyAltTextOrg.i18n.pageText[MyAltTextOrg.const.DEFAULT_PAGE_LANG]
 }
 
-function updatePageLanguage(isoLang) {
+export function updatePageLanguage(isoLang) {
     initPageLanguage(isoLang)
     for (let localizedElem of Object.values(MyAltTextOrg.i18n.localizableElements)) {
         localizedElem.elem[localizedElem.elemKey] = getLocalized(localizedElem.i18nKey)

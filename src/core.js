@@ -1,4 +1,17 @@
-async function cropExtractAndAddInFlight() {
+import { MyAltTextOrg } from "./first.js"
+import { clearImage, loadFile, crop } from "./canvas.js"
+import { clearInFlight, addBlankInFlight, saveAllInFlight, addInFlight } from "./in-flight.js"
+import { showPaletteChooser } from "./palette.js"
+import {
+    buildComplexDropdownMenu,
+    buildSimpleDropdownMenu,
+    makePageLangFooter,
+    hideEscapable
+} from "./dropdowns.js"
+import { updatePageLanguage, getLocalized } from "./i18n.js"
+import { setExtractionLang, extractText } from "./tesseract.js"
+
+export async function cropExtractAndAddInFlight() {
     const extractBtn = document.getElementById("extract-btn")
 
     extractBtn.classList.add("loading")
@@ -17,7 +30,7 @@ async function cropExtractAndAddInFlight() {
     extractBtn.classList.remove("loading")
 }
 
-function showSplash() {
+export function showSplash() {
     const dialog = document.querySelector("dialog.splash")
 
     dialog?.showModal()
@@ -26,7 +39,7 @@ function showSplash() {
     })
 }
 
-function listenForKeys(elem, keys) {
+export function listenForKeys(elem, keys) {
     const keyMap = {}
     keys.forEach(key => {
         keyMap[key.keyCode] = keyMap[key.keyCode] || []
@@ -54,7 +67,7 @@ function listenForKeys(elem, keys) {
     })
 }
 
-function compareStr(a, b) {
+export function compareStr(a, b) {
     if (a < b) {
         return -1;
     } else if (a > b) {
@@ -64,7 +77,7 @@ function compareStr(a, b) {
     }
 }
 
-function addKeyboardCommand(key, invoke) {
+export function addKeyboardCommand(key, invoke) {
     MyAltTextOrg.cmd.push({
         key,
         invoke
@@ -80,18 +93,18 @@ function showHelp() {
     })
 }
 
-function showExecMenu(overlay, button) {
+export function showExecMenu(overlay, button) {
     return () => {
         showEscapable(overlay, true)
         button.click()
     }
 }
 
-function focusClick(id) {
+export function focusClick(id) {
     document.getElementById(id).click();
 }
 
-function addDots() {
+export function addDots() {
     let openLangMenu = null
     const options = [
         {
@@ -266,7 +279,7 @@ function addDots() {
     })
 }
 
-function addWorkAreaButtons () {
+export function addWorkAreaButtons () {
     let addBtn = document.createElement("button");
     addBtn.classList.add("page-button", "emoji-button", "large-emoji");
     addBtn.ariaLabel = getLocalized("addInFlightBtnTxt");

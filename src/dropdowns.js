@@ -1,4 +1,7 @@
-function buildSimpleDropdownMenu(openMenuButton, options, footer, onSelection, dropdownClass) {
+import { compareStr, listenForKeys } from "./core.js"
+import { registerLocalizedElement } from "./i18n.js"
+
+export function buildSimpleDropdownMenu(openMenuButton, options, footer, onSelection, dropdownClass) {
     const complexified = []
     Object.entries(options).forEach(([display, value]) => {
         complexified.push({
@@ -21,7 +24,7 @@ function buildSimpleDropdownMenu(openMenuButton, options, footer, onSelection, d
     return buildDropdownMenu(openMenuButton, complexified, footer, dropdownClass)
 }
 
-function buildComplexDropdownMenu(openMenuButton, options, footer, dropdownClass) {
+export function buildComplexDropdownMenu(openMenuButton, options, footer, dropdownClass) {
     const standardized = []
     options.forEach(option => {
         standardized.push({
@@ -276,7 +279,7 @@ function showEscapable(elem, skipOverlay) {
     toEscape.push(elem)
 }
 
-function hideEscapable(elem) {
+export function hideEscapable(elem) {
     const overlay = document.getElementById("overlay");
     if (elem) {
         elem.classList.remove("open")
@@ -292,7 +295,7 @@ function hideEscapable(elem) {
 
 }
 
-function makePageLangFooter() {
+export function makePageLangFooter() {
     const link = document.createElement("a")
     link.classList.add("dropdown-footer")
     link.target = "_blank"

@@ -1,9 +1,11 @@
+import { MyAltTextOrg, makeId } from "./first.js"
+
 MyAltTextOrg.const.DESCRIPTION_KEY = "descriptions";
 
 MyAltTextOrg.storage.userDescriptions = loadDescriptions()
 MyAltTextOrg.storage.descByHash = {}
 
-function saveDescriptions() {
+export function saveDescriptions() {
     try {
         window.localStorage.setItem(MyAltTextOrg.const.DESCRIPTION_KEY, JSON.stringify(MyAltTextOrg.storage.userDescriptions))
         hashIndexDescriptions()
@@ -16,7 +18,7 @@ function loadDescriptions() {
     return JSON.parse(window.localStorage.getItem(MyAltTextOrg.const.DESCRIPTION_KEY) || "{}")
 }
 
-function saveDescription(desc) {
+export function saveDescription(desc) {
     desc.id = desc.id || makeId()
     let now = Date.now();
     desc.atime = now
@@ -28,11 +30,11 @@ function saveDescription(desc) {
     return desc.id
 }
 
-function getDescriptionsForHash(imgHash) {
+export function getDescriptionsForHash(imgHash) {
     return MyAltTextOrg.storage.descByHash[imgHash]
 }
 
-function getRecentDescriptions(limit, imgHash) {
+export function getRecentDescriptions(limit, imgHash) {
     let mtimeDescriptions = Object.values(MyAltTextOrg.storage.userDescriptions)
     if (imgHash) {
         mtimeDescriptions = mtimeDescriptions.filter(desc => desc.imgHash === imgHash)
@@ -42,21 +44,21 @@ function getRecentDescriptions(limit, imgHash) {
     return mtimeDescriptions.slice(0, limit).map(desc => desc.id)
 }
 
-function deleteDescription(descId) {
+export function deleteDescription(descId) {
     delete MyAltTextOrg.storage.userDescriptions[descId]
     saveDescriptions()
 }
 
-function getDescription(descId) {
+export function getDescription(descId) {
     return MyAltTextOrg.storage.userDescriptions[descId]
 }
 
-function getAllDescriptions() {
+export function getAllDescriptions() {
     return MyAltTextOrg.storage.userDescriptions
 }
 
 
-function hashIndexDescriptions() {
+export function hashIndexDescriptions() {
     MyAltTextOrg.storage.descByHash = {}
     for (let [descId, desc] of Object.entries(MyAltTextOrg.storage.userDescriptions)) {
         if (!MyAltTextOrg.storage.descByHash[desc.imgHash]) {

@@ -1,4 +1,4 @@
-MyAltTextOrg = {
+export const MyAltTextOrg = {
     c: {}, // processed configuration
     f: {}, // functions
     cmd: [],
@@ -15,7 +15,7 @@ MyAltTextOrg = {
 
 }
 
-function makeId() {
+export function makeId() {
     if (window.location.protocol === 'https:') {
         return crypto.randomUUID()
     } else {

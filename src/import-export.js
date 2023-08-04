@@ -18,7 +18,7 @@ function openImport() {
 
 }
 
-function importArchive(file) {
+export function importArchive(file) {
     readJsonFile(file).then(json => importDescriptions(json)).catch(e => {
         console.log(e)
         alert("Failed to import JSON archive")

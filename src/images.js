@@ -1,4 +1,6 @@
-async function hashImage(file) {
+import { MyAltTextOrg } from "./first.js"
+
+export async function hashImage(file) {
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsArrayBuffer(file);

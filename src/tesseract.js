@@ -1,5 +1,6 @@
+import { MyAltTextOrg } from "./first.js"
 
-async function initOcr() {
+export async function initOcr() {
     const isoExtractionLang =
         (window.navigator.language || MyAltTextOrg.const.DEFAULT_EXTRACTION_LANG_ISO).split('-')[0]
 
@@ -13,13 +14,13 @@ async function initOcr() {
     MyAltTextOrg.tesseract.worker = worker
 }
 
-async function extractText(dataUrl) {
+export async function extractText(dataUrl) {
     const {data: {text}} = await MyAltTextOrg.tesseract.worker.recognize(dataUrl);
     MyAltTextOrg.currImage.lang = MyAltTextOrg.tesseract.isoLang
     return [text]
 }
 
-async function setExtractionLang(tesseractCode) {
+export async function setExtractionLang(tesseractCode) {
     await MyAltTextOrg.tesseract.worker.loadLanguage(tesseractCode);
     await MyAltTextOrg.tesseract.worker.initialize(tesseractCode);
 }

@@ -1,3 +1,7 @@
+import { MyAltTextOrg } from "./first.js"
+import { updateDescriptionDisplay, setImageFilter } from "./descriptions.js"
+import { hashImage } from "./images.js"
+
 MyAltTextOrg.const.CVS_PADDING = 0
 
 MyAltTextOrg.canvas = new fabric.Canvas("cvs", {
@@ -56,7 +60,7 @@ async function loadDataUrl(dataUrl, name) {
     await loadFile(file)
 }
 
-async function loadFile(file) {
+export async function loadFile(file) {
     const url = URL.createObjectURL(file);
     if (MyAltTextOrg.c.discardCropsOnNewImg) {
         MyAltTextOrg.canvas.clear()
@@ -123,7 +127,7 @@ function srcToFile(src, fileName, mimeType) {
     );
 }
 
-function clearImage() {
+export function clearImage() {
     const toggleBtn = document.getElementById("image-filter-toggle")
     const uploadWrapper = document.getElementById("upload-wrapper")
     const extractBtn = document.getElementById("extract-btn")
@@ -289,7 +293,7 @@ function handleCropScaling() {
     //TODO: Prevent scaling outside canvas
 }
 
-function crop() {
+export function crop() {
     MyAltTextOrg.canvas.setZoom(1)
     let crops = MyAltTextOrg.canvas.getActiveObject()
         ? [MyAltTextOrg.canvas.getActiveObject()]
