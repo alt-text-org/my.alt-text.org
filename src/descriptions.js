@@ -1,5 +1,12 @@
 import { MyAltTextOrg } from "./first.js"
-import { getAllDescriptions, saveDescription, getRecentDescriptions, getDescription } from "./storage.js"
+import {
+    getAllDescriptions,
+    saveDescription,
+    getRecentDescriptions,
+    getDescription,
+    getDescriptionsForHash,
+    deleteDescription
+} from "./storage.js"
 import { getLocalized } from "./i18n.js"
 import { addInFlight } from "./in-flight.js"
 
