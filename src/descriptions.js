@@ -19,7 +19,6 @@ function toggleSearchResults(btn) {
     if (MyAltTextOrg.desc.resultIsDown) {
         const main = document.getElementById("main-area")
         updateDescriptionDisplay()
-        main.scrollHeight = 0
     } else {
         hideResultDisplay()
     }
@@ -204,8 +203,6 @@ function renderDescriptions() {
             let descEle = makeDescriptionEle(description)
             descriptionsEle.appendChild(descEle)
         })
-
-        descriptionsEle.scrollHeight = scrollPx
     }
     descriptionWrapper.style.display = "flex"
 }
