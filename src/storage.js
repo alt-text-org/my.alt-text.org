@@ -44,7 +44,7 @@ export function getRecentDescriptions(limit, imgHash) {
     return mtimeDescriptions.slice(0, limit).map(desc => desc.id)
 }
 
-function deleteDescription(descId) {
+export function deleteDescription(descId) {
     delete MyAltTextOrg.storage.userDescriptions[descId]
     saveDescriptions()
 }
