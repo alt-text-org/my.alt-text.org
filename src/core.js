@@ -75,8 +75,10 @@ function showHelp() {
     const help = document.querySelector(".help-dialog")
 
     help?.showModal()
-    help?.addEventListener("click", () => {
-        help.close()
+    help?.addEventListener("click", (e) => {
+        if (e.target.nodeName === "DIALOG") {
+            help.close()
+        }
     })
 }
 
