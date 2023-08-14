@@ -69,6 +69,8 @@ async function loadFile(file) {
         uploadWrapper.style.display = "none"
         canvasWrapper.style.display = "flex"
 
+        URL.revokeObjectURL(url)
+
         MyAltTextOrg.canvas.setBackgroundImage(img, null, {
             top: MyAltTextOrg.const.CVS_PADDING,
             left: MyAltTextOrg.const.CVS_PADDING
