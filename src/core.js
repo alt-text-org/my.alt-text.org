@@ -234,7 +234,7 @@ function addDots() {
     const footer = document.createElement("div")
     footer.classList.add("links")
     footer.innerHTML = `
-                <a href="https://alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
+                <a href="https://www.alt-text.org" target="_blank"><img class="link-logo" src="images/alt-text-org.svg"
                                                                     alt="Alt-Text.org"></a>
                 <a href="https://github.com/alt-text-org/my.alt-text.org" target="_blank"><img class="link-logo"
                                                                                                src="images/github.svg"
